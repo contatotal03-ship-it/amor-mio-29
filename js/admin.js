@@ -222,6 +222,8 @@ function loadDayIntoEditor(dayNumber) {
   document.getElementById('ed-teaser').value = cap.teaserTitle || '';
   document.getElementById('ed-title').value = cap.unlockedTitle || '';
   document.getElementById('ed-message').value = cap.message || '';
+  document.getElementById('ed-allow-reply').checked = Boolean(cap.allowReply);
+  document.getElementById('ed-sunflowers').checked = Boolean(cap.hasSunflowers);
   document.getElementById('ed-dynamic-type').value = cap.dynamicType || 'classic';
 
   renderDynamicFieldsEditor(cap.dynamicType || 'classic', cap.dynamicPayload || {});
@@ -504,6 +506,8 @@ async function saveCurrentDayFromEditor() {
   cap.teaserTitle = document.getElementById('ed-teaser').value.trim();
   cap.unlockedTitle = document.getElementById('ed-title').value.trim();
   cap.message = document.getElementById('ed-message').value;
+  cap.allowReply = document.getElementById('ed-allow-reply').checked;
+  cap.hasSunflowers = document.getElementById('ed-sunflowers').checked;
   cap.dynamicType = document.getElementById('ed-dynamic-type').value;
   cap.dynamicPayload = collectDynamicPayloadFromEditor(cap.dynamicType);
 
@@ -586,6 +590,9 @@ function populateSettingsForms() {
   // Alerts
   if (p) {
     document.getElementById('alert-wa-phone').value = p.whatsappPhone || '';
+    document.getElementById('alert-wa-template').value =
+      p.whatsappTemplate ||
+      '✨ Hola {nombre}! Acabo de autorizar la apertura del Capítulo {capitulo} en tu universo. Entra a descubrirlo aquí: {link}';
     document.getElementById('alert-tg-token').value = p.telegramBotToken || '';
     document.getElementById('alert-tg-chat').value = p.telegramChatId || '';
   }
@@ -730,8 +737,14 @@ function downloadLuxuryQrCard() {
 function sendWhatsAppAlert(dayNumber) {
   const phone = (state.privateSettings?.whatsappPhone || '').replace(/\D/g, '');
   const appUrl = document.getElementById('qr-url-input').value.trim() || window.location.origin;
-  const her = state.settings?.herName || 'mi amor';
-  const text = `✨ Hola ${her}! Acabo de autorizar la apertura del Capítulo ${String(dayNumber).padStart(2, '0')} en tu universo. Entra a descubrirlo aquí: ${appUrl}`;
+  const her = state.settings?.herName || 'Amor Mío';
+  const tpl =
+    state.privateSettings?.whatsappTemplate ||
+    '✨ Hola {nombre}! Acabo de autorizar la apertura del Capítulo {capitulo} en tu universo. Entra a descubrirlo aquí: {link}';
+  const text = tpl
+    .replace(/\{nombre\}/gi, her)
+    .replace(/\{capitulo\}/gi, String(dayNumber).padStart(2, '0'))
+    .replace(/\{link\}/gi, appUrl);
   const waUrl = phone
     ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}`
     : `https://wa.me/?text=${encodeURIComponent(text)}`;
@@ -1040,6 +1053,7 @@ function bindStaticEvents() {
   document.getElementById('save-alerts-btn').addEventListener('click', async () => {
     state.privateSettings = {
       whatsappPhone: document.getElementById('alert-wa-phone').value.trim(),
+      whatsappTemplate: document.getElementById('alert-wa-template').value.trim(),
       telegramBotToken: document.getElementById('alert-tg-token').value.trim(),
       telegramChatId: document.getElementById('alert-tg-chat').value.trim()
     };

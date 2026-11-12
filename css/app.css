@@ -1046,3 +1046,57 @@
 }
 
 
+
+/* Luxury Sunflower Chapter Accents */
+.modal-card.has-sunflowers {
+  border-color: rgba(245, 197, 66, 0.72);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85), 0 0 70px rgba(245, 197, 66, 0.16);
+}
+
+.sunflower-ornament {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.24;
+  filter: drop-shadow(0 0 14px rgba(245, 197, 66, 0.35));
+  animation: sunflowerSway 7s ease-in-out infinite;
+}
+
+.sunflower-tr {
+  top: -14px;
+  right: -14px;
+  width: 112px;
+  height: 112px;
+}
+
+.sunflower-bl {
+  bottom: -16px;
+  left: -16px;
+  width: 96px;
+  height: 96px;
+  animation-delay: -3.5s;
+}
+
+.modal-card.has-sunflowers > *:not(.sunflower-ornament) {
+  position: relative;
+  z-index: 1;
+}
+
+.sunflower-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(245, 197, 66, 0.14);
+  border: 1px solid rgba(245, 197, 66, 0.4);
+  color: #fde68a;
+  font-size: 0.68rem;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+@keyframes sunflowerSway {
+  0%, 100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.04); }
+}

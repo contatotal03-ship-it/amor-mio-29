@@ -197,6 +197,8 @@ function defaultCapsules() {
       dynamicAnswer: '',
       mediaItems: [],
       herReply: '',
+      allowReply: false,
+      hasSunflowers: [3, 14, 22, 30].includes(day),
       openedAt: null
     };
   });
@@ -474,6 +476,8 @@ async function syncGitHubVaultAndPublic(vaultData) {
       message: c.message || '',
       dynamicType: c.dynamicType || 'classic',
       dynamicPayload: c.dynamicPayload || {},
+      allowReply: Boolean(c.allowReply),
+      hasSunflowers: Boolean(c.hasSunflowers),
       mediaItems: (c.mediaItems || []).map((m) => ({
         type: m.type,
         url: m.publicUrl || m.url,
@@ -697,6 +701,8 @@ export async function getHerCapsules() {
             dynamicAnswer: '',
             mediaItems: [],
             herReply: '',
+      allowReply: false,
+      hasSunflowers: false,
             openedAt: null
           };
         }
@@ -724,6 +730,8 @@ export async function getHerCapsules() {
           dynamicAnswer: '',
           mediaItems: [],
           herReply: '',
+      allowReply: false,
+      hasSunflowers: false,
           openedAt: null
         };
       }
@@ -739,6 +747,8 @@ export async function getHerCapsules() {
         message: c.message || '',
         dynamicType: c.dynamicType || 'classic',
         dynamicPayload: c.dynamicPayload || {},
+      allowReply: Boolean(c.allowReply),
+      hasSunflowers: Boolean(c.hasSunflowers),
         dynamicDone: Boolean(p.dynamicDone),
         dynamicAnswer: p.dynamicAnswer || '',
         mediaItems: Array.isArray(c.mediaItems) ? c.mediaItems : [],
@@ -764,6 +774,8 @@ export async function getHerCapsules() {
         dynamicAnswer: '',
         mediaItems: [],
         herReply: '',
+      allowReply: false,
+      hasSunflowers: false,
         openedAt: null
       };
     }
@@ -1037,7 +1049,13 @@ export async function saveAdminSettings(settings) {
 }
 
 export async function getPrivateAdminSettings() {
-  const defaults = { telegramBotToken: '', telegramChatId: '', whatsappPhone: '' };
+  const defaults = {
+    telegramBotToken: '',
+    telegramChatId: '',
+    whatsappPhone: '',
+    whatsappTemplate:
+      '✨ Hola {nombre}! Acabo de autorizar la apertura del Capítulo {capitulo} en tu universo. Entra a descubrirlo aquí: {link}'
+  };
   const mode = getBackendMode();
 
   if (mode === 'supabase') {

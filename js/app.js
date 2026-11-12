@@ -42,6 +42,26 @@ const WAX_SVG = `
   </svg>
 `;
 
+function createSunflowerSvg(cls) {
+  const wrap = document.createElement('div');
+  wrap.className = `sunflower-ornament ${cls}`;
+  wrap.innerHTML = `
+    <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
+      <g transform="translate(60 60)">
+        ${Array.from({ length: 14 }, (_, i) =>
+          `<ellipse cx="0" cy="-36" rx="9" ry="22" transform="rotate(${(i * 360) / 14})" fill="#f5c542" opacity="0.92"/>`
+        ).join('')}
+        ${Array.from({ length: 14 }, (_, i) =>
+          `<ellipse cx="0" cy="-32" rx="6" ry="17" transform="rotate(${(i * 360) / 14 + 13})" fill="#d4af37" opacity="0.88"/>`
+        ).join('')}
+        <circle r="21" fill="#3a200a" stroke="#b99124" stroke-width="2.5"/>
+        <circle r="14" fill="#241305"/>
+      </g>
+    </svg>
+  `;
+  return wrap;
+}
+
 // ---------------------------------------------------------------------------
 // Initialization
 // ---------------------------------------------------------------------------
@@ -177,11 +197,11 @@ async function renderGrid() {
     dayNum.appendChild(document.createTextNode(String(cap.dayNumber).padStart(2, '0')));
     top.appendChild(dayNum);
 
-    if (isOpened && cap.isFavorite) {
-      const fav = document.createElement('span');
-      fav.className = 'cap-fav-heart';
-      fav.textContent = '❤️';
-      top.appendChild(fav);
+    if (isOpened && (cap.isFavorite || cap.hasSunflowers)) {
+      const badges = document.createElement('span');
+      badges.className = 'cap-fav-heart';
+      badges.textContent = `${cap.hasSunflowers ? '🌻' : ''}${cap.isFavorite ? '❤️' : ''}`;
+      top.appendChild(badges);
     }
 
     const center = document.createElement('div');
@@ -305,7 +325,11 @@ async function openCapsuleModal(cap) {
   backdrop.className = 'modal-backdrop';
 
   const card = document.createElement('div');
-  card.className = 'modal-card';
+  card.className = 'modal-card' + (cap.hasSunflowers ? ' has-sunflowers' : '');
+  if (cap.hasSunflowers) {
+    card.appendChild(createSunflowerSvg('sunflower-tr'));
+    card.appendChild(createSunflowerSvg('sunflower-bl'));
+  }
 
   // Header
   const header = document.createElement('div');
@@ -317,6 +341,12 @@ async function openCapsuleModal(cap) {
   tag.textContent = `Capítulo ${String(cap.dayNumber).padStart(2, '0')} · ${
     (DYNAMIC_TYPES[cap.dynamicType] || DYNAMIC_TYPES.classic).label
   }`;
+  if (cap.hasSunflowers) {
+    const sf = document.createElement('span');
+    sf.className = 'sunflower-pill';
+    sf.textContent = '🌻 Girasoles para ti';
+    tag.appendChild(sf);
+  }
 
   const h2 = document.createElement('h2');
   h2.className = 'modal-title gold-text';
@@ -444,47 +474,73 @@ async function openCapsuleModal(cap) {
   });
   card.appendChild(dynSlot);
 
-  // Her Reply Form
-  const replySec = document.createElement('div');
-  replySec.className = 'reply-section';
+  // Her Reply Form (ONLY shown when HE enables allowReply for this chapter)
+  if (cap.allowReply) {
+    const replySec = document.createElement('div');
+    replySec.className = 'reply-section';
 
-  const replyLbl = document.createElement('label');
-  replyLbl.className = 'field-label';
-  replyLbl.textContent = '💌 Déjale una respuesta o lo que sentiste hoy';
+    const replyLbl = document.createElement('label');
+    replyLbl.className = 'field-label';
+    replyLbl.textContent = '💌 Déjale una respuesta o lo que sentiste hoy';
 
-  const replyRow = document.createElement('div');
-  replyRow.className = 'reply-row';
+    const replyRow = document.createElement('div');
+    replyRow.className = 'reply-row';
 
-  const textarea = document.createElement('textarea');
-  textarea.className = 'textarea';
-  textarea.style.minHeight = '76px';
-  textarea.placeholder = 'Escribe aquí algo bonito para él...';
-  textarea.value = cap.herReply || '';
+    const textarea = document.createElement('textarea');
+    textarea.className = 'textarea';
+    textarea.style.minHeight = '76px';
+    textarea.placeholder = 'Escribe aquí algo bonito para él...';
+    textarea.value = cap.herReply || '';
 
-  const saveReplyBtn = document.createElement('button');
-  saveReplyBtn.type = 'button';
-  saveReplyBtn.className = 'btn btn-glass btn-sm';
-  saveReplyBtn.style.alignSelf = 'flex-end';
-  saveReplyBtn.textContent = cap.herReply ? 'Actualizar mi nota ✨' : 'Enviar mi respuesta ✨';
+    const btnRow = document.createElement('div');
+    btnRow.style.display = 'flex';
+    btnRow.style.flexWrap = 'wrap';
+    btnRow.style.gap = '8px';
+    btnRow.style.justifyContent = 'flex-end';
 
-  saveReplyBtn.addEventListener('click', async () => {
-    cap.herReply = textarea.value.trim();
-    saveReplyBtn.disabled = true;
-    try {
-      await herInteractCapsule(cap.dayNumber, { herReply: cap.herReply });
-      showToast('💖 ¡Tu mensaje se guardó para él!');
-    } catch {
-      showToast('No se pudo guardar en este momento.');
-    } finally {
-      saveReplyBtn.disabled = false;
-    }
-  });
+    const saveReplyBtn = document.createElement('button');
+    saveReplyBtn.type = 'button';
+    saveReplyBtn.className = 'btn btn-glass btn-sm';
+    saveReplyBtn.textContent = cap.herReply ? 'Guardar en mi diario ✨' : 'Guardar respuesta ✨';
 
-  replyRow.appendChild(textarea);
-  replyRow.appendChild(saveReplyBtn);
-  replySec.appendChild(replyLbl);
-  replySec.appendChild(replyRow);
-  card.appendChild(replySec);
+    const waReplyBtn = document.createElement('button');
+    waReplyBtn.type = 'button';
+    waReplyBtn.className = 'btn btn-gold btn-sm';
+    waReplyBtn.textContent = '📲 Enviársela por WhatsApp';
+
+    saveReplyBtn.addEventListener('click', async () => {
+      cap.herReply = textarea.value.trim();
+      saveReplyBtn.disabled = true;
+      try {
+        await herInteractCapsule(cap.dayNumber, { herReply: cap.herReply });
+        showToast('💖 ¡Tu nota se guardó! Si quieres que la vea al instante, pulsa "Enviársela por WhatsApp".');
+      } catch {
+        showToast('No se pudo guardar en este momento.');
+      } finally {
+        saveReplyBtn.disabled = false;
+      }
+    });
+
+    waReplyBtn.addEventListener('click', async () => {
+      const msg = textarea.value.trim();
+      if (!msg) {
+        showToast('Escribe primero tu respuesta 💖');
+        return;
+      }
+      cap.herReply = msg;
+      await herInteractCapsule(cap.dayNumber, { herReply: msg }).catch(() => {});
+      const waText = `💌 Respuesta sobre el Capítulo ${String(cap.dayNumber).padStart(2, '0')} (${cap.unlockedTitle}):\n\n"${msg}"`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(waText)}`, '_blank');
+    });
+
+    btnRow.appendChild(saveReplyBtn);
+    btnRow.appendChild(waReplyBtn);
+    replyRow.appendChild(textarea);
+    replyRow.appendChild(btnRow);
+    replySec.appendChild(replyLbl);
+    replySec.appendChild(replyRow);
+    card.appendChild(replySec);
+  }
 
   backdrop.addEventListener('click', (e) => {
     if (e.target === backdrop) backdrop.remove();

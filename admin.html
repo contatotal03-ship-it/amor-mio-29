@@ -176,6 +176,17 @@
               <textarea id="ed-message" class="textarea" placeholder="Escríbele desde el corazón..."></textarea>
             </div>
 
+            <div class="form-row-2" style="background:rgba(255,255,255,0.025);padding:12px 14px;border-radius:12px;border:1px solid var(--border-subtle);">
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.86rem;cursor:pointer;color:var(--text-ivory);">
+                <input type="checkbox" id="ed-allow-reply" />
+                💬 Mostrar caja para que ella te escriba nota hoy
+              </label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.86rem;cursor:pointer;color:var(--gold-light);">
+                <input type="checkbox" id="ed-sunflowers" />
+                🌻 Detalle especial de Girasoles en este capítulo
+              </label>
+            </div>
+
             <div>
               <label class="field-label" for="ed-dynamic-type">Dinámica Interactiva del Día</label>
               <select id="ed-dynamic-type" class="select">
@@ -345,6 +356,10 @@
             <div>
               <label class="field-label" for="alert-wa-phone">WhatsApp de Ella (código país + número, sin +)</label>
               <input id="alert-wa-phone" type="text" class="input" placeholder="Ej: 573001234567" />
+            </div>
+            <div>
+              <label class="field-label" for="alert-wa-template">Mensaje que le llegará a WhatsApp (puedes usar {nombre}, {capitulo}, {link})</label>
+              <textarea id="alert-wa-template" class="textarea" style="min-height:80px;"></textarea>
             </div>
             <div class="form-row-2">
               <div>
