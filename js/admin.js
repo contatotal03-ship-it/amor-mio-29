@@ -443,7 +443,7 @@ async function renderAdminMediaList(mediaItems) {
         const iframe = document.createElement('iframe');
         iframe.className = 'spotify-embed-frame';
         iframe.src = embedUrl;
-        iframe.height = '152';
+        iframe.height = '80';
         iframe.loading = 'lazy';
         card.appendChild(iframe);
       } else {

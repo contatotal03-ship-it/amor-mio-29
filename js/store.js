@@ -413,6 +413,15 @@ async function ensureGhVaultLoaded() {
   return ghVaultPromise;
 }
 
+async function ghReadFileBase64(owner, repo, relPath, token) {
+  const fileObj = await ghApiRequest(`/repos/${owner}/${repo}/contents/${relPath}?ref=main`, { token });
+  const inlineContent = (fileObj.content || '').replace(/\s/g, '');
+  if (inlineContent) return inlineContent;
+  // Files > 1 MB return empty inline content in Contents API; read via Git Blobs API
+  const blobObj = await ghApiRequest(`/repos/${owner}/${repo}/git/blobs/${fileObj.sha}`, { token });
+  return (blobObj.content || '').replace(/\s/g, '');
+}
+
 async function syncGitHubVaultAndPublic(vaultData) {
   const token = getStoredGitHubToken();
   const { githubOwner, githubPublicRepo, githubVaultRepo } = PUBLIC_CONFIG;
@@ -423,16 +432,13 @@ async function syncGitHubVaultAndPublic(vaultData) {
     for (const item of cap.mediaItems) {
       if (item.url && item.url.startsWith('gh-vault://') && !item.publicUrl) {
         const vaultRelPath = item.url.slice('gh-vault://'.length);
-        const fileObj = await ghApiRequest(
-          `/repos/${githubOwner}/${githubVaultRepo}/contents/${vaultRelPath}?ref=main`,
-          { token }
-        );
+        const b64 = await ghReadFileBase64(githubOwner, githubVaultRepo, vaultRelPath, token);
         const pubRelPath = `data/${vaultRelPath}`;
         await ghPutBase64File(
           githubOwner,
           githubPublicRepo,
           pubRelPath,
-          fileObj.content.replace(/\s/g, ''),
+          b64,
           `Publicar media autorizada del Capitulo ${cap.dayNumber}`,
           token
         );
@@ -550,8 +556,8 @@ export async function resolveMediaUrl(url) {
     const relPath = url.slice('gh-vault://'.length);
     const { githubOwner, githubVaultRepo } = PUBLIC_CONFIG;
     try {
-      const file = await ghApiRequest(`/repos/${githubOwner}/${githubVaultRepo}/contents/${relPath}?ref=main`, { token });
-      const bytes = base64ToUint8Array(file.content);
+      const b64 = await ghReadFileBase64(githubOwner, githubVaultRepo, relPath, token);
+      const bytes = base64ToUint8Array(b64);
       const ext = relPath.split('.').pop()?.toLowerCase() || '';
       const mime =
         ext === 'mp4' ? 'video/mp4' :

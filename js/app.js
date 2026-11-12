@@ -392,10 +392,11 @@ async function openCapsuleModal(cap) {
       } else if (m.type === 'spotify') {
         const embedUrl = toSpotifyEmbedUrl(resolvedUrl);
         if (embedUrl) {
+          item.classList.add('is-spotify');
           const iframe = document.createElement('iframe');
           iframe.className = 'spotify-embed-frame';
           iframe.src = embedUrl;
-          iframe.height = embedUrl.includes('/playlist/') || embedUrl.includes('/album/') ? '352' : '152';
+          iframe.height = embedUrl.includes('/playlist/') || embedUrl.includes('/album/') ? '180' : '80';
           iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
           iframe.loading = 'lazy';
           item.appendChild(iframe);
