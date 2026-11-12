@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:54:51.109Z",
+  "updatedAt": "2026-11-12T03:57:41.527Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -23,8 +23,22 @@
     },
     {
       "dayNumber": 3,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo III · Raspa para descubrir"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo III · Raspa para descubrir",
+      "unlockedTitle": "Un capricho dorado para ti",
+      "message": "Hoy no hay acertijos... solo desliza tu dedo sobre el oro para descubrir el primer capricho de este mes.",
+      "dynamicType": "scratch",
+      "dynamicPayload": {
+        "prompt": "Raspa el velo dorado con tu dedo",
+        "secretReward": "Vale por una cena o pedido a domicilio de tu restaurante favorito esta semana 🍷✨"
+      },
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/6c9HvXjXSEOwhFp7GhqQ8x",
+          "caption": "?? Transforma Mi Mundo ? Kaleth Morales"
+        }
+      ]
     },
     {
       "dayNumber": 4,
