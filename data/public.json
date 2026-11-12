@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:57:50.495Z",
+  "updatedAt": "2026-11-12T03:57:52.689Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -87,13 +87,38 @@
     },
     {
       "dayNumber": 7,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo VII · Primera semana completada"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo VII · Primera semana completada",
+      "unlockedTitle": "Cupón VIP: Cero estrés",
+      "message": "Ya completamos los primeros 7 capítulos. Como premio por iluminar mi semana, aquí tienes un pase VIP oficial.",
+      "dynamicType": "coupon",
+      "dynamicPayload": {
+        "couponTitle": "MASAJE RELAX + TARDE LIBRE DE TODO",
+        "couponDesc": "45 minutos de masaje con aceite tibio, tu serie o música favorita y yo encargándome de todo."
+      },
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/4TFjpINnVhINpTdrtNQIvx",
+          "caption": "?? X TI ? Kapo, Feid"
+        }
+      ]
     },
     {
       "dayNumber": 8,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo",
+      "unlockedTitle": "Nuestras fotos favoritas (Parte I)",
+      "message": "Estaba mirando nuestra galería y encontré estos momentos. Si pudiera congelar el tiempo, volvería a reírme contigo exactamente así.",
+      "dynamicType": "classic",
+      "dynamicPayload": {},
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/5QjmUqgpPQgXgg4606DqZF",
+          "caption": "?? UWAIE ? Kapo"
+        }
+      ]
     },
     {
       "dayNumber": 9,
