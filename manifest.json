@@ -1,0 +1,20 @@
+{
+  "name": "Rumbo a tus 29 · Tu Universo",
+  "short_name": "Rumbo a tus 29",
+  "description": "Un viaje privado de 30 días hacia tus 29 años.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08070b",
+  "theme_color": "#08070b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

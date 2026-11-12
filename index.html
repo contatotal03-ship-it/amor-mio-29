@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#07060a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Rumbo a tus 29 · Tu Universo</title>
+
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg" />
+  <link rel="apple-touch-icon" href="./assets/icon.svg" />
+  <link rel="manifest" href="./manifest.json" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="./css/theme.css" />
+  <link rel="stylesheet" href="./css/app.css" />
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Velvet Luxury Welcome Curtain -->
+  <section class="welcome-curtain" id="welcome-curtain">
+    <div class="curtain-crest">
+      <span class="gold-text">29</span>
+    </div>
+    <p class="curtain-eyebrow" id="curtain-her-name">Para Amor Mío</p>
+    <h1 class="curtain-title gold-text">Tu Viaje Comienza Aquí</h1>
+    <p class="curtain-sub">
+      Treinta cápsulas selladas con oro, recuerdos y secretos. Ninguna se abrirá antes de tiempo… solo cuando llegue tu momento, mi princesa.
+    </p>
+    <button type="button" class="btn btn-gold btn-lg" id="enter-universe-btn">
+      Entrar a mi Universo ✨
+    </button>
+  </section>
+
+  <!-- Her Sanctuary Main Shell -->
+  <main class="app-shell">
+    <header class="top-bar">
+      <div class="brand-mini">
+        <div class="brand-monogram">29</div>
+        <span class="brand-label" id="brand-title-mini">Rumbo a tus 29</span>
+      </div>
+      <div class="top-actions">
+        <button type="button" class="music-pill" id="music-toggle-btn">
+          <span class="music-bars"><i></i><i></i><i></i></span>
+          <span id="music-label">Música</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-kicker" id="countdown-kicker">Cuenta regresiva hacia tus 29</div>
+      <h1 class="hero-title gold-text" id="hero-title">Rumbo a tus 29</h1>
+      <p class="hero-script" id="hero-her-name">Para ti, Amor Mío</p>
+      <p class="hero-subtitle" id="hero-subtitle">
+        Treinta días para recordarte por qué eres mi princesa y lo más hermoso de mi vida.
+      </p>
+
+      <div class="countdown-box" aria-label="Cuenta regresiva">
+        <div class="cd-unit">
+          <span class="cd-val" id="cd-days">30</span>
+          <span class="cd-lbl">Días</span>
+        </div>
+        <div class="cd-unit">
+          <span class="cd-val" id="cd-hours">00</span>
+          <span class="cd-lbl">Horas</span>
+        </div>
+        <div class="cd-unit">
+          <span class="cd-val" id="cd-mins">00</span>
+          <span class="cd-lbl">Min</span>
+        </div>
+        <div class="cd-unit">
+          <span class="cd-val" id="cd-secs">00</span>
+          <span class="cd-lbl">Seg</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span>Progreso del viaje</span>
+          <span id="progress-label">0 de 30 descubiertos</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Grand Finale Cinema Banner (HIDDEN unless enabled by Him in Admin) -->
+      <div class="finale-banner hidden" id="finale-banner">
+        <div>
+          <span class="modal-day-tag">🎬 Estreno Exclusivo</span>
+          <h2 class="gold-text" id="finale-banner-title">Nuestro Viaje Hacia tus 29</h2>
+          <p>Nuestra película privada con todos los recuerdos de estos 30 días.</p>
+        </div>
+        <button type="button" class="btn btn-gold" id="open-cinema-btn">
+          Ver Película Ahora ✨
+        </button>
+      </div>
+    </section>
+
+    <nav class="filter-bar" aria-label="Filtros de capítulos">
+      <button type="button" class="filter-pill is-active" data-filter="all">Todos (30)</button>
+      <button type="button" class="filter-pill" data-filter="ready">Listos para Abrir ✨</button>
+      <button type="button" class="filter-pill" data-filter="opened">Descubiertos</button>
+      <button type="button" class="filter-pill" data-filter="favorites">Favoritos ❤️</button>
+    </nav>
+
+    <section class="capsule-grid" id="capsule-grid" aria-live="polite"></section>
+
+    <footer class="app-footer">
+      <span class="secret-crest-tap" id="secret-crest-tap">Hecho con todo mi amor · Edición 29 ✦</span>
+    </footer>
+  </main>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
+

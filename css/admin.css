@@ -1,0 +1,356 @@
+/* ==========================================================================
+   29 CAPÍTULOS · COMMAND CENTER (HIS ADMIN PANEL)
+   ========================================================================== */
+
+.admin-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.gate-card {
+  width: min(100%, 440px);
+  padding: 34px 28px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold-strong);
+  box-shadow: var(--shadow-luxury);
+  backdrop-filter: blur(20px);
+  text-align: center;
+}
+
+.admin-shell {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 20px 18px 80px;
+}
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold);
+  margin-bottom: 22px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.status-pill.is-cloud {
+  border-color: rgba(74, 222, 128, 0.45);
+  background: rgba(74, 222, 128, 0.1);
+  color: #86efac;
+}
+
+.status-pill.is-local {
+  border-color: var(--border-gold);
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold-light);
+}
+
+/* Admin Navigation Tabs */
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab-btn:hover {
+  border-color: var(--border-gold);
+  color: var(--text-ivory);
+}
+
+.tab-btn.is-active {
+  background: linear-gradient(135deg, rgba(243, 223, 158, 0.2), rgba(212, 175, 55, 0.12));
+  border-color: var(--gold-main);
+  color: var(--gold-light);
+}
+
+/* Panels & Cards */
+.panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  backdrop-filter: blur(16px);
+}
+
+.panel-gold {
+  border-color: var(--border-gold);
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+}
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1.1;
+}
+
+.stat-lbl {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Split Layout for Capsules Tab */
+.cockpit-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .cockpit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.days-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.day-tile {
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  font-weight: 600;
+}
+
+.day-tile:hover {
+  border-color: var(--gold-main);
+  color: var(--text-ivory);
+}
+
+.day-tile.is-selected {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 2px;
+}
+
+.day-tile.state-authorized {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: var(--gold-main);
+  color: var(--gold-light);
+}
+
+.day-tile.state-opened {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #bbf7d0;
+}
+
+.day-tile-dot {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  font-size: 0.65rem;
+}
+
+/* Editor Sections */
+.editor-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 640px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Media Manager in Admin */
+.media-upload-zone {
+  border: 1.5px dashed var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  text-align: center;
+  background: rgba(212, 175, 55, 0.04);
+}
+
+.admin-media-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.admin-media-card {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-media-card img,
+.admin-media-card video {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  background: #000;
+}
+
+.admin-media-meta {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Her Reply Box inside Admin */
+.her-reply-box {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(232, 180, 184, 0.4);
+  background: rgba(232, 180, 184, 0.08);
+  margin-bottom: 18px;
+}
+
+/* Ideas Bank Grid */
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+}
+
+.idea-card {
+  padding: 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.025);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.idea-card:hover {
+  border-color: var(--border-gold);
+}
+
+.idea-act-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold-main);
+}
+
+/* QR Luxury Printable Card Preview */
+.qr-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .qr-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.qr-card-preview {
+  background: linear-gradient(155deg, #161221, #07060a);
+  border: 2px solid var(--gold-main);
+  border-radius: 24px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: var(--shadow-luxury);
+}
+
+.qr-white-frame {
+  display: inline-block;
+  padding: 14px;
+  background: #ffffff;
+  border-radius: 16px;
+  margin: 18px 0;
+}
+
+.code-block {
+  background: #060509;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  color: #e4dccb;
+  overflow-x: auto;
+  white-space: pre;
+  max-height: 280px;
+}
+

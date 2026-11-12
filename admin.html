@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07060a" />
+  <title>Director de Sorpresas · 29 Capítulos</title>
+
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="./css/theme.css" />
+  <link rel="stylesheet" href="./css/app.css" />
+  <link rel="stylesheet" href="./css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- SECURITY GATE -->
+  <section class="admin-gate" id="admin-gate">
+    <div class="gate-card">
+      <div class="curtain-crest" style="width:82px;height:82px;margin:0 auto 20px;">
+        <span class="gold-text" style="font-size:2rem;">29</span>
+      </div>
+      <h1 class="font-display gold-text" style="font-size:2rem;margin-bottom:6px;">Director de Sorpresas</h1>
+      <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:22px;" id="gate-subtitle">
+        Solo tú puedes entrar aquí para preparar y autorizar los capítulos.
+      </p>
+
+      <!-- GitHub Cloud Auth Form -->
+      <form id="github-login-form" class="form-grid hidden">
+        <div style="text-align:left;">
+          <label class="field-label" for="gh-token-input">Llave / Token de Acceso GitHub</label>
+          <input id="gh-token-input" type="password" class="input" required placeholder="ghp_..." autocomplete="current-password" />
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);cursor:pointer;">
+          <input type="checkbox" id="gh-remember-check" checked />
+          Recordar sesión en este teléfono/navegador
+        </label>
+        <button type="submit" class="btn btn-gold">Entrar a la Nube GitHub ☁️</button>
+        <p style="font-size:0.75rem;color:var(--text-dim);">
+          100% en la nube 24/7 sin depender de tu PC. Solo el propietario de GitHub puede entrar.
+        </p>
+        <button type="button" id="switch-local-dev-btn" class="btn btn-glass btn-sm hidden">
+          💻 Usar Modo Local de Prueba
+        </button>
+      </form>
+
+      <!-- Local PIN Form -->
+      <form id="local-login-form" class="form-grid hidden">
+        <div style="text-align:left;">
+          <label class="field-label" for="pin-input">PIN de acceso</label>
+          <input id="pin-input" type="password" class="input" placeholder="PIN inicial: 2929" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-gold">Entrar al Panel ✨</button>
+        <p style="font-size:0.75rem;color:var(--text-dim);">
+          Modo Local · PIN inicial por defecto: <code>2929</code> (puedes cambiarlo en Configuración).
+        </p>
+      </form>
+
+      <!-- Cloud Supabase Auth Form -->
+      <form id="cloud-login-form" class="form-grid hidden">
+        <div style="text-align:left;">
+          <label class="field-label" for="cloud-email">Tu correo (Admin Supabase)</label>
+          <input id="cloud-email" type="email" class="input" required placeholder="tu@correo.com" />
+        </div>
+        <div style="text-align:left;">
+          <label class="field-label" for="cloud-password">Contraseña</label>
+          <input id="cloud-password" type="password" class="input" required placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn btn-gold">Iniciar Sesión en la Nube ☁️</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MAIN ADMIN COMMAND CENTER -->
+  <main class="admin-shell hidden" id="admin-shell">
+    <header class="admin-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <h1 class="font-display gold-text" style="font-size:1.85rem;">Centro de Mando · 29 Capítulos</h1>
+          <span class="status-pill is-local" id="mode-badge">Modo Local</span>
+        </div>
+        <p style="font-size:0.84rem;color:var(--text-muted);margin-top:2px;">
+          Las cápsulas permanecen 100% ocultas para ella hasta que tú autorices cada una.
+        </p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="./index.html" target="_blank" class="btn btn-glass btn-sm">👁️ Ver como Ella</a>
+        <button type="button" class="btn btn-danger btn-sm hidden" id="cloud-logout-btn">Cerrar Sesión</button>
+      </div>
+    </header>
+
+    <!-- Stats Summary -->
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val" id="stat-authorized">0 / 30</div>
+        <div class="stat-lbl">Autorizadas por ti</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="stat-opened">0</div>
+        <div class="stat-lbl">Abiertas por ella</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="stat-replies">0</div>
+        <div class="stat-lbl">Con respuesta suya</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="stat-favorites">0</div>
+        <div class="stat-lbl">Marcadas favoritas ❤️</div>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <nav class="admin-tabs">
+      <button type="button" class="tab-btn is-active" data-tab="capsules">🎛️ Cápsulas (1–30)</button>
+      <button type="button" class="tab-btn" data-tab="ideas">💡 Asistente de Ideas</button>
+      <button type="button" class="tab-btn" data-tab="finale">🎬 Gran Final & Video</button>
+      <button type="button" class="tab-btn" data-tab="qr">📱 Tarjeta QR & Alertas</button>
+      <button type="button" class="tab-btn" data-tab="cloud">☁️ Nube, GitHub & Ajustes</button>
+    </nav>
+
+    <!-- TAB 1: CAPSULES COCKPIT -->
+    <section id="tab-capsules" class="tab-pane">
+      <div class="cockpit-grid">
+        <!-- Left: 30-day grid -->
+        <aside class="panel panel-gold">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <h2 class="font-display" style="font-size:1.35rem;">Elige un Capítulo</h2>
+            <span style="font-size:0.75rem;color:var(--text-muted);">🔒 Sellado · ✨ Listo · 💖 Abierto</span>
+          </div>
+          <div class="days-selector-grid" id="days-selector-grid"></div>
+        </aside>
+
+        <!-- Right: Day Editor -->
+        <div class="panel panel-gold" id="day-editor-panel">
+          <div class="editor-header">
+            <div>
+              <span class="modal-day-tag" id="ed-act-badge">Acto I</span>
+              <h2 class="font-display gold-text" style="font-size:1.85rem;" id="ed-day-heading">Capítulo 01</h2>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="btn btn-sm" id="ed-toggle-auth-btn">🔓 Autorizar Apertura</button>
+              <button type="button" class="btn btn-glass btn-sm" id="ed-load-idea-btn">💡 Cargar Idea Sugerida</button>
+            </div>
+          </div>
+
+          <!-- Her Reply & Activity Box (shown when she interacts) -->
+          <div class="her-reply-box hidden" id="ed-her-activity">
+            <strong style="color:var(--rose-champagne);font-size:0.84rem;display:block;margin-bottom:6px;">
+              💖 Actividad de Ella en este Capítulo:
+            </strong>
+            <p id="ed-her-activity-text" style="font-size:0.92rem;color:var(--text-ivory);white-space:pre-wrap;"></p>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-row-2">
+              <div>
+                <label class="field-label" for="ed-teaser">Texto Misterioso (cuando está sellado 🔒)</label>
+                <input id="ed-teaser" type="text" class="input" placeholder="Ej: Un secreto te espera..." />
+              </div>
+              <div>
+                <label class="field-label" for="ed-title">Título Real (solo al abrir ✨)</label>
+                <input id="ed-title" type="text" class="input" placeholder="Ej: Bienvenida a tu mes" />
+              </div>
+            </div>
+
+            <div>
+              <label class="field-label" for="ed-message">Carta / Mensaje para ella</label>
+              <textarea id="ed-message" class="textarea" placeholder="Escríbele desde el corazón..."></textarea>
+            </div>
+
+            <div>
+              <label class="field-label" for="ed-dynamic-type">Dinámica Interactiva del Día</label>
+              <select id="ed-dynamic-type" class="select">
+                <option value="classic">💌 Carta & Recuerdo (Clásica)</option>
+                <option value="scratch">🪙 Raspa y Gana Dorado</option>
+                <option value="trivia">🧠 Trivia de Nosotros</option>
+                <option value="clue">🕵️‍♀️ Búsqueda del Tesoro (Pista + Código)</option>
+                <option value="coupon">🎟️ Cupón VIP Canjeable</option>
+                <option value="challenge">✨ Elección / Misión del Día</option>
+              </select>
+            </div>
+
+            <!-- Dynamic-specific fields -->
+            <div id="ed-dynamic-fields" class="panel" style="background:rgba(212,175,55,0.04);border-color:var(--border-gold);"></div>
+
+            <!-- Media Upload & Voice Recorder -->
+            <div class="media-upload-zone">
+              <p style="font-size:0.9rem;font-weight:600;color:var(--gold-light);margin-bottom:10px;">
+                📸 Fotos, Videos y Notas de Voz para este Capítulo
+              </p>
+              <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:12px;">
+                <label class="btn btn-glass btn-sm" style="cursor:pointer;">
+                  📁 Subir Foto / Video / Audio
+                  <input type="file" id="ed-file-input" multiple accept="image/*,video/*,audio/*" class="hidden" />
+                </label>
+                <button type="button" class="btn btn-rose btn-sm" id="ed-record-voice-btn">
+                  🎙️ Grabar Nota de Voz
+                </button>
+              </div>
+              <div style="display:flex;gap:8px;max-width:520px;margin:0 auto;flex-wrap:wrap;">
+                <select id="ed-url-type" class="select" style="width:145px;">
+                  <option value="image">Foto URL</option>
+                  <option value="video">Video URL</option>
+                  <option value="audio">Audio URL</option>
+                  <option value="spotify">🎵 Spotify Track</option>
+                </select>
+                <input id="ed-url-input" type="url" class="input" style="flex:1 1 200px;" placeholder="Link de Spotify (open.spotify.com/track/...) o media" />
+                <button type="button" class="btn btn-glass btn-sm" id="ed-add-url-btn">+ Añadir</button>
+              </div>
+              <div class="admin-media-list" id="ed-media-list"></div>
+            </div>
+
+            <!-- Action Footer -->
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:8px;">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="btn btn-glass btn-sm" id="ed-whatsapp-alert-btn">📲 Avisar por WhatsApp</button>
+                <button type="button" class="btn btn-glass btn-sm" id="ed-telegram-alert-btn">✈️ Avisar por Telegram</button>
+              </div>
+              <button type="button" class="btn btn-gold" id="ed-save-btn">💾 Guardar Capítulo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: IDEAS ASSISTANT -->
+    <section id="tab-ideas" class="tab-pane hidden">
+      <div class="panel panel-gold" style="margin-bottom:18px;">
+        <h2 class="font-display gold-text" style="font-size:1.75rem;margin-bottom:6px;">
+          Asistente Creativo: 30 Días Mejorando Cada Día
+        </h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:14px;">
+          Usa este mapa en 4 actos crecientes para que cada sorpresa supere la anterior. Con un clic puedes cargar cualquier idea en tu editor y adaptarla.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;" id="ideas-act-filters">
+          <button type="button" class="filter-pill is-active" data-act="all">Todos (30)</button>
+          <button type="button" class="filter-pill" data-act="Acto I · La Chispa">Acto I · Chispa (1-7)</button>
+          <button type="button" class="filter-pill" data-act="Acto II · Complicidad">Acto II · Complicidad (8-14)</button>
+          <button type="button" class="filter-pill" data-act="Acto III · Adrenalina">Acto III · Adrenalina (15-21)</button>
+          <button type="button" class="filter-pill" data-act="Acto IV · Cuenta Épica">Acto IV · Épico (22-29)</button>
+          <button type="button" class="filter-pill" data-act="Gran Final · Tus 29">Gran Final (30)</button>
+        </div>
+      </div>
+      <div class="ideas-grid" id="ideas-grid"></div>
+    </section>
+
+    <!-- TAB 3: GRAND FINALE & VIDEO GENERATOR -->
+    <section id="tab-finale" class="tab-pane hidden">
+      <div class="form-grid">
+        <div class="panel panel-gold">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;">
+            <div>
+              <h2 class="font-display gold-text" style="font-size:1.8rem;">Gran Final · Cine de Recuerdos</h2>
+              <p style="color:var(--text-muted);font-size:0.9rem;">
+                El día antes (o el día de sus 29), activa este botón para que aparezca la película interactiva en su plataforma, o descarga el video automático.
+              </p>
+            </div>
+            <button type="button" class="btn" id="finale-toggle-btn">🎬 Estado: Oculto para Ella</button>
+          </div>
+
+          <div class="form-row-2" style="margin-bottom:16px;">
+            <div>
+              <label class="field-label" for="fin-title">Título de la Película</label>
+              <input id="fin-title" type="text" class="input" />
+            </div>
+            <div>
+              <label class="field-label" for="fin-dedication">Dedicatoria de Cierre</label>
+              <input id="fin-dedication" type="text" class="input" />
+            </div>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+            <button type="button" class="btn btn-gold btn-sm" id="fin-save-btn">💾 Guardar Textos del Final</button>
+            <button type="button" class="btn btn-glass btn-sm" id="fin-preview-btn">👁️ Previsualizar Película Interactiva</button>
+          </div>
+        </div>
+
+        <div class="panel panel-gold">
+          <h3 class="font-display gold-text" style="font-size:1.55rem;margin-bottom:6px;">
+            🎥 Generador Automático de Video Descargable (.webm)
+          </h3>
+          <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:16px;">
+            Compila automáticamente todas las fotos, títulos y mensajes de los capítulos autorizados en un archivo de video real listo para enviar o proyectar.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+            <select id="video-format-select" class="select" style="width:240px;">
+              <option value="vertical">📱 Formato Vertical (Stories / Celular)</option>
+              <option value="landscape">📺 Formato Horizontal (TV / Laptop)</option>
+            </select>
+            <button type="button" class="btn btn-gold" id="generate-video-btn">
+              ✨ Renderizar y Descargar Video
+            </button>
+            <span id="video-render-status" style="font-size:0.86rem;color:var(--gold-light);"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: QR CARD & NOTIFICATIONS -->
+    <section id="tab-qr" class="tab-pane hidden">
+      <div class="qr-layout">
+        <!-- Printable Card Preview -->
+        <div class="qr-card-preview">
+          <span class="modal-day-tag">Invitación Privada</span>
+          <h3 class="font-display gold-text" style="font-size:2rem;margin-bottom:4px;" id="qr-preview-title">29 Capítulos</h3>
+          <p style="font-size:0.86rem;color:var(--rose-champagne);" id="qr-preview-her">Para Mi Amor</p>
+          <div class="qr-white-frame">
+            <canvas id="qr-canvas" width="210" height="210"></canvas>
+          </div>
+          <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:16px;" id="qr-preview-msg">
+            Escanea este código cada día para descubrir tu sorpresa.
+          </p>
+          <button type="button" class="btn btn-gold btn-sm" id="download-qr-card-btn">
+            🖨️ Descargar Tarjeta QR de Lujo (PNG)
+          </button>
+        </div>
+
+        <!-- QR Config + Alert Settings -->
+        <div class="form-grid">
+          <div class="panel panel-gold form-grid">
+            <h3 class="font-display gold-text" style="font-size:1.5rem;">Personalizar Tarjeta QR</h3>
+            <div>
+              <label class="field-label" for="qr-url-input">Enlace de la Plataforma de Ella (GitHub Pages o Local)</label>
+              <input id="qr-url-input" type="url" class="input" placeholder="https://tuusuario.github.io/29-capitulos/" />
+            </div>
+            <div>
+              <label class="field-label" for="qr-dedication-input">Texto impreso debajo del QR</label>
+              <input id="qr-dedication-input" type="text" class="input" value="Escanea este código y entra a tu universo secreto." />
+            </div>
+          </div>
+
+          <div class="panel panel-gold form-grid">
+            <h3 class="font-display gold-text" style="font-size:1.5rem;">🔔 Alertas Automáticas al Celular de Ella</h3>
+            <p style="font-size:0.84rem;color:var(--text-muted);">
+              Configura WhatsApp o un Bot gratuito de Telegram para enviarle un mensaje con un clic cada vez que autorices una nueva cápsula.
+            </p>
+            <div>
+              <label class="field-label" for="alert-wa-phone">WhatsApp de Ella (código país + número, sin +)</label>
+              <input id="alert-wa-phone" type="text" class="input" placeholder="Ej: 573001234567" />
+            </div>
+            <div class="form-row-2">
+              <div>
+                <label class="field-label" for="alert-tg-token">Telegram Bot Token (Opcional)</label>
+                <input id="alert-tg-token" type="password" class="input" placeholder="123456:ABC-DEF..." />
+              </div>
+              <div>
+                <label class="field-label" for="alert-tg-chat">Telegram Chat ID de Ella</label>
+                <input id="alert-tg-chat" type="text" class="input" placeholder="Ej: 987654321" />
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button type="button" class="btn btn-gold btn-sm" id="save-alerts-btn">💾 Guardar Alertas</button>
+              <button type="button" class="btn btn-glass btn-sm" id="test-tg-btn">✈️ Probar Alerta Telegram</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: CLOUD, GITHUB & GENERAL SETTINGS -->
+    <section id="tab-cloud" class="tab-pane hidden">
+      <div class="form-grid">
+        <div class="panel panel-gold form-grid">
+          <h2 class="font-display gold-text" style="font-size:1.65rem;">✨ Personalización General</h2>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="set-her-name">Nombre de Ella</label>
+              <input id="set-her-name" type="text" class="input" />
+            </div>
+            <div>
+              <label class="field-label" for="set-bday">Fecha y Hora Exacta de su Cumpleaños #29</label>
+              <input id="set-bday" type="datetime-local" class="input" />
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="set-app-title">Título Principal</label>
+              <input id="set-app-title" type="text" class="input" />
+            </div>
+            <div>
+              <label class="field-label" for="set-music-url">Playlist Spotify ("Día especial 29") o URL MP3</label>
+              <input id="set-music-url" type="url" class="input" placeholder="https://open.spotify.com/playlist/... o .mp3" />
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="set-subtitle">Subtítulo Poético</label>
+            <input id="set-subtitle" type="text" class="input" />
+          </div>
+          <div style="max-width:260px;">
+            <label class="field-label" for="set-local-pin">PIN de Acceso Local (mín. 4 caracteres)</label>
+            <input id="set-local-pin" type="password" class="input" placeholder="••••" />
+          </div>
+          <div>
+            <button type="button" class="btn btn-gold" id="save-general-btn">💾 Guardar Configuración</button>
+          </div>
+        </div>
+
+        <div class="panel panel-gold form-grid">
+          <h2 class="font-display gold-text" style="font-size:1.65rem;">☁️ Conexión a la Nube (Supabase + GitHub Pages)</h2>
+          <p style="font-size:0.88rem;color:var(--text-muted);">
+            Para que tú autorices capítulos desde tu celular y se desbloqueen al instante en el celular de ella (con fotos y videos en la nube, cero spoilers):
+            <br />1) Crea un proyecto gratis en <strong>supabase.com</strong>.
+            <br />2) En <strong>SQL Editor</strong> pega el contenido del archivo <code>supabase_schema.sql</code>.
+            <br />3) En <strong>Authentication → Users</strong> crea TU usuario Admin (email y contraseña).
+            <br />4) Pega abajo tu Project URL y Anon Key, y luego descarga tu <code>config.js</code> para subirlo a GitHub.
+          </p>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="cloud-url-input">Supabase Project URL</label>
+              <input id="cloud-url-input" type="url" class="input" placeholder="https://xxxx.supabase.co" />
+            </div>
+            <div>
+              <label class="field-label" for="cloud-anon-input">Supabase Anon Public Key</label>
+              <input id="cloud-anon-input" type="text" class="input" placeholder="eyJhbGciOi..." />
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <button type="button" class="btn btn-gold btn-sm" id="connect-cloud-btn">☁️ Conectar Supabase Aquí</button>
+            <button type="button" class="btn btn-glass btn-sm" id="download-configjs-btn">📦 Descargar js/config.js para GitHub</button>
+            <button type="button" class="btn btn-danger btn-sm" id="disconnect-cloud-btn">Volver a Modo Local</button>
+          </div>
+        </div>
+
+        <div class="panel form-grid">
+          <h3 class="font-display" style="font-size:1.35rem;">💾 Respaldo Completo (Exportar / Importar JSON)</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <button type="button" class="btn btn-glass btn-sm" id="export-backup-btn">⬇️ Descargar Respaldo (.json)</button>
+            <label class="btn btn-glass btn-sm" style="cursor:pointer;">
+              ⬆️ Restaurar Respaldo (.json)
+              <input type="file" id="import-backup-input" accept="application/json" class="hidden" />
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>
+

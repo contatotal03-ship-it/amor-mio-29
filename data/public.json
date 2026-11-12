@@ -1,0 +1,165 @@
+{
+  "updatedAt": "2026-11-12T03:00:00.000Z",
+  "settings": {
+    "herName": "Amor M?o",
+    "birthdayIso": "2026-12-12T00:00:00",
+    "appTitle": "Rumbo a tus 29",
+    "appSubtitle": "Treinta d?as para recordarte por qu? eres mi princesa y lo m?s hermoso de mi vida.",
+    "musicUrl": "",
+    "finaleEnabled": false,
+    "finaleTitle": "Nuestro Viaje Hacia tus 29",
+    "finaleDedication": "Cada d?a contigo ha sido mi cap?tulo favorito. ?Feliz cumplea?os, mi princesa!"
+  },
+  "capsules": [
+    {
+      "dayNumber": 1,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo I · Donde comienza la magia"
+    },
+    {
+      "dayNumber": 2,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta"
+    },
+    {
+      "dayNumber": 3,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo III · Raspa para descubrir"
+    },
+    {
+      "dayNumber": 4,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo IV · Escucha mi voz"
+    },
+    {
+      "dayNumber": 5,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo V · Tú decides el plan"
+    },
+    {
+      "dayNumber": 6,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo VI · Algo escondido cerca de ti"
+    },
+    {
+      "dayNumber": 7,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo VII · Primera semana completada"
+    },
+    {
+      "dayNumber": 8,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo"
+    },
+    {
+      "dayNumber": 9,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo IX · Brilla bajo el oro"
+    },
+    {
+      "dayNumber": 10,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo X · Un tercio del camino"
+    },
+    {
+      "dayNumber": 11,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XI · 11 razones"
+    },
+    {
+      "dayNumber": 12,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XII · Confesión nocturna"
+    },
+    {
+      "dayNumber": 13,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XIII · Pase de fotografía"
+    },
+    {
+      "dayNumber": 14,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XIV · Mitad del viaje"
+    },
+    {
+      "dayNumber": 15,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XV · Video secreto"
+    },
+    {
+      "dayNumber": 16,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XVI · Boleto dorado"
+    },
+    {
+      "dayNumber": 17,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XVII · ¿Qué tanto me conoces?"
+    },
+    {
+      "dayNumber": 18,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XVIII · Sorpresa gastronómica"
+    },
+    {
+      "dayNumber": 19,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XIX · Carta al futuro"
+    },
+    {
+      "dayNumber": 20,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XX · Últimos 10 días"
+    },
+    {
+      "dayNumber": 21,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXI · Pista #3 (Nivel experto)"
+    },
+    {
+      "dayNumber": 22,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXII · Voces que te aman"
+    },
+    {
+      "dayNumber": 23,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXIII · Primera pista del gran regalo"
+    },
+    {
+      "dayNumber": 24,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXIV · Nuestros momentos top"
+    },
+    {
+      "dayNumber": 25,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXV · Código de vestimenta"
+    },
+    {
+      "dayNumber": 26,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXVI · Brindis anticipado"
+    },
+    {
+      "dayNumber": 27,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXVII · Casi en la meta"
+    },
+    {
+      "dayNumber": 28,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXVIII · La víspera mágica"
+    },
+    {
+      "dayNumber": 29,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXIX · Víspera del Gran Video"
+    },
+    {
+      "dayNumber": 30,
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑"
+    }
+  ]
+}

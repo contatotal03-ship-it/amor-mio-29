@@ -1,0 +1,683 @@
+/**
+ * ============================================================================
+ * 29 CAPÍTULOS · HER SANCTUARY CONTROLLER
+ * Muestra ESTRICTAMENTE solo las cápsulas autorizadas por él.
+ * ============================================================================
+ */
+
+import {
+  getPublicSettings,
+  getHerCapsules,
+  herInteractCapsule,
+  subscribeHerLiveUpdates,
+  resolveMediaUrl,
+  toSpotifyEmbedUrl
+} from './store.js';
+import { DYNAMIC_TYPES } from './ideas-bank.js';
+import { initStardust, launchGoldConfetti, showToast } from './particles.js';
+import { renderDynamicSection } from './dynamics.js';
+import { openCinemaModal } from './cinema.js';
+
+let state = {
+  settings: null,
+  capsules: [],
+  filter: 'all',
+  musicPlaying: false,
+  audioEl: null,
+  synthTimer: null,
+  synthCtx: null
+};
+
+const PADLOCK_SVG = `
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="11" width="16" height="10" rx="2.5"></rect>
+    <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+  </svg>
+`;
+
+const WAX_SVG = `
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2l2.6 5.3 5.9.8-4.3 4.1 1 5.8L12 15.2 6.8 18l1-5.8-4.3-4.1 5.9-.8L12 2z"></path>
+  </svg>
+`;
+
+// ---------------------------------------------------------------------------
+// Initialization
+// ---------------------------------------------------------------------------
+async function init() {
+  // Secret shortcut via URL parameter ?portal=director
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('portal') === 'director') {
+    window.location.replace('./admin.html');
+    return;
+  }
+
+  initStardust();
+  registerServiceWorker();
+  await loadData();
+  bindEvents();
+  startCountdownTicker();
+
+  // Live updates when he unlocks a capsule from Admin
+  await subscribeHerLiveUpdates(async () => {
+    const prevReadyCount = state.capsules.filter((c) => c.isAuthorized).length;
+    await loadData();
+    const newReadyCount = state.capsules.filter((c) => c.isAuthorized).length;
+    if (newReadyCount > prevReadyCount) {
+      launchGoldConfetti();
+      showToast('✨ ¡Acaba de desbloquearse un nuevo capítulo para ti!');
+    }
+  });
+
+  // Safety refresh on visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') loadData();
+  });
+}
+
+function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+}
+
+async function loadData() {
+  const [settings, capsules] = await Promise.all([getPublicSettings(), getHerCapsules()]);
+  state.settings = settings;
+  state.capsules = capsules;
+  renderAll();
+}
+
+// ---------------------------------------------------------------------------
+// Rendering
+// ---------------------------------------------------------------------------
+function renderAll() {
+  const { settings, capsules } = state;
+  if (!settings) return;
+
+  document.title = `${settings.appTitle} · Para ${settings.herName}`;
+  document.getElementById('curtain-her-name').textContent = `Para ${settings.herName}`;
+  document.getElementById('hero-title').textContent = settings.appTitle || '29 Capítulos';
+  document.getElementById('hero-her-name').textContent = `Para ti, ${settings.herName}`;
+  document.getElementById('hero-subtitle').textContent = settings.appSubtitle || '';
+  document.getElementById('brand-title-mini').textContent = settings.appTitle || '29 Capítulos';
+
+  const authorizedCount = capsules.filter((c) => c.isAuthorized).length;
+  const openedCount = capsules.filter((c) => c.isAuthorized && c.isOpenedByHer).length;
+
+  document.getElementById('progress-label').textContent =
+    `${openedCount} de 30 descubiertos · ${authorizedCount} autorizados`;
+  document.getElementById('progress-fill').style.width = `${Math.round((openedCount / 30) * 100)}%`;
+
+  // Grand Finale Banner (STRICTLY hidden unless HE enables it)
+  const finaleBanner = document.getElementById('finale-banner');
+  if (settings.finaleEnabled) {
+    finaleBanner.classList.remove('hidden');
+    document.getElementById('finale-banner-title').textContent =
+      settings.finaleTitle || 'Nuestro Viaje Hacia tus 29';
+  } else {
+    finaleBanner.classList.add('hidden');
+  }
+
+  renderGrid();
+}
+
+async function renderGrid() {
+  const grid = document.getElementById('capsule-grid');
+  grid.innerHTML = '';
+
+  const filtered = state.capsules.filter((c) => {
+    if (state.filter === 'ready') return c.isAuthorized && !c.isOpenedByHer;
+    if (state.filter === 'opened') return c.isAuthorized && c.isOpenedByHer;
+    if (state.filter === 'favorites') return c.isAuthorized && c.isFavorite;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    const empty = document.createElement('div');
+    empty.style.gridColumn = '1 / -1';
+    empty.style.textAlign = 'center';
+    empty.style.padding = '48px 16px';
+    empty.style.color = 'var(--text-muted)';
+    empty.textContent = 'Aún no hay capítulos en esta categoría ✨';
+    grid.appendChild(empty);
+    return;
+  }
+
+  for (const cap of filtered) {
+    const card = document.createElement('article');
+    const isLocked = !cap.isAuthorized;
+    const isReady = cap.isAuthorized && !cap.isOpenedByHer;
+    const isOpened = cap.isAuthorized && cap.isOpenedByHer;
+
+    card.className = 'capsule-card ' + (isLocked ? 'is-locked' : isReady ? 'is-ready' : 'is-opened');
+
+    // Optional photo background on ALREADY OPENED cards
+    if (isOpened && cap.mediaItems && cap.mediaItems.length > 0) {
+      const firstImg = cap.mediaItems.find((m) => m.type === 'image');
+      if (firstImg) {
+        const bg = document.createElement('div');
+        bg.className = 'cap-thumb-bg';
+        resolveMediaUrl(firstImg.url).then((resolved) => {
+          if (resolved) bg.style.backgroundImage = `url("${resolved}")`;
+        });
+        card.appendChild(bg);
+      }
+    }
+
+    const top = document.createElement('div');
+    top.className = 'cap-top';
+
+    const dayNum = document.createElement('div');
+    dayNum.className = 'cap-day-num';
+    const small = document.createElement('small');
+    small.textContent = 'Capítulo';
+    dayNum.appendChild(small);
+    dayNum.appendChild(document.createTextNode(String(cap.dayNumber).padStart(2, '0')));
+    top.appendChild(dayNum);
+
+    if (isOpened && cap.isFavorite) {
+      const fav = document.createElement('span');
+      fav.className = 'cap-fav-heart';
+      fav.textContent = '❤️';
+      top.appendChild(fav);
+    }
+
+    const center = document.createElement('div');
+    center.className = 'cap-center';
+
+    const ring = document.createElement('div');
+    ring.className = 'cap-icon-ring';
+    if (isLocked) {
+      ring.innerHTML = PADLOCK_SVG;
+    } else if (isReady) {
+      ring.innerHTML = WAX_SVG;
+    } else {
+      const dynMeta = DYNAMIC_TYPES[cap.dynamicType] || DYNAMIC_TYPES.classic;
+      ring.textContent = dynMeta.icon;
+      ring.style.fontSize = '1.35rem';
+    }
+
+    const title = document.createElement('h3');
+    title.className = 'cap-title';
+    if (isLocked) {
+      title.textContent = cap.teaserTitle || 'Esperando autorización...';
+    } else if (isReady) {
+      title.textContent = cap.teaserTitle || '¡Lista para abrir!';
+    } else {
+      title.textContent = cap.unlockedTitle || `Capítulo ${cap.dayNumber}`;
+    }
+
+    center.appendChild(ring);
+    center.appendChild(title);
+
+    const bottom = document.createElement('div');
+    bottom.className = 'cap-bottom';
+    const badge = document.createElement('span');
+    badge.className = 'cap-status-badge';
+    if (isLocked) badge.textContent = '🔒 Sellado';
+    else if (isReady) badge.textContent = '✨ ¡Toca para abrir!';
+    else badge.textContent = 'Abierto ✓';
+    bottom.appendChild(badge);
+
+    card.appendChild(top);
+    card.appendChild(center);
+    card.appendChild(bottom);
+
+    card.addEventListener('click', () => handleCardClick(cap, card));
+    grid.appendChild(card);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Capsule Interaction & Wax Seal Ritual
+// ---------------------------------------------------------------------------
+function handleCardClick(cap, cardEl) {
+  if (!cap.isAuthorized) {
+    cardEl.classList.add('shake');
+    setTimeout(() => cardEl.classList.remove('shake'), 500);
+    showToast('🔒 Este capítulo aún está sellado. Solo se abrirá cuando él dé la señal.');
+    return;
+  }
+
+  if (!cap.isOpenedByHer) {
+    openWaxSealRitual(cap);
+  } else {
+    openCapsuleModal(cap);
+  }
+}
+
+function openWaxSealRitual(cap) {
+  const overlay = document.createElement('div');
+  overlay.className = 'ritual-overlay';
+
+  const kicker = document.createElement('p');
+  kicker.className = 'curtain-eyebrow';
+  kicker.textContent = `Capítulo ${String(cap.dayNumber).padStart(2, '0')} Desbloqueado`;
+
+  const sealBtn = document.createElement('button');
+  sealBtn.type = 'button';
+  sealBtn.className = 'wax-seal-btn';
+  sealBtn.innerHTML = `
+    <span style="font-family:var(--font-display);font-size:2.4rem;font-weight:700;line-height:1;">${String(cap.dayNumber).padStart(2, '0')}</span>
+    <span style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;">Romper sello</span>
+  `;
+
+  const hint = document.createElement('p');
+  hint.style.color = 'var(--text-muted)';
+  hint.style.maxWidth = '340px';
+  hint.textContent = cap.teaserTitle || 'Toca el sello real para descubrir la sorpresa de hoy.';
+
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'btn btn-glass btn-sm';
+  cancel.style.marginTop = '26px';
+  cancel.textContent = 'Volver';
+  cancel.addEventListener('click', () => overlay.remove());
+
+  sealBtn.addEventListener('click', async () => {
+    sealBtn.classList.add('is-breaking');
+    launchGoldConfetti();
+    cap.isOpenedByHer = true;
+    cap.openedAt = new Date().toISOString();
+    try {
+      await herInteractCapsule(cap.dayNumber, { isOpenedByHer: true });
+    } catch {
+      // Keep UI fluid
+    }
+    setTimeout(() => {
+      overlay.remove();
+      renderAll();
+      openCapsuleModal(cap);
+    }, 520);
+  });
+
+  overlay.appendChild(kicker);
+  overlay.appendChild(sealBtn);
+  overlay.appendChild(hint);
+  overlay.appendChild(cancel);
+  document.body.appendChild(overlay);
+}
+
+async function openCapsuleModal(cap) {
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop';
+
+  const card = document.createElement('div');
+  card.className = 'modal-card';
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'modal-header';
+
+  const titleWrap = document.createElement('div');
+  const tag = document.createElement('span');
+  tag.className = 'modal-day-tag';
+  tag.textContent = `Capítulo ${String(cap.dayNumber).padStart(2, '0')} · ${
+    (DYNAMIC_TYPES[cap.dynamicType] || DYNAMIC_TYPES.classic).label
+  }`;
+
+  const h2 = document.createElement('h2');
+  h2.className = 'modal-title gold-text';
+  h2.textContent = cap.unlockedTitle || `Capítulo ${cap.dayNumber}`;
+
+  titleWrap.appendChild(tag);
+  titleWrap.appendChild(h2);
+
+  const actions = document.createElement('div');
+  actions.className = 'modal-header-actions';
+
+  const favBtn = document.createElement('button');
+  favBtn.type = 'button';
+  favBtn.className = 'icon-btn' + (cap.isFavorite ? ' is-fav' : '');
+  favBtn.title = 'Guardar en Favoritos';
+  favBtn.textContent = cap.isFavorite ? '❤️' : '🤍';
+  favBtn.addEventListener('click', async () => {
+    cap.isFavorite = !cap.isFavorite;
+    favBtn.className = 'icon-btn' + (cap.isFavorite ? ' is-fav' : '');
+    favBtn.textContent = cap.isFavorite ? '❤️' : '🤍';
+    await herInteractCapsule(cap.dayNumber, { isFavorite: cap.isFavorite });
+    renderGrid();
+    showToast(cap.isFavorite ? '❤️ Guardado en tus recuerdos favoritos' : 'Quitado de favoritos');
+  });
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'icon-btn';
+  closeBtn.textContent = '✕';
+  closeBtn.addEventListener('click', () => backdrop.remove());
+
+  actions.appendChild(favBtn);
+  actions.appendChild(closeBtn);
+  header.appendChild(titleWrap);
+  header.appendChild(actions);
+  card.appendChild(header);
+
+  // Media Gallery
+  if (Array.isArray(cap.mediaItems) && cap.mediaItems.length > 0) {
+    const gallery = document.createElement('div');
+    gallery.className = 'media-gallery';
+
+    for (const m of cap.mediaItems) {
+      const item = document.createElement('div');
+      item.className = 'media-item';
+      const resolvedUrl = await resolveMediaUrl(m.url);
+      if (!resolvedUrl) continue;
+
+      if (m.type === 'image') {
+        const img = document.createElement('img');
+        img.src = resolvedUrl;
+        img.alt = m.caption || cap.unlockedTitle;
+        img.loading = 'lazy';
+        item.appendChild(img);
+      } else if (m.type === 'video') {
+        const vid = document.createElement('video');
+        vid.src = resolvedUrl;
+        vid.controls = true;
+        vid.playsInline = true;
+        item.appendChild(vid);
+      } else if (m.type === 'audio') {
+        const wrap = document.createElement('div');
+        wrap.className = 'media-audio-wrap';
+        const lbl = document.createElement('span');
+        lbl.style.fontSize = '0.84rem';
+        lbl.style.color = 'var(--gold-light)';
+        lbl.textContent = '🎙️ Nota de voz especial para ti';
+        const aud = document.createElement('audio');
+        aud.src = resolvedUrl;
+        aud.controls = true;
+        wrap.appendChild(lbl);
+        wrap.appendChild(aud);
+        item.appendChild(wrap);
+      } else if (m.type === 'spotify') {
+        const embedUrl = toSpotifyEmbedUrl(resolvedUrl);
+        if (embedUrl) {
+          const iframe = document.createElement('iframe');
+          iframe.className = 'spotify-embed-frame';
+          iframe.src = embedUrl;
+          iframe.height = embedUrl.includes('/playlist/') || embedUrl.includes('/album/') ? '352' : '152';
+          iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+          iframe.loading = 'lazy';
+          item.appendChild(iframe);
+        }
+      }
+
+      if (m.caption) {
+        const capEl = document.createElement('div');
+        capEl.className = 'media-caption';
+        capEl.textContent = m.caption;
+        item.appendChild(capEl);
+      }
+
+      gallery.appendChild(item);
+    }
+
+    if (gallery.children.length > 0) card.appendChild(gallery);
+  }
+
+  // Letter Message
+  if (cap.message) {
+    const letter = document.createElement('div');
+    letter.className = 'letter-box';
+    letter.textContent = cap.message;
+    card.appendChild(letter);
+  }
+
+  // Interactive Dynamic
+  const dynSlot = document.createElement('div');
+  renderDynamicSection(dynSlot, cap, async (result) => {
+    cap.dynamicDone = result.dynamicDone;
+    cap.dynamicAnswer = result.dynamicAnswer || '';
+    await herInteractCapsule(cap.dayNumber, {
+      dynamicDone: cap.dynamicDone,
+      dynamicAnswer: cap.dynamicAnswer
+    });
+  });
+  card.appendChild(dynSlot);
+
+  // Her Reply Form
+  const replySec = document.createElement('div');
+  replySec.className = 'reply-section';
+
+  const replyLbl = document.createElement('label');
+  replyLbl.className = 'field-label';
+  replyLbl.textContent = '💌 Déjale una respuesta o lo que sentiste hoy';
+
+  const replyRow = document.createElement('div');
+  replyRow.className = 'reply-row';
+
+  const textarea = document.createElement('textarea');
+  textarea.className = 'textarea';
+  textarea.style.minHeight = '76px';
+  textarea.placeholder = 'Escribe aquí algo bonito para él...';
+  textarea.value = cap.herReply || '';
+
+  const saveReplyBtn = document.createElement('button');
+  saveReplyBtn.type = 'button';
+  saveReplyBtn.className = 'btn btn-glass btn-sm';
+  saveReplyBtn.style.alignSelf = 'flex-end';
+  saveReplyBtn.textContent = cap.herReply ? 'Actualizar mi nota ✨' : 'Enviar mi respuesta ✨';
+
+  saveReplyBtn.addEventListener('click', async () => {
+    cap.herReply = textarea.value.trim();
+    saveReplyBtn.disabled = true;
+    try {
+      await herInteractCapsule(cap.dayNumber, { herReply: cap.herReply });
+      showToast('💖 ¡Tu mensaje se guardó para él!');
+    } catch {
+      showToast('No se pudo guardar en este momento.');
+    } finally {
+      saveReplyBtn.disabled = false;
+    }
+  });
+
+  replyRow.appendChild(textarea);
+  replyRow.appendChild(saveReplyBtn);
+  replySec.appendChild(replyLbl);
+  replySec.appendChild(replyRow);
+  card.appendChild(replySec);
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  backdrop.appendChild(card);
+  document.body.appendChild(backdrop);
+}
+
+// ---------------------------------------------------------------------------
+// Countdown Timer & Music Player
+// ---------------------------------------------------------------------------
+function startCountdownTicker() {
+  const update = () => {
+    if (!state.settings) return;
+    const target = new Date(state.settings.birthdayIso).getTime();
+    const now = Date.now();
+    const diff = Math.max(0, target - now);
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / (1000 * 60)) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+    document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+
+    const titleEl = document.getElementById('countdown-kicker');
+    if (diff === 0) {
+      titleEl.textContent = '👑 ¡HOY CELEBRAMOS TUS 29 AÑOS! 👑';
+    } else {
+      titleEl.textContent = 'Cuenta regresiva hacia tus 29';
+    }
+  };
+  update();
+  setInterval(update, 1000);
+}
+
+function ensureSpotifyDrawer(embedUrl) {
+  let drawer = document.getElementById('spotify-drawer');
+  if (!drawer) {
+    drawer = document.createElement('aside');
+    drawer.id = 'spotify-drawer';
+    drawer.className = 'spotify-drawer hidden';
+    drawer.innerHTML = `
+      <div class="spotify-drawer-head">
+        <span>🎧 Tu Banda Sonora</span>
+        <button type="button" class="icon-btn" style="width:28px;height:28px;font-size:0.85rem;" id="spotify-drawer-close">✕</button>
+      </div>
+      <iframe class="spotify-embed-frame" id="spotify-drawer-iframe" height="352" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    `;
+    document.body.appendChild(drawer);
+    drawer.querySelector('#spotify-drawer-close').addEventListener('click', () => {
+      drawer.classList.add('hidden');
+      state.musicPlaying = false;
+      document.getElementById('music-toggle-btn').classList.remove('is-playing');
+      document.getElementById('music-label').textContent = 'Playlist';
+    });
+  }
+  const iframe = drawer.querySelector('#spotify-drawer-iframe');
+  if (iframe.src !== embedUrl) iframe.src = embedUrl;
+  return drawer;
+}
+
+function toggleAmbientMusic(forcePlay = null) {
+  const btn = document.getElementById('music-toggle-btn');
+  const label = document.getElementById('music-label');
+  const url = state.settings?.musicUrl || '';
+  const spotifyEmbed = toSpotifyEmbedUrl(url);
+  const shouldPlay = forcePlay !== null ? forcePlay : !state.musicPlaying;
+
+  if (spotifyEmbed) {
+    const drawer = ensureSpotifyDrawer(spotifyEmbed);
+    if (shouldPlay) {
+      drawer.classList.remove('hidden');
+      state.musicPlaying = true;
+      btn.classList.add('is-playing');
+      label.textContent = 'Playlist';
+    } else {
+      drawer.classList.add('hidden');
+      state.musicPlaying = false;
+      btn.classList.remove('is-playing');
+      label.textContent = 'Playlist';
+    }
+    return;
+  }
+
+  if (shouldPlay) {
+    if (url) {
+      if (!state.audioEl || state.audioEl.src !== url) {
+        state.audioEl = new Audio(url);
+        state.audioEl.loop = true;
+        state.audioEl.volume = 0.45;
+      }
+      state.audioEl.play().catch(() => {});
+    } else {
+      startGentleAmbientPad();
+    }
+    state.musicPlaying = true;
+    btn.classList.add('is-playing');
+    label.textContent = 'Sonando';
+  } else {
+    if (state.audioEl) state.audioEl.pause();
+    stopGentleAmbientPad();
+    state.musicPlaying = false;
+    btn.classList.remove('is-playing');
+    label.textContent = 'Música';
+  }
+}
+
+/**
+ * Dreamy zero-dependency ambient harp/chime pad when no custom MP3 URL is set
+ */
+function startGentleAmbientPad() {
+  try {
+    if (!state.synthCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      state.synthCtx = new AC();
+    }
+    if (state.synthCtx.state === 'suspended') state.synthCtx.resume();
+    if (state.synthTimer) return;
+
+    const notes = [261.63, 329.63, 392.0, 493.88, 523.25, 440.0, 349.23];
+    let step = 0;
+    const playNote = () => {
+      if (!state.synthCtx) return;
+      const ctx = state.synthCtx;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = notes[step % notes.length];
+      step++;
+
+      const now = ctx.currentTime;
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.032, now + 0.35);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.2);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 3.3);
+    };
+
+    playNote();
+    state.synthTimer = setInterval(playNote, 2400);
+  } catch {
+    // Browser blocked audio
+  }
+}
+
+function stopGentleAmbientPad() {
+  if (state.synthTimer) {
+    clearInterval(state.synthTimer);
+    state.synthTimer = null;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Events
+// ---------------------------------------------------------------------------
+function bindEvents() {
+  // Welcome curtain enter button
+  document.getElementById('enter-universe-btn').addEventListener('click', () => {
+    document.getElementById('welcome-curtain').classList.add('is-dismissed');
+    toggleAmbientMusic(true);
+  });
+
+  document.getElementById('music-toggle-btn').addEventListener('click', () => {
+    toggleAmbientMusic();
+  });
+
+  // Filters
+  document.querySelectorAll('.filter-pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach((p) => p.classList.remove('is-active'));
+      pill.classList.add('is-active');
+      state.filter = pill.dataset.filter;
+      renderGrid();
+    });
+  });
+
+  // Finale Cinema Button
+  document.getElementById('open-cinema-btn').addEventListener('click', () => {
+    openCinemaModal(state.capsules, state.settings);
+  });
+
+  // Discreet 5-tap secret entry on footer crest (no visible Admin link for her!)
+  let taps = 0;
+  let tapResetTimer = null;
+  document.getElementById('secret-crest-tap').addEventListener('click', () => {
+    taps++;
+    clearTimeout(tapResetTimer);
+    tapResetTimer = setTimeout(() => (taps = 0), 1800);
+    if (taps >= 5) {
+      taps = 0;
+      window.location.href = './admin.html';
+    }
+  });
+}
+
+init();
+
