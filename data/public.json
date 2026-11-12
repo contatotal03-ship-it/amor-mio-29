@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:19.570Z",
+  "updatedAt": "2026-11-12T04:10:21.192Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -241,8 +241,24 @@
     },
     {
       "dayNumber": 13,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XIII · Pase de fotografía"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XIII · Pase de fotografía",
+      "unlockedTitle": "Sesión privada de fotos & tarde linda",
+      "message": "Porque mereces sentirte como portada de revista todos los días...",
+      "dynamicType": "coupon",
+      "dynamicPayload": {
+        "couponTitle": "TARDE DE FOTOS + HELADO / CÓCTEL AL ATARDECER",
+        "couponDesc": "Ponte tu outfit favorito: hoy soy tu fotógrafo oficial y vamos por algo rico mirando el atardecer."
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/22t10FTx8y3pC5fjLuKJ8K",
+          "caption": "?? Te Esperaba ? Carlos Rivera"
+        }
+      ]
     },
     {
       "dayNumber": 14,
