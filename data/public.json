@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:08.302Z",
+  "updatedAt": "2026-11-12T04:25:18.437Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -147,15 +147,8 @@
     },
     {
       "dayNumber": 19,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XIX · Carta al futuro",
-      "unlockedTitle": "Lo que sueño construir contigo",
-      "message": "Cumplir 29 no es solo sumar un año más: es mirar todo lo que has crecido, lo fuerte que eres y la mujer increíble que tengo la suerte de caminar de la mano.\n\nEsto es solo el comienzo de nuestra mejor etapa.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XIX · Carta al futuro"
     },
     {
       "dayNumber": 20,
