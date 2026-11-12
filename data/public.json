@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:24.922Z",
+  "updatedAt": "2026-11-12T04:24:26.253Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -104,32 +104,8 @@
     },
     {
       "dayNumber": 10,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo X · Un tercio del camino",
-      "unlockedTitle": "10 días y contando...",
-      "message": "¡Llegamos al día 10! Vamos a ver qué tan buena eres recordando nuestras locuras:",
-      "dynamicType": "trivia",
-      "dynamicPayload": {
-        "question": "Si tuviéramos que escapar hoy mismo a un lugar los dos solos, ¿qué no puede faltar en la maleta?",
-        "options": [
-          "Tu cámara y buena música",
-          "Ropa cómoda y algo rico para picar",
-          "Ganas de perdernos sin horario",
-          "¡Todo eso junto contigo!"
-        ],
-        "correctIndex": 3,
-        "hint": "Pista: ¡Contigo todo plan se multiplica!",
-        "rewardText": "¡Exacto! Prepárate porque antes de tus 29 vamos a hacer una escapada especial."
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/4rHczyhBZ53pLWgn6edWfB",
-          "caption": "?? Casi un Hechizo ? Jerry Rivera"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo X · Un tercio del camino"
     },
     {
       "dayNumber": 11,
