@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:26.253Z",
+  "updatedAt": "2026-11-12T04:24:41.717Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -83,24 +83,8 @@
     },
     {
       "dayNumber": 9,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo IX · Brilla bajo el oro",
-      "unlockedTitle": "Sorpresa de media mañana",
-      "message": "Solo quiero hacer que hoy sea un poquito más dulce que ayer. Raspa aquí abajo:",
-      "dynamicType": "scratch",
-      "dynamicPayload": {
-        "prompt": "Descubre qué viene en camino hoy",
-        "secretReward": "¡Un café/postre sorpresa pensado justo para alegrarte el día hoy!"
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/45xU99QgWETDFGhgivpYce",
-          "caption": "?? Te Vi Venir ? Sin Bandera"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo IX · Brilla bajo el oro"
     },
     {
       "dayNumber": 10,
