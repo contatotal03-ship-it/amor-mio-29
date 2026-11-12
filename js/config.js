@@ -5,7 +5,7 @@
  */
 
 export const PUBLIC_CONFIG = {
-  herName: 'Camila',
+  herName: 'Amor Mío',
   birthdayIso: '2026-12-12T00:00:00',
   appTitle: 'Rumbo a tus 29',
   appSubtitle: 'Treinta días pensados única y exclusivamente para hacerte sonreír y recordarte lo especial que eres para mí.',

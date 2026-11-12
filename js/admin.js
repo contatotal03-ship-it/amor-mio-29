@@ -1070,7 +1070,7 @@ function renderQrPreview() {
 
 function downloadLuxuryQrCard() {
   const url = document.getElementById('qr-url-input').value.trim() || 'https://contatotal03-ship-it.github.io/amor-mio-29/';
-  const herName = state.settings?.herName || 'Camila';
+  const herName = state.settings?.herName || 'Amor Mío';
   const title = state.settings?.appTitle || 'Rumbo a tus 29';
 
   const w = 1200;
@@ -1199,7 +1199,7 @@ function downloadLuxuryQrCard() {
   // 7. Recipient
   ctx.fillStyle = '#e8b4b8';
   ctx.font = 'italic 38px Georgia, serif';
-  ctx.fillText(`Para ${herName}, el amor de mi vida`, w / 2, 395);
+  ctx.fillText('Para Ti, el Amor de Mi Vida', w / 2, 395);
 
   // 8. Delicate Gold Divider Line
   ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
@@ -1322,7 +1322,7 @@ function downloadLuxuryQrCard() {
   ctx.fillText('Tu universo secreto ya está esperándote · Rumbo a tus 29 Años · Diciembre 2026', w / 2, 1530);
 
   const link = document.createElement('a');
-  link.download = `Tarjeta-QR-Lujo-Rumbo-a-tus-29-${herName.replace(/\s+/g, '-')}.png`;
+  link.download = 'Tarjeta-QR-Lujo-Rumbo-a-tus-29.png';
   link.href = card.toDataURL('image/png');
   link.click();
   showToast('🖨️ Tarjeta QR de Lujo descargada en alta resolución (1200x1700)');

@@ -155,14 +155,13 @@ function renderAll() {
   const { settings, capsules } = state;
   if (!settings) return;
 
-  const her = settings.herName && settings.herName !== 'Amor Mío' ? settings.herName : 'Camila';
-  document.title = `${settings.appTitle || 'Rumbo a tus 29'} · Para ${her}`;
+  document.title = `${settings.appTitle || 'Rumbo a tus 29'} · Amor Mío`;
   const curtainHer = document.getElementById('curtain-her-name');
   if (curtainHer) {
-    curtainHer.textContent = `✦ PARA ${her.toUpperCase()}, EL AMOR DE MI VIDA ✦`;
+    curtainHer.textContent = `✦ PARA TI, EL AMOR DE MI VIDA ✦`;
   }
   document.getElementById('hero-title').textContent = settings.appTitle || 'Rumbo a tus 29';
-  document.getElementById('hero-her-name').textContent = `Para ti, ${her} · Mi amor y mi princesa`;
+  document.getElementById('hero-her-name').textContent = `Para ti, mi princesa y amor de mi vida`;
   document.getElementById('hero-subtitle').textContent =
     settings.appSubtitle ||
     'Treinta días pensados única y exclusivamente para hacerte sonreír y recordarte lo especial que eres para mí.';
