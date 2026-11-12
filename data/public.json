@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:20.001Z",
+  "updatedAt": "2026-11-12T04:25:22.002Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -93,32 +93,8 @@
     },
     {
       "dayNumber": 17,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XVII · ¿Qué tanto me conoces?",
-      "unlockedTitle": "Reto divertido de pareja",
-      "message": "Hoy cambiamos las reglas: veamos qué tan bien me tienes leído...",
-      "dynamicType": "trivia",
-      "dynamicPayload": {
-        "question": "¿Cuál es mi debilidad número uno cuando estás cerca?",
-        "options": [
-          "Tu olor y tu cuello",
-          "Cuando te ríes a carcajadas",
-          "Cuando me miras con cara de travesura",
-          "¡No puedo resistirme a ninguna de las tres!"
-        ],
-        "correctIndex": 3,
-        "hint": "Pista: ¡Me derrito con todo!",
-        "rewardText": "¡Correcto! Y hoy te toca cobrar diez besos largos de interés.",
-        "optionFeedbacks": [
-          "¡Uf, totalmente cierto! Ese perfume tuyo me desarma... pero hay más 😘",
-          "¡Tu risa es mi sonido favorito! Sigue intentando...",
-          "¡Esa mirada peligrosa me vuelve loco! Pero mira la última opción 😉",
-          "¡Me conoces demasiado bien! Hoy te toca cobrar diez besos largos de interés 💋🔥"
-        ]
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XVII · ¿Qué tanto me conoces?"
     },
     {
       "dayNumber": 18,
