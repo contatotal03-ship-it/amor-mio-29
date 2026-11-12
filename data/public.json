@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:57:48.330Z",
+  "updatedAt": "2026-11-12T03:57:50.495Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -67,8 +67,23 @@
     },
     {
       "dayNumber": 6,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo VI · Algo escondido cerca de ti"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo VI · Algo escondido cerca de ti",
+      "unlockedTitle": "Búsqueda del tesoro · Pista #1",
+      "message": "Hoy dejé algo pequeño en el mundo real esperándote. Encuentra el sobre/nota escondida y escribe aquí la palabra clave que dice dentro.",
+      "dynamicType": "clue",
+      "dynamicPayload": {
+        "riddle": "Busca en el lugar donde guardas lo que usas justo antes de salir de casa cada mañana... ahí hay una nota con una palabra secreta.",
+        "secretCode": "SIEMPRE",
+        "rewardText": "¡Lo encontraste! Ahora mira el pequeño detalle que dejé ahí para recordarte que pienso en ti cada mañana."
+      },
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/06C0w9m8VKo25XAIIRpNN6",
+          "caption": "?? Sin Miedo a Querer ? Nalaia Lyrics"
+        }
+      ]
     },
     {
       "dayNumber": 7,
