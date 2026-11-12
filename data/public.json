@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:25.400Z",
+  "updatedAt": "2026-11-12T04:10:27.401Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -296,8 +296,18 @@
     },
     {
       "dayNumber": 16,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XVI · Boleto dorado"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XVI · Boleto dorado",
+      "unlockedTitle": "Noche de película VIP",
+      "message": "Raspa este boleto dorado para conocer tu función especial de esta noche:",
+      "dynamicType": "scratch",
+      "dynamicPayload": {
+        "prompt": "Raspa tu entrada VIP",
+        "secretReward": "Pase doble VIP para cine o maratón en casa con tus snacks favoritos incluidos 🍿🥂"
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": []
     },
     {
       "dayNumber": 17,
