@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:21.192Z",
+  "updatedAt": "2026-11-12T04:10:23.567Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -262,8 +262,25 @@
     },
     {
       "dayNumber": 14,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XIV · Mitad del viaje"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XIV · Mitad del viaje",
+      "unlockedTitle": "Búsqueda del tesoro · Pista #2",
+      "message": "¡Mitad del camino! Hoy la recompensa física es un poco más grande. Sigue la pista:",
+      "dynamicType": "clue",
+      "dynamicPayload": {
+        "riddle": "Donde duermes o descansas, busca en un rincón que normalmente no revisas de día...",
+        "secretCode": "CATORCE",
+        "rewardText": "¡Sorpresa! Que este regalo te abrace cuando yo no esté al lado."
+      },
+      "allowReply": false,
+      "hasSunflowers": true,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/1oGQsCmd5B0AyqX1YW0Qm7",
+          "caption": "?? Te Amo y Te Amo ? Felipe Peláez, Zabaleta"
+        }
+      ]
     },
     {
       "dayNumber": 15,
