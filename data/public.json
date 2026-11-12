@@ -73,6 +73,11 @@
           "Noche elegante: cocteles, música y cena especial",
           "Plan íntimo: película, manta, comida rica y cero afán",
           "Sorpréndeme tú eligiendo el lugar secreto"
+        ],
+        "choiceFeedbacks": [
+          "¡Me encanta! Ve alistando ese outfit espectacular porque nos vamos de noche elegante 🥂✨",
+          "¡Plan perfecto! Yo me encargo de tu comida favorita, mantas y cero afán en el mundo 🎬💖",
+          "¡Acepto el reto, amor mío! Prepárate porque te voy a llevar a un lugar especial sin decirte antes 😉✨"
         ]
       },
       "allowReply": false,
@@ -184,7 +189,13 @@
         ],
         "correctIndex": 3,
         "hint": "Pista: ¡Contigo todo plan se multiplica!",
-        "rewardText": "¡Exacto! Prepárate porque antes de tus 29 vamos a hacer una escapada especial."
+        "rewardText": "¡Exacto! Prepárate porque antes de tus 29 vamos a hacer una escapada especial.",
+        "optionFeedbacks": [
+          "¡Obvio que música y fotos van! Pero todavía falta algo más...",
+          "¡Un buen antojo nunca falla! Aun así falta la respuesta completa 😘",
+          "¡Desconectarnos del mundo es la clave! Pero mira la última opción...",
+          "¡SÍII, amor mío! Contigo todo plan se multiplica. Prepárate porque antes de tus 29 nos escapamos juntos ✈️💖"
+        ]
       },
       "allowReply": false,
       "hasSunflowers": false,
@@ -227,6 +238,11 @@
           "Un viaje o lugar nuevo que muero por conocer",
           "Una experiencia diferente que nunca he probado",
           "Algo especial para mí / mi bienestar"
+        ],
+        "choiceFeedbacks": [
+          "¡Anotado, viajera! Escríbeme abajo qué destino sueñas y lo ponemos en la mira ✈️🌍",
+          "¡Amo tu espíritu aventurero! Cuéntame abajo qué locura bonita quieres vivir ✨",
+          "¡Te lo mereces todo, princesa! Escríbeme abajo cómo quieres consentirte 💐💖"
         ]
       },
       "allowReply": false,
@@ -326,7 +342,13 @@
         ],
         "correctIndex": 3,
         "hint": "Pista: ¡Me derrito con todo!",
-        "rewardText": "¡Correcto! Y hoy te toca cobrar diez besos largos de interés."
+        "rewardText": "¡Correcto! Y hoy te toca cobrar diez besos largos de interés.",
+        "optionFeedbacks": [
+          "¡Uf, totalmente cierto! Ese perfume tuyo me desarma... pero hay más 😘",
+          "¡Tu risa es mi sonido favorito! Sigue intentando...",
+          "¡Esa mirada peligrosa me vuelve loco! Pero mira la última opción 😉",
+          "¡Me conoces demasiado bien! Hoy te toca cobrar diez besos largos de interés 💋🔥"
+        ]
       },
       "allowReply": false,
       "hasSunflowers": false,
@@ -345,6 +367,11 @@
           "Italiana: pasta, vino y velas",
           "Asiática: sushi / ramen especial",
           "Parrilla / Burgers gourmet & cocteles"
+        ],
+        "choiceFeedbacks": [
+          "¡Bellísima elección! Prepara tu apetito que esta noche nos vamos de pasta y vino 🍝🍷",
+          "¡Sushi y sabores increíbles en camino! Hoy se te cumple el antojo 🍣✨",
+          "¡Plan delicioso! Cocteles y algo bien rico para brindar por ti 🍔🥂"
         ]
       },
       "allowReply": false,
@@ -438,7 +465,13 @@
         ],
         "correctIndex": 3,
         "hint": "Pista: Siempre es la misma magia.",
-        "rewardText": "¡Eso mismo! Y esta semana vamos a crear recuerdos aún mejores."
+        "rewardText": "¡Eso mismo! Y esta semana vamos a crear recuerdos aún mejores.",
+        "optionFeedbacks": [
+          "¡Estuvo delicioso! Pero hubo algo mejor todavía 😋",
+          "¡Esas carcajadas no las cambio por nada! Sigue intentando...",
+          "¡Ese abrazo recargó mi alma entera! Pero mira la última...",
+          "¡Exactamente, mi princesa! Contigo hasta un día normal se vuelve inolvidable 💖"
+        ]
       },
       "allowReply": false,
       "hasSunflowers": false,
@@ -457,6 +490,11 @@
           "Elegante y espectacular en una noche inolvidable",
           "Rodeada de música, brindis y mucha risa",
           "Íntima, romántica y completamente consentida"
+        ],
+        "choiceFeedbacks": [
+          "¡Así será, reina mía! Alista tu look más espectacular porque vas a brillar ✨👑",
+          "¡Que suene nuestra playlist y no falte el brindis! Va a ser épico 🥂🎶",
+          "¡Totalmente consentida de principio a fin, te lo prometo! 💖✨"
         ]
       },
       "allowReply": false,
