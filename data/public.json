@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:57:43.578Z",
+  "updatedAt": "2026-11-12T03:57:46.543Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -23,27 +23,24 @@
     },
     {
       "dayNumber": 3,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo III · Raspa para descubrir",
-      "unlockedTitle": "Un capricho dorado para ti",
-      "message": "Hoy no hay acertijos... solo desliza tu dedo sobre el oro para descubrir el primer capricho de este mes.",
-      "dynamicType": "scratch",
-      "dynamicPayload": {
-        "prompt": "Raspa el velo dorado con tu dedo",
-        "secretReward": "Vale por una cena o pedido a domicilio de tu restaurante favorito esta semana 🍷✨"
-      },
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/6c9HvXjXSEOwhFp7GhqQ8x",
-          "caption": "?? Transforma Mi Mundo ? Kaleth Morales"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo III · Raspa para descubrir"
     },
     {
       "dayNumber": 4,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo IV · Escucha mi voz"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo IV · Escucha mi voz",
+      "unlockedTitle": "Palabras que prefiero decirte al oído",
+      "message": "A veces las letras se quedan cortas. Dale play al audio de arriba y cierra los ojos un segundo.",
+      "dynamicType": "classic",
+      "dynamicPayload": {},
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/37miw1ff4zH0LDuFrBvZ4i",
+          "caption": "?? Sabes ? Reik"
+        }
+      ]
     },
     {
       "dayNumber": 5,
