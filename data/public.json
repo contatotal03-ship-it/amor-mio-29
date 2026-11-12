@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:49:41.581Z",
+  "updatedAt": "2026-11-12T03:49:56.431Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -34,8 +34,30 @@
     },
     {
       "dayNumber": 2,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta",
+      "unlockedTitle": "Prueba de memoria de nosotros",
+      "message": "Antes de darte tu sorpresa de hoy, quiero comprobar si recuerdas los detalles que me enamoraron desde el primer día...",
+      "dynamicType": "trivia",
+      "dynamicPayload": {
+        "question": "¿Qué es lo que más me enamoró de ti desde el inicio?",
+        "options": [
+          "Tu sonrisa cuando te ríes sin parar",
+          "Cómo me miras cuando hablamos",
+          "Tu forma única de iluminar cualquier lugar",
+          "¡Todas las anteriores sin duda!"
+        ],
+        "correctIndex": 3,
+        "hint": "Pista: No podía elegir solo una cosa de ti...",
+        "rewardText": "¡Acertaste! Tu premio de hoy: esta noche el antojo dulce que pidas corre por mi cuenta."
+      },
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/0xXhgLXfEHnWJHVgRvFvdn",
+          "caption": "?? Creo en Ti ? Reik"
+        }
+      ]
     },
     {
       "dayNumber": 3,
