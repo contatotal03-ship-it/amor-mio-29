@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:41.787Z",
+  "updatedAt": "2026-11-12T04:10:45.021Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -423,8 +423,26 @@
     },
     {
       "dayNumber": 24,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XXIV · Nuestros momentos top"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XXIV · Nuestros momentos top",
+      "unlockedTitle": "¿Recuerdas esta foto?",
+      "message": "Mira la foto de arriba y contesta rápido:",
+      "dynamicType": "trivia",
+      "dynamicPayload": {
+        "question": "¿Qué fue lo mejor de ese día juntos?",
+        "options": [
+          "La comida deliciosa",
+          "Que no paramos de reírnos",
+          "El abrazo al final del día",
+          "¡Todo, porque era contigo!"
+        ],
+        "correctIndex": 3,
+        "hint": "Pista: Siempre es la misma magia.",
+        "rewardText": "¡Eso mismo! Y esta semana vamos a crear recuerdos aún mejores."
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": []
     },
     {
       "dayNumber": 25,
