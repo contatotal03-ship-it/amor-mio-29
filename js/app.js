@@ -11,6 +11,7 @@ import {
   herInteractCapsule,
   subscribeHerLiveUpdates,
   resolveMediaUrl,
+  getRawFallbackUrl,
   toSpotifyEmbedUrl
 } from './store.js';
 import { DYNAMIC_TYPES } from './ideas-bank.js';
@@ -369,6 +370,13 @@ async function openCapsuleModal(cap) {
         img.src = resolvedUrl;
         img.alt = m.caption || cap.unlockedTitle;
         img.loading = 'lazy';
+        img.addEventListener('error', () => {
+          const fb = getRawFallbackUrl(resolvedUrl);
+          if (fb && !img.dataset.retried) {
+            img.dataset.retried = '1';
+            img.src = fb;
+          }
+        });
         item.appendChild(img);
       } else if (m.type === 'video') {
         const vid = document.createElement('video');

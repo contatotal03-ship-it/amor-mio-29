@@ -442,7 +442,7 @@ async function syncGitHubVaultAndPublic(vaultData) {
           `Publicar media autorizada del Capitulo ${cap.dayNumber}`,
           token
         );
-        item.publicUrl = `https://raw.githubusercontent.com/${githubOwner}/${githubPublicRepo}/main/${pubRelPath}`;
+        item.publicUrl = `./${pubRelPath}`;
       }
     }
   }
@@ -573,7 +573,27 @@ export async function resolveMediaUrl(url) {
       return '';
     }
   }
+  if (
+    PUBLIC_CONFIG.githubOwner &&
+    PUBLIC_CONFIG.githubPublicRepo &&
+    url.startsWith(`https://raw.githubusercontent.com/${PUBLIC_CONFIG.githubOwner}/${PUBLIC_CONFIG.githubPublicRepo}/main/data/`)
+  ) {
+    const rel = url.split('/main/')[1];
+    return `./${rel}`;
+  }
   return url;
+}
+
+export function getRawFallbackUrl(resolvedUrl) {
+  if (
+    resolvedUrl &&
+    resolvedUrl.startsWith('./data/') &&
+    PUBLIC_CONFIG.githubOwner &&
+    PUBLIC_CONFIG.githubPublicRepo
+  ) {
+    return `https://raw.githubusercontent.com/${PUBLIC_CONFIG.githubOwner}/${PUBLIC_CONFIG.githubPublicRepo}/main/${resolvedUrl.slice(2)}`;
+  }
+  return '';
 }
 
 // ---------------------------------------------------------------------------
