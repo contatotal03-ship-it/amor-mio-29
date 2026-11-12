@@ -46,6 +46,12 @@ const WAX_SVG = `
   </svg>
 `;
 
+const SPARKLE_HEART_SVG = `
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+  </svg>
+`;
+
 function createSunflowerSvg(cls) {
   const wrap = document.createElement('div');
   wrap.className = `sunflower-ornament ${cls}`;
@@ -247,9 +253,7 @@ async function renderGrid() {
     } else if (isReady) {
       ring.innerHTML = WAX_SVG;
     } else {
-      const dynMeta = DYNAMIC_TYPES[cap.dynamicType] || DYNAMIC_TYPES.classic;
-      ring.textContent = dynMeta.icon;
-      ring.style.fontSize = '1.35rem';
+      ring.innerHTML = SPARKLE_HEART_SVG;
     }
 
     const title = document.createElement('h3');
@@ -274,7 +278,7 @@ async function renderGrid() {
     } else if (isReady) {
       badge.textContent = '✨ ¡Toca para abrir!';
     } else {
-      badge.innerHTML = `Abierto ✓ <button type="button" class="reseal-mini-btn" title="Volver a sellar para pruebas" style="margin-left:6px;background:rgba(212,175,55,0.22);border:1px solid rgba(212,175,55,0.5);border-radius:999px;padding:2px 8px;font-size:0.72rem;color:var(--gold-light);cursor:pointer;line-height:1.2;">🔒 Sellar</button>`;
+      badge.innerHTML = `✨ Capítulo Revelado <button type="button" class="reseal-mini-btn" title="Volver a sellar para pruebas" style="margin-left:6px;background:rgba(212,175,55,0.22);border:1px solid rgba(212,175,55,0.5);border-radius:999px;padding:2px 8px;font-size:0.72rem;color:var(--gold-light);cursor:pointer;line-height:1.2;">🔒 Sellar</button>`;
       badge.querySelector('.reseal-mini-btn')?.addEventListener('click', (e) => {
         e.stopPropagation();
         cap.isOpenedByHer = false;

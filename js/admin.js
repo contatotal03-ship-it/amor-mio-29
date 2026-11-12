@@ -1349,6 +1349,15 @@ function bindStaticEvents() {
     const cap = getCurrentCapsule();
     const prev = cap.isAuthorized;
     cap.isAuthorized = !prev;
+    // Reseal locally on this browser so test progress is reset
+    try {
+      const raw = localStorage.getItem('cap29_her_progress_v1');
+      if (raw) {
+        const p = JSON.parse(raw);
+        delete p[String(cap.dayNumber)];
+        localStorage.setItem('cap29_her_progress_v1', JSON.stringify(p));
+      }
+    } catch {}
     try {
       await saveCurrentDayFromEditor();
       updateAuthorizeButtonUI(cap);
