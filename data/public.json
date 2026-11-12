@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:35.754Z",
+  "updatedAt": "2026-11-12T04:10:37.862Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -380,8 +380,19 @@
     },
     {
       "dayNumber": 21,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XXI · Pista #3 (Nivel experto)"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XXI · Pista #3 (Nivel experto)",
+      "unlockedTitle": "El código del atardecer",
+      "message": "Cada vez estás más cerca del final... busca el código secreto de hoy:",
+      "dynamicType": "clue",
+      "dynamicPayload": {
+        "riddle": "Está guardado dentro de algo que te pones cuando hace frío o en la guantera donde viajamos juntos...",
+        "secretCode": "BRILLA",
+        "rewardText": "¡Excelente detective! Hoy te ganaste un abrazo eterno y un detalle especial."
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": []
     },
     {
       "dayNumber": 22,
