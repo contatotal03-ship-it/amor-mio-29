@@ -550,7 +550,7 @@ export const ALTERNATIVE_IDEAS = {
     message: 'Hoy arranca oficialmente tu mes de sorpresas, mi princesa. Canjea este pase inaugural para activar la magia.',
     dynamicPayload: {
       couponTitle: 'PASAPORTE VIP · 30 DÍAS DE AMOR',
-      couponDesc: 'Válido para ser consentida, sorprendida y amada sin límites rumbo a tus 29 años 🌻✨'
+      couponDesc: 'Válido para ser consentida, sorprendida y amada sin límites en el mes de tus 29 años 🌻✨'
     }
   },
   2: {

@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * RUMBO A TUS 29 · UNIFIED CLOUD STORE (GITHUB CLOUD + SUPABASE + LOCAL)
+ * EL MES DE TUS 29 · UNIFIED CLOUD STORE (GITHUB CLOUD + SUPABASE + LOCAL)
  * ============================================================================
  */
 
@@ -168,13 +168,13 @@ function defaultSettings() {
   return {
     herName: PUBLIC_CONFIG.herName || 'Amor Mío',
     birthdayIso: PUBLIC_CONFIG.birthdayIso || '2026-12-12T00:00:00',
-    appTitle: PUBLIC_CONFIG.appTitle || 'Rumbo a tus 29',
+    appTitle: PUBLIC_CONFIG.appTitle || 'El Mes de tus 29',
     appSubtitle:
       PUBLIC_CONFIG.appSubtitle ||
-      'Treinta días para recordarte por qué eres mi princesa y lo más hermoso de mi vida.',
+      'Treinta detalles pensados única y exclusivamente para hacerte sonreír y recordarte lo especial que eres para mí.',
     musicUrl: PUBLIC_CONFIG.musicUrl || '',
     finaleEnabled: false,
-    finaleTitle: 'Nuestro Viaje Hacia tus 29',
+    finaleTitle: 'Nuestro Gran Final · 29 Años',
     finaleDedication: 'Cada día contigo ha sido mi capítulo favorito. ¡Feliz cumpleaños, mi princesa!'
   };
 }

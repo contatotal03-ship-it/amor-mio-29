@@ -1,7 +1,7 @@
 {
-  "name": "Rumbo a tus 29 · Tu Universo",
-  "short_name": "Rumbo a tus 29",
-  "description": "Un viaje privado de 30 días hacia tus 29 años.",
+  "name": "El Mes de tus 29 · Tu Universo",
+  "short_name": "El Mes de tus 29",
+  "description": "Treinta detalles privados hacia tus 29 años.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

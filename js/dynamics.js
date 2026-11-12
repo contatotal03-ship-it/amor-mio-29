@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * RUMBO A TUS 29 · INTERACTIVE DYNAMICS ENGINE
+ * EL MES DE TUS 29 · INTERACTIVE DYNAMICS ENGINE
  * Pop-ups centrados en pantalla + mensajes únicos por cada respuesta.
  * ============================================================================
  */

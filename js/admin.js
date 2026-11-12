@@ -1071,7 +1071,7 @@ function renderQrPreview() {
 function downloadLuxuryQrCard() {
   const url = document.getElementById('qr-url-input').value.trim() || 'https://contatotal03-ship-it.github.io/amor-mio-29/';
   const herName = state.settings?.herName || 'Amor Mío';
-  const title = state.settings?.appTitle || 'Rumbo a tus 29';
+  const title = state.settings?.appTitle || 'El Mes de tus 29';
 
   const w = 1200;
   const h = 1700;
@@ -1219,7 +1219,7 @@ function downloadLuxuryQrCard() {
   const msgY = 475;
   const manifesto = [
     "Durante los próximos 30 días, antes de que celebres tus 29,",
-    "cada medianoche se encenderá un capítulo secreto pensado solo para ti.",
+    "en cualquier momento del día se encenderá una sorpresa pensada solo para ti.",
     "Un refugio privado donde las palabras, nuestros recuerdos y cada detalle",
     "ya están preparados para recordarte lo maravillosa que eres.",
     "Tú no tienes que organizar nada; todo ya está dispuesto para hacerte feliz."
@@ -1315,14 +1315,14 @@ function downloadLuxuryQrCard() {
 
   ctx.fillStyle = '#f6e3a1';
   ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('UN CAPÍTULO CADA DÍA A LAS 00:00 · PREPARADO CON TODO MI AMOR', w / 2, 1480);
+  ctx.fillText('✦ 30 DETALLES INOLVIDABLES · PREPARADOS CON TODO MI AMOR ✦', w / 2, 1480);
 
   ctx.fillStyle = 'rgba(234, 226, 213, 0.65)';
   ctx.font = '400 17px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('Tu universo secreto ya está esperándote · Rumbo a tus 29 Años · Diciembre 2026', w / 2, 1530);
+  ctx.fillText('Tus sorpresas pueden aparecer en cualquier momento · Diciembre 2026', w / 2, 1530);
 
   const link = document.createElement('a');
-  link.download = 'Tarjeta-QR-Lujo-Rumbo-a-tus-29.png';
+  link.download = 'Tarjeta-QR-Lujo-El-Mes-de-tus-29.png';
   link.href = card.toDataURL('image/png');
   link.click();
   showToast('🖨️ Tarjeta QR de Lujo descargada en alta resolución (1200x1700)');
@@ -1861,7 +1861,7 @@ function bindStaticEvents() {
     const content = `export const PUBLIC_CONFIG = {
   herName: ${JSON.stringify(s?.herName || 'Amor Mío')},
   birthdayIso: ${JSON.stringify(s?.birthdayIso || '2026-12-12T00:00:00')},
-  appTitle: ${JSON.stringify(s?.appTitle || 'Rumbo a tus 29')},
+  appTitle: ${JSON.stringify(s?.appTitle || 'El Mes de tus 29')},
   appSubtitle: ${JSON.stringify(s?.appSubtitle || '')},
   musicUrl: ${JSON.stringify(s?.musicUrl || '')},
   githubOwner: ${JSON.stringify(PUBLIC_CONFIG.githubOwner || '')},
