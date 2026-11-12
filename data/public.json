@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:35.332Z",
+  "updatedAt": "2026-11-12T04:25:37.339Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -148,15 +148,8 @@
     },
     {
       "dayNumber": 28,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XXVIII · La víspera mágica",
-      "unlockedTitle": "Mañana termina la espera...",
-      "message": "Hoy es el último día de tus 28 años. Gracias por regalarme el privilegio de verte brillar un año más.\n\nMañana —cuando autorice la última cápsula y el Gran Cine de Recuerdos— vas a entender por qué guardé lo mejor para el final.\n\nDescansa lindo, mi vida.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXVIII · La víspera mágica"
     },
     {
       "dayNumber": 29,
