@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cap29-shell-v1';
+const CACHE_NAME = 'cap29-shell-v2';
 const SHELL_ASSETS = [
   './',
   './index.html',
@@ -27,8 +27,9 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  // Never intercept Supabase or external API/media requests
+  // Never intercept Supabase, live data snapshots, or external API/media requests
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.includes('/data/')) return;
 
   event.respondWith(
     fetch(event.request)

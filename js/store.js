@@ -323,9 +323,15 @@ async function ghPutBase64File(owner, repo, filePath, base64Content, commitMsg, 
   });
 }
 
-async function fetchPublicGitHubSnapshot() {
+let lastApiCheckTs = 0;
+
+export function forceInstantPublicRefresh() {
+  ghPublicCache.ts = 0;
+}
+
+async function fetchPublicGitHubSnapshot({ preferApi = true } = {}) {
   const now = Date.now();
-  if (ghPublicCache.data && now - ghPublicCache.ts < 1500) {
+  if (ghPublicCache.data && now - ghPublicCache.ts < 2000) {
     return ghPublicCache.data;
   }
   if (ghPublicCache.promise) return ghPublicCache.promise;
@@ -334,11 +340,13 @@ async function fetchPublicGitHubSnapshot() {
     const { githubOwner, githubPublicRepo } = PUBLIC_CONFIG;
     let payload = null;
 
-    // 1. Try instant GitHub API raw read (no Pages build lag)
-    if (githubOwner && githubPublicRepo && !isLocalhostEnv()) {
+    // 1. Instant GitHub API raw read (bypasses edge cache via timestamp, <1s live!)
+    const canTryApi = preferApi && (now - lastApiCheckTs > 3500);
+    if (canTryApi && githubOwner && githubPublicRepo && !isLocalhostEnv()) {
+      lastApiCheckTs = Date.now();
       try {
         const rawText = await ghApiRequest(
-          `/repos/${githubOwner}/${githubPublicRepo}/contents/data/public.json?ref=main`,
+          `/repos/${githubOwner}/${githubPublicRepo}/contents/data/public.json?ref=main&_=${Date.now()}`,
           { raw: true }
         );
         payload = JSON.parse(rawText);
@@ -347,14 +355,25 @@ async function fetchPublicGitHubSnapshot() {
       }
     }
 
-    // 2. Fallback to same-origin ./data/public.json
+    // 2. Same-origin ./data/public.json (unlimited requests, cache-busted)
     if (!payload) {
-      const resp = await fetch(`./data/public.json?t=${Date.now()}`, { cache: 'no-store' });
-      if (resp.ok) payload = await resp.json();
+      try {
+        const resp = await fetch(`./data/public.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (resp.ok) payload = await resp.json();
+      } catch {
+        // Offline fallback
+      }
     }
 
     if (!payload) {
-      payload = { settings: defaultSettings(), capsules: defaultCapsules() };
+      payload = ghPublicCache.data || { settings: defaultSettings(), capsules: defaultCapsules() };
+    }
+
+    // Never overwrite a newer API snapshot with an older Pages build
+    const prevUpdated = ghPublicCache.data?.updatedAt || '';
+    const nextUpdated = payload?.updatedAt || '';
+    if (ghPublicCache.data && prevUpdated && nextUpdated && nextUpdated < prevUpdated) {
+      payload = ghPublicCache.data;
     }
 
     ghPublicCache.data = payload;
@@ -848,10 +867,15 @@ export async function subscribeHerLiveUpdates(onChange) {
   }
 
   if (mode === 'github') {
-    const timer = setInterval(() => {
+    let tick = 0;
+    const timer = setInterval(async () => {
+      if (document.visibilityState !== 'visible') return;
+      tick++;
       ghPublicCache.ts = 0;
+      // Every 10s check unlimited GitHub Pages CDN; every 60s also hit instant GitHub API
+      await fetchPublicGitHubSnapshot({ preferApi: tick % 6 === 0 });
       onChange();
-    }, 75000);
+    }, 10000);
     return () => clearInterval(timer);
   }
 

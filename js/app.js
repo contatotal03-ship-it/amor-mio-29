@@ -12,6 +12,7 @@ import {
   subscribeHerLiveUpdates,
   resolveMediaUrl,
   getRawFallbackUrl,
+  forceInstantPublicRefresh,
   toSpotifyEmbedUrl
 } from './store.js';
 import { DYNAMIC_TYPES } from './ideas-bank.js';
@@ -22,6 +23,7 @@ import { openCinemaModal } from './cinema.js';
 let state = {
   settings: null,
   capsules: [],
+  lastSnapshotSig: '',
   filter: 'all',
   musicPlaying: false,
   audioEl: null,
@@ -91,8 +93,17 @@ async function init() {
   });
 
   // Safety refresh on visibility change
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') loadData();
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible') {
+      const prevCount = state.capsules.filter((c) => c.isAuthorized).length;
+      forceInstantPublicRefresh();
+      await loadData();
+      const nextCount = state.capsules.filter((c) => c.isAuthorized).length;
+      if (nextCount > prevCount) {
+        launchGoldConfetti();
+        showToast('✨ ¡Acaba de desbloquearse un nuevo capítulo para ti!');
+      }
+    }
   });
 }
 
@@ -102,11 +113,15 @@ function registerServiceWorker() {
   }
 }
 
-async function loadData() {
+async function loadData(forceRender = false) {
   const [settings, capsules] = await Promise.all([getPublicSettings(), getHerCapsules()]);
+  const sig = JSON.stringify({ settings, capsules });
   state.settings = settings;
   state.capsules = capsules;
-  renderAll();
+  if (forceRender || sig !== state.lastSnapshotSig) {
+    state.lastSnapshotSig = sig;
+    renderAll();
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -253,8 +268,17 @@ async function renderGrid() {
 // ---------------------------------------------------------------------------
 // Capsule Interaction & Wax Seal Ritual
 // ---------------------------------------------------------------------------
-function handleCardClick(cap, cardEl) {
+async function handleCardClick(cap, cardEl) {
   if (!cap.isAuthorized) {
+    forceInstantPublicRefresh();
+    await loadData();
+    const fresh = state.capsules.find((c) => c.dayNumber === cap.dayNumber);
+    if (fresh && fresh.isAuthorized) {
+      launchGoldConfetti();
+      showToast('✨ ¡Capítulo recién desbloqueado!');
+      openWaxSealRitual(fresh);
+      return;
+    }
     cardEl.classList.add('shake');
     setTimeout(() => cardEl.classList.remove('shake'), 500);
     showToast('🔒 Este capítulo aún está sellado. Solo se abrirá cuando él dé la señal.');
@@ -395,24 +419,29 @@ async function openCapsuleModal(cap) {
       const resolvedUrl = await resolveMediaUrl(m.url);
       if (!resolvedUrl) continue;
 
+      const attachRawFallback = (el) => {
+        el.addEventListener('error', () => {
+          const fb = getRawFallbackUrl(resolvedUrl);
+          if (fb && !el.dataset.retried) {
+            el.dataset.retried = '1';
+            el.src = fb;
+          }
+        });
+      };
+
       if (m.type === 'image') {
         const img = document.createElement('img');
         img.src = resolvedUrl;
         img.alt = m.caption || cap.unlockedTitle;
         img.loading = 'lazy';
-        img.addEventListener('error', () => {
-          const fb = getRawFallbackUrl(resolvedUrl);
-          if (fb && !img.dataset.retried) {
-            img.dataset.retried = '1';
-            img.src = fb;
-          }
-        });
+        attachRawFallback(img);
         item.appendChild(img);
       } else if (m.type === 'video') {
         const vid = document.createElement('video');
         vid.src = resolvedUrl;
         vid.controls = true;
         vid.playsInline = true;
+        attachRawFallback(vid);
         item.appendChild(vid);
       } else if (m.type === 'audio') {
         const wrap = document.createElement('div');
@@ -424,6 +453,7 @@ async function openCapsuleModal(cap) {
         const aud = document.createElement('audio');
         aud.src = resolvedUrl;
         aud.controls = true;
+        attachRawFallback(aud);
         wrap.appendChild(lbl);
         wrap.appendChild(aud);
         item.appendChild(wrap);
