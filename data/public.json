@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:10.637Z",
+  "updatedAt": "2026-11-12T04:24:12.530Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -322,18 +322,8 @@
     },
     {
       "dayNumber": 20,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XX · Últimos 10 días",
-      "unlockedTitle": "Día de consentimiento / Beauty pass",
-      "message": "Faltan solo 10 capítulos para tu gran día y quiero verte brillando como la reina que eres.",
-      "dynamicType": "coupon",
-      "dynamicPayload": {
-        "couponTitle": "PASAPORTE BEAUTY & SPA",
-        "couponDesc": "Válido para consentirte (uñas, spa o tu tratamiento favorito) antes de tu fiesta de los 29 ✨"
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XX · Últimos 10 días"
     },
     {
       "dayNumber": 21,
