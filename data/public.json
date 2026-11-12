@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:27.371Z",
+  "updatedAt": "2026-11-12T04:25:29.654Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -123,18 +123,8 @@
     },
     {
       "dayNumber": 23,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XXIII · Primera pista del gran regalo",
-      "unlockedTitle": "Un destello de tu regalo mayor",
-      "message": "Todavía faltan 7 días... pero hoy voy a dejar que raspes apenas una pequeña pista de lo que viene al final:",
-      "dynamicType": "scratch",
-      "dynamicPayload": {
-        "prompt": "Raspa para ver la pista #1 del gran regalo",
-        "secretReward": "Pista: Involucra una fecha especial, mucha emoción y algo que llevas tiempo queriendo vivir ✨"
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXIII · Primera pista del gran regalo"
     },
     {
       "dayNumber": 24,
