@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:22.002Z",
+  "updatedAt": "2026-11-12T04:25:23.873Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -154,27 +154,8 @@
     },
     {
       "dayNumber": 25,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XXV · Código de vestimenta",
-      "unlockedTitle": "Prepárate para celebrar",
-      "message": "Faltan apenas 5 días. Necesito confirmar algo muy importante contigo para el gran cierre:",
-      "dynamicType": "challenge",
-      "dynamicPayload": {
-        "prompt": "¿Cómo quieres sentirte el día de tus 29?",
-        "choices": [
-          "Elegante y espectacular en una noche inolvidable",
-          "Rodeada de música, brindis y mucha risa",
-          "Íntima, romántica y completamente consentida"
-        ],
-        "choiceFeedbacks": [
-          "¡Así será, reina mía! Alista tu look más espectacular porque vas a brillar ✨👑",
-          "¡Que suene nuestra playlist y no falte el brindis! Va a ser épico 🥂🎶",
-          "¡Totalmente consentida de principio a fin, te lo prometo! 💖✨"
-        ]
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXV · Código de vestimenta"
     },
     {
       "dayNumber": 26,
