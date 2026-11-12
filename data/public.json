@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:46.823Z",
+  "updatedAt": "2026-11-12T04:10:48.822Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -465,8 +465,18 @@
     },
     {
       "dayNumber": 26,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XXVI · Brindis anticipado"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XXVI · Brindis anticipado",
+      "unlockedTitle": "Copa & confesiones bajo la luna",
+      "message": "Antes de que empiece el torbellino del cumpleaños, quiero una noche tranquila solo tú y yo.",
+      "dynamicType": "coupon",
+      "dynamicPayload": {
+        "couponTitle": "BRINDIS PRIVADO POR TUS 28 QUE SE VAN",
+        "couponDesc": "Una copa de tu bebida favorita mientras recordamos todo lo bonito que viviste en tus 28."
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": []
     },
     {
       "dayNumber": 27,
