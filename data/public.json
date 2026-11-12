@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:02.765Z",
+  "updatedAt": "2026-11-12T04:25:04.404Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -63,21 +63,8 @@
     },
     {
       "dayNumber": 11,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XI · 11 razones",
-      "unlockedTitle": "11 cosas que amo de ti",
-      "message": "Hoy es día 11, así que aquí van 11 cosas reales que amo de ti:\n1. Tu risa contagiosa.\n2. Tu valentía para luchar por lo que quieres.\n3. La paz que siento cuando me abrazas.\n(Personaliza el resto con tus palabras...)",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/7mne6vl01FpHSn1r1S2BCk",
-          "caption": "?? Cuando Quieras Quiero - En Vivo ? Felipe Peláez"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XI · 11 razones"
     },
     {
       "dayNumber": 12,
