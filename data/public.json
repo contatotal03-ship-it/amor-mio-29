@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:45:49.388Z",
+  "updatedAt": "2026-11-12T10:55:40.960386Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -45,7 +45,7 @@
     {
       "dayNumber": 3,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo III · Raspa para descubrir"
+      "teaserTitle": "Capítulo III · Un secreto entre girasoles 🌻"
     },
     {
       "dayNumber": 4,
@@ -55,7 +55,7 @@
     {
       "dayNumber": 5,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo V · Tú decides el plan"
+      "teaserTitle": "Capítulo V · Todo está preparado para ti"
     },
     {
       "dayNumber": 6,
@@ -90,7 +90,7 @@
     {
       "dayNumber": 12,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XII · Confesión nocturna"
+      "teaserTitle": "Capítulo XII · Un deseo guardado en oro"
     },
     {
       "dayNumber": 13,
@@ -100,7 +100,7 @@
     {
       "dayNumber": 14,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XIV · Mitad del viaje"
+      "teaserTitle": "Capítulo XIV · Mitad del viaje 🌻"
     },
     {
       "dayNumber": 15,
@@ -115,12 +115,12 @@
     {
       "dayNumber": 17,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XVII · ¿Qué tanto me conoces?"
+      "teaserTitle": "Capítulo XVII · Complicidad en secreto"
     },
     {
       "dayNumber": 18,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XVIII · Sorpresa gastronómica"
+      "teaserTitle": "Capítulo XVIII · Una mesa reservada en secreto"
     },
     {
       "dayNumber": 19,
@@ -140,7 +140,7 @@
     {
       "dayNumber": 22,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XXII · Voces que te aman"
+      "teaserTitle": "Capítulo XXII · Voces que te aman 🌻"
     },
     {
       "dayNumber": 23,
@@ -155,7 +155,7 @@
     {
       "dayNumber": 25,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XXV · Código de vestimenta"
+      "teaserTitle": "Capítulo XXV · La antesala de tus 29"
     },
     {
       "dayNumber": 26,
@@ -180,7 +180,7 @@
     {
       "dayNumber": 30,
       "isAuthorized": false,
-      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑"
+      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑🌻"
     }
   ]
 }
