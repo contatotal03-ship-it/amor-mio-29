@@ -13,7 +13,9 @@ import {
   resolveMediaUrl,
   getRawFallbackUrl,
   forceInstantPublicRefresh,
-  toSpotifyEmbedUrl
+  toSpotifyEmbedUrl,
+  resetAllHerLocalProgress,
+  resealSingleCapsule
 } from './store.js';
 import { DYNAMIC_TYPES } from './ideas-bank.js';
 import { initStardust, launchGoldConfetti, showToast } from './particles.js';
@@ -267,9 +269,21 @@ async function renderGrid() {
     bottom.className = 'cap-bottom';
     const badge = document.createElement('span');
     badge.className = 'cap-status-badge';
-    if (isLocked) badge.textContent = '🔒 Sellado';
-    else if (isReady) badge.textContent = '✨ ¡Toca para abrir!';
-    else badge.textContent = 'Abierto ✓';
+    if (isLocked) {
+      badge.textContent = '🔒 Sellado';
+    } else if (isReady) {
+      badge.textContent = '✨ ¡Toca para abrir!';
+    } else {
+      badge.innerHTML = `Abierto ✓ <button type="button" class="reseal-mini-btn" title="Volver a sellar para pruebas" style="margin-left:6px;background:rgba(212,175,55,0.22);border:1px solid rgba(212,175,55,0.5);border-radius:999px;padding:2px 8px;font-size:0.72rem;color:var(--gold-light);cursor:pointer;line-height:1.2;">🔒 Sellar</button>`;
+      badge.querySelector('.reseal-mini-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cap.isOpenedByHer = false;
+        cap.openedAt = null;
+        resealSingleCapsule(cap.dayNumber);
+        renderAll();
+        showToast(`🔒 Capítulo ${String(cap.dayNumber).padStart(2, '0')} vuelto a sellar.`);
+      });
+    }
     bottom.appendChild(badge);
 
     card.appendChild(top);
@@ -412,12 +426,28 @@ async function openCapsuleModal(cap) {
     showToast(cap.isFavorite ? '❤️ Guardado en tus recuerdos favoritos' : 'Quitado de favoritos');
   });
 
+  const resealBtn = document.createElement('button');
+  resealBtn.type = 'button';
+  resealBtn.className = 'icon-btn';
+  resealBtn.title = 'Volver a sellar este capítulo (probar desde cero)';
+  resealBtn.setAttribute('aria-label', 'Volver a sellar este capítulo');
+  resealBtn.innerHTML = '🔒';
+  resealBtn.addEventListener('click', () => {
+    cap.isOpenedByHer = false;
+    cap.openedAt = null;
+    resealSingleCapsule(cap.dayNumber);
+    backdrop.remove();
+    renderAll();
+    showToast(`🔒 Capítulo ${String(cap.dayNumber).padStart(2, '0')} vuelto a sellar.`);
+  });
+
   const closeBtn = document.createElement('button');
   closeBtn.type = 'button';
   closeBtn.className = 'icon-btn';
   closeBtn.textContent = '✕';
   closeBtn.addEventListener('click', () => backdrop.remove());
 
+  actions.appendChild(resealBtn);
   actions.appendChild(favBtn);
   actions.appendChild(closeBtn);
   header.appendChild(titleWrap);
@@ -766,13 +796,24 @@ function bindEvents() {
   });
 
   // Filters
-  document.querySelectorAll('.filter-pill').forEach((pill) => {
+  document.querySelectorAll('.filter-pill[data-filter]').forEach((pill) => {
     pill.addEventListener('click', () => {
-      document.querySelectorAll('.filter-pill').forEach((p) => p.classList.remove('is-active'));
+      document.querySelectorAll('.filter-pill[data-filter]').forEach((p) => p.classList.remove('is-active'));
       pill.classList.add('is-active');
       state.filter = pill.dataset.filter;
       renderGrid();
     });
+  });
+
+  // Quick Reseal All button in filter bar
+  document.getElementById('quick-reseal-all-btn')?.addEventListener('click', () => {
+    resetAllHerLocalProgress();
+    state.capsules.forEach((c) => {
+      c.isOpenedByHer = false;
+      c.openedAt = null;
+    });
+    renderAll();
+    showToast('✨ Todas las cápsulas vuelven a estar selladas con su cera dorada.');
   });
 
   // Reset test progress button in footer

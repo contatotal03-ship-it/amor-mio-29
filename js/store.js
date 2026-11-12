@@ -385,7 +385,7 @@ async function fetchPublicGitHubSnapshot({ preferApi = true } = {}) {
   return ghPublicCache.promise;
 }
 
-function getHerLocalProgress() {
+export function getHerLocalProgress() {
   try {
     return JSON.parse(localStorage.getItem(LS_HER_PROGRESS_KEY) || '{}');
   } catch {
@@ -393,8 +393,29 @@ function getHerLocalProgress() {
   }
 }
 
-function saveHerLocalProgress(map) {
+export function saveHerLocalProgress(map) {
   localStorage.setItem(LS_HER_PROGRESS_KEY, JSON.stringify(map));
+}
+
+export function resetAllHerLocalProgress() {
+  try {
+    localStorage.removeItem(LS_HER_PROGRESS_KEY);
+  } catch (e) {
+    console.warn('Could not reset local progress', e);
+  }
+}
+
+export function resealSingleCapsule(dayNumber) {
+  try {
+    const progress = getHerLocalProgress();
+    const key = String(dayNumber);
+    if (progress[key]) {
+      delete progress[key];
+      saveHerLocalProgress(progress);
+    }
+  } catch (e) {
+    console.warn('Could not reseal single capsule', e);
+  }
 }
 
 async function ensureGhVaultLoaded() {
@@ -826,12 +847,17 @@ export async function herInteractCapsule(dayNumber, changes) {
     if (changes.isOpenedByHer !== undefined) {
       cur.isOpenedByHer = Boolean(changes.isOpenedByHer);
       if (cur.isOpenedByHer && !cur.openedAt) cur.openedAt = new Date().toISOString();
+      if (!cur.isOpenedByHer) cur.openedAt = null;
     }
     if (changes.isFavorite !== undefined) cur.isFavorite = Boolean(changes.isFavorite);
     if (changes.dynamicDone !== undefined) cur.dynamicDone = Boolean(changes.dynamicDone);
     if (changes.dynamicAnswer !== undefined) cur.dynamicAnswer = changes.dynamicAnswer;
     if (changes.herReply !== undefined) cur.herReply = changes.herReply;
-    progress[key] = cur;
+    if (!cur.isOpenedByHer && !cur.isFavorite && !cur.dynamicDone && !cur.herReply && !cur.dynamicAnswer) {
+      delete progress[key];
+    } else {
+      progress[key] = cur;
+    }
     saveHerLocalProgress(progress);
     return true;
   }
@@ -844,6 +870,9 @@ export async function herInteractCapsule(dayNumber, changes) {
     target.isOpenedByHer = Boolean(changes.isOpenedByHer);
     if (target.isOpenedByHer && !target.openedAt) {
       target.openedAt = new Date().toISOString();
+    }
+    if (!target.isOpenedByHer) {
+      target.openedAt = null;
     }
   }
   if (changes.isFavorite !== undefined) target.isFavorite = Boolean(changes.isFavorite);
