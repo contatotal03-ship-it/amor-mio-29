@@ -69,9 +69,10 @@
 }
 
 .curtain-sub {
-  max-width: 440px;
+  max-width: 540px;
   color: var(--text-muted);
-  font-size: 0.98rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
   margin-bottom: 34px;
 }
 

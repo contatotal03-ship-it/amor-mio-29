@@ -155,12 +155,18 @@ function renderAll() {
   const { settings, capsules } = state;
   if (!settings) return;
 
-  document.title = `${settings.appTitle} · Para ${settings.herName}`;
-  document.getElementById('curtain-her-name').textContent = `Para ${settings.herName}`;
-  document.getElementById('hero-title').textContent = settings.appTitle || '29 Capítulos';
-  document.getElementById('hero-her-name').textContent = `Para ti, ${settings.herName}`;
-  document.getElementById('hero-subtitle').textContent = settings.appSubtitle || '';
-  document.getElementById('brand-title-mini').textContent = settings.appTitle || '29 Capítulos';
+  const her = settings.herName && settings.herName !== 'Amor Mío' ? settings.herName : 'Camila';
+  document.title = `${settings.appTitle || 'Rumbo a tus 29'} · Para ${her}`;
+  const curtainHer = document.getElementById('curtain-her-name');
+  if (curtainHer) {
+    curtainHer.textContent = `✦ PARA ${her.toUpperCase()}, EL AMOR DE MI VIDA ✦`;
+  }
+  document.getElementById('hero-title').textContent = settings.appTitle || 'Rumbo a tus 29';
+  document.getElementById('hero-her-name').textContent = `Para ti, ${her} · Mi amor y mi princesa`;
+  document.getElementById('hero-subtitle').textContent =
+    settings.appSubtitle ||
+    'Treinta días pensados única y exclusivamente para hacerte sonreír y recordarte lo especial que eres para mí.';
+  document.getElementById('brand-title-mini').textContent = settings.appTitle || 'Rumbo a tus 29';
 
   const authorizedCount = capsules.filter((c) => c.isAuthorized).length;
   const openedCount = capsules.filter((c) => c.isAuthorized && c.isOpenedByHer).length;
