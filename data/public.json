@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:33.399Z",
+  "updatedAt": "2026-11-12T04:25:35.332Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -143,19 +143,8 @@
     },
     {
       "dayNumber": 27,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XXVII · Casi en la meta",
-      "unlockedTitle": "La llave de los últimos 3 días",
-      "message": "Hoy no está escondido en un mueble... el código secreto de hoy te lo voy a decir yo al oído (o por nota de voz).",
-      "dynamicType": "clue",
-      "dynamicPayload": {
-        "riddle": "Pregúntame o escucha la palabra secreta que te susurré hoy...",
-        "secretCode": "TE AMO",
-        "rewardText": "¡Desbloqueado! Pista #2 del gran regalo: alista una sonrisa enorme porque viene algo inolvidable."
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXVII · Casi en la meta"
     },
     {
       "dayNumber": 28,
