@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:29.433Z",
+  "updatedAt": "2026-11-12T04:10:31.439Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -334,8 +334,22 @@
     },
     {
       "dayNumber": 18,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XVIII · Sorpresa gastronómica"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XVIII · Sorpresa gastronómica",
+      "unlockedTitle": "Menú secreto de esta noche",
+      "message": "Esta noche no cocinas ni mueves un dedo. Tú solo elige el estilo de tu antojo:",
+      "dynamicType": "challenge",
+      "dynamicPayload": {
+        "prompt": "Elige la vibra de tu cena:",
+        "choices": [
+          "Italiana: pasta, vino y velas",
+          "Asiática: sushi / ramen especial",
+          "Parrilla / Burgers gourmet & cocteles"
+        ]
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": []
     },
     {
       "dayNumber": 19,
