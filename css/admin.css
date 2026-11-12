@@ -378,3 +378,58 @@
   display: grid;
   gap: 8px;
 }
+
+/* Comfortable Long-Letter Editor + Fullscreen Writing Studio */
+.textarea-letter {
+  min-height: 220px;
+  max-height: 520px;
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.letter-studio-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 820;
+  background: rgba(5, 4, 9, 0.9);
+  backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.letter-studio-card {
+  width: min(96vw, 940px);
+  height: min(90vh, 780px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(170deg, #171323 0%, #09080e 100%);
+  border: 1.5px solid var(--border-gold-strong);
+  box-shadow: var(--shadow-luxury);
+}
+
+@media (max-width: 600px) {
+  .letter-studio-card {
+    padding: 16px;
+    height: 92vh;
+  }
+}
+
+.studio-snippets-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.letter-studio-textarea {
+  flex: 1;
+  width: 100%;
+  font-size: 1.05rem;
+  line-height: 1.82;
+  padding: 18px 20px;
+  resize: none;
+}

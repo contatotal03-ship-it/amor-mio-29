@@ -179,8 +179,14 @@
             </div>
 
             <div>
-              <label class="field-label" for="ed-message">Carta / Mensaje para ella</label>
-              <textarea id="ed-message" class="textarea" placeholder="Escríbele desde el corazón..."></textarea>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;">
+                <label class="field-label" for="ed-message" style="margin-bottom:0;">Carta / Mensaje para ella</label>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span id="ed-message-count" style="font-size:0.75rem;color:var(--text-muted);">0 palabras</span>
+                  <button type="button" class="btn btn-glass btn-sm" id="ed-expand-letter-btn">🖋️ Ampliar para escribir</button>
+                </div>
+              </div>
+              <textarea id="ed-message" class="textarea textarea-letter" placeholder="Escríbele desde el corazón..."></textarea>
             </div>
 
             <div class="form-row-2" style="background:rgba(255,255,255,0.025);padding:12px 14px;border-radius:12px;border:1px solid var(--border-subtle);">
@@ -464,6 +470,39 @@
       </div>
     </section>
   </main>
+
+  <!-- FULLSCREEN / WIDE LETTER WRITING STUDIO OVERLAY -->
+  <div class="letter-studio-overlay hidden" id="letter-studio-overlay">
+    <div class="letter-studio-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <span class="modal-day-tag" id="studio-day-label">Capítulo 01</span>
+          <h2 class="font-display gold-text" style="font-size:1.65rem;">Estudio de Carta Amplio</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span id="studio-word-count" style="font-size:0.8rem;color:var(--text-muted);">0 palabras</span>
+          <button type="button" class="icon-btn" id="studio-close-x" aria-label="Cerrar estudio">✕</button>
+        </div>
+      </div>
+
+      <div class="studio-snippets-bar" id="studio-snippets-bar">
+        <button type="button" class="filter-pill" data-insert="Amor mío, ">Amor mío,</button>
+        <button type="button" class="filter-pill" data-insert="Mi princesa, ">Mi princesa,</button>
+        <button type="button" class="filter-pill" data-insert="💖">💖</button>
+        <button type="button" class="filter-pill" data-insert="🌻">🌻</button>
+        <button type="button" class="filter-pill" data-insert="✨">✨</button>
+        <button type="button" class="filter-pill" data-insert="👑">👑</button>
+        <button type="button" class="filter-pill" data-insert="🥂">🥂</button>
+      </div>
+
+      <textarea id="studio-textarea" class="textarea letter-studio-textarea" placeholder="Escribe aquí tranquilo todo lo que quieras decirle, con espacio amplio para leer cada párrafo completo..."></textarea>
+
+      <div style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn btn-glass" id="studio-apply-btn">✅ Aplicar y volver</button>
+        <button type="button" class="btn btn-gold" id="studio-save-now-btn">💾 Guardar Capítulo Ahora</button>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="./js/admin.js"></script>
 </body>

@@ -241,12 +241,28 @@ function loadDayIntoEditor(dayNumber, useCurrentDraft = false) {
   document.getElementById('ed-teaser').value = cap.teaserTitle || '';
   document.getElementById('ed-title').value = cap.unlockedTitle || '';
   document.getElementById('ed-message').value = cap.message || '';
+  updateLetterBoxStats();
   document.getElementById('ed-allow-reply').checked = Boolean(cap.allowReply);
   document.getElementById('ed-sunflowers').checked = Boolean(cap.hasSunflowers);
   document.getElementById('ed-dynamic-type').value = cap.dynamicType || 'classic';
 
   renderDynamicFieldsEditor(cap.dynamicType || 'classic', cap.dynamicPayload || {});
   renderAdminMediaList(cap.mediaItems || []);
+}
+
+function countWordsLabel(text) {
+  const clean = (text || '').trim();
+  const words = clean ? clean.split(/\s+/).length : 0;
+  return `${words} palabras · ${clean.length} caracteres`;
+}
+
+function updateLetterBoxStats() {
+  const box = document.getElementById('ed-message');
+  if (!box) return;
+  box.style.height = 'auto';
+  box.style.height = `${Math.min(520, Math.max(220, box.scrollHeight + 8))}px`;
+  const countEl = document.getElementById('ed-message-count');
+  if (countEl) countEl.textContent = countWordsLabel(box.value);
 }
 
 function updateAuthorizeButtonUI(cap) {
@@ -1017,7 +1033,65 @@ function bindStaticEvents() {
     if (el) el.addEventListener('input', () => setDraftDirty(true));
     if (el && el.type === 'checkbox') el.addEventListener('change', () => setDraftDirty(true));
   });
+  document.getElementById('ed-message').addEventListener('input', updateLetterBoxStats);
   document.getElementById('ed-dynamic-fields').addEventListener('input', () => setDraftDirty(true));
+
+  // Fullscreen / Wide Letter Writing Studio
+  const studioOverlay = document.getElementById('letter-studio-overlay');
+  const studioTa = document.getElementById('studio-textarea');
+  const studioCount = document.getElementById('studio-word-count');
+
+  const openStudio = () => {
+    const edMsg = document.getElementById('ed-message');
+    document.getElementById('studio-day-label').textContent = `Capítulo ${String(state.selectedDay).padStart(2, '0')}`;
+    studioTa.value = edMsg.value;
+    studioCount.textContent = countWordsLabel(studioTa.value);
+    studioOverlay.classList.remove('hidden');
+    studioTa.focus();
+  };
+
+  const applyStudioToEditor = () => {
+    const edMsg = document.getElementById('ed-message');
+    if (edMsg.value !== studioTa.value) {
+      edMsg.value = studioTa.value;
+      setDraftDirty(true);
+    }
+    updateLetterBoxStats();
+    studioOverlay.classList.add('hidden');
+  };
+
+  document.getElementById('ed-expand-letter-btn').addEventListener('click', openStudio);
+  document.getElementById('studio-apply-btn').addEventListener('click', applyStudioToEditor);
+  document.getElementById('studio-close-x').addEventListener('click', applyStudioToEditor);
+  studioTa.addEventListener('input', () => {
+    studioCount.textContent = countWordsLabel(studioTa.value);
+  });
+
+  document.getElementById('studio-snippets-bar').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-insert]');
+    if (!btn) return;
+    const snippet = btn.dataset.insert;
+    const start = studioTa.selectionStart ?? studioTa.value.length;
+    const end = studioTa.selectionEnd ?? studioTa.value.length;
+    studioTa.setRangeText(snippet, start, end, 'end');
+    studioTa.focus();
+    studioCount.textContent = countWordsLabel(studioTa.value);
+  });
+
+  document.getElementById('studio-save-now-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('studio-save-now-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Guardando...';
+    applyStudioToEditor();
+    try {
+      await saveCurrentDayFromEditor();
+    } catch (err) {
+      showToast('Error al guardar: ' + (err.message || 'Verifica conexión'));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '💾 Guardar Capítulo Ahora';
+    }
+  });
 
   // Dynamic type switcher
   document.getElementById('ed-dynamic-type').addEventListener('change', (e) => {
