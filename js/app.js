@@ -524,10 +524,10 @@ function ensureSpotifyDrawer(embedUrl) {
     drawer.className = 'spotify-drawer hidden';
     drawer.innerHTML = `
       <div class="spotify-drawer-head">
-        <span>🎧 Tu Banda Sonora</span>
+        <span>🎧 Día especial 29</span>
         <button type="button" class="icon-btn" style="width:28px;height:28px;font-size:0.85rem;" id="spotify-drawer-close">✕</button>
       </div>
-      <iframe class="spotify-embed-frame" id="spotify-drawer-iframe" height="352" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <iframe class="spotify-embed-frame" id="spotify-drawer-iframe" height="180" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     `;
     document.body.appendChild(drawer);
     drawer.querySelector('#spotify-drawer-close').addEventListener('click', () => {
