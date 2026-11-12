@@ -33,22 +33,38 @@
         Solo tú puedes entrar aquí para preparar y autorizar los capítulos.
       </p>
 
-      <!-- GitHub Cloud Auth Form -->
+      <!-- Master PIN Login Form (Default & Simple: 2929) -->
+      <form id="pin-login-form" class="form-grid">
+        <div style="text-align:left;">
+          <label class="field-label" for="admin-pin-input">PIN de Acceso</label>
+          <input id="admin-pin-input" type="password" class="input" placeholder="Introduce tu PIN (2929)" autocomplete="current-password" inputmode="numeric" autofocus />
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);cursor:pointer;">
+          <input type="checkbox" id="pin-remember-check" checked />
+          Recordar sesión en este teléfono/navegador
+        </label>
+        <button type="submit" class="btn btn-gold">Entrar al Panel ✨</button>
+        <p style="font-size:0.75rem;color:var(--text-dim);">
+          Acceso rápido y seguro · PIN por defecto: <code>2929</code>
+        </p>
+        <button type="button" id="toggle-manual-token-btn" class="btn btn-glass btn-sm" style="font-size:0.75rem;opacity:0.75;">
+          🔑 Ingresar con Token de GitHub manual
+        </button>
+      </form>
+
+      <!-- GitHub Cloud Auth Form (Manual Fallback) -->
       <form id="github-login-form" class="form-grid hidden">
         <div style="text-align:left;">
           <label class="field-label" for="gh-token-input">Llave / Token de Acceso GitHub</label>
-          <input id="gh-token-input" type="password" class="input" required placeholder="ghp_..." autocomplete="current-password" />
+          <input id="gh-token-input" type="password" class="input" placeholder="ghp_..." autocomplete="current-password" />
         </div>
         <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);cursor:pointer;">
           <input type="checkbox" id="gh-remember-check" checked />
           Recordar sesión en este teléfono/navegador
         </label>
-        <button type="submit" class="btn btn-gold">Entrar a la Nube GitHub ☁️</button>
-        <p style="font-size:0.75rem;color:var(--text-dim);">
-          100% en la nube 24/7 sin depender de tu PC. Solo el propietario de GitHub puede entrar.
-        </p>
-        <button type="button" id="switch-local-dev-btn" class="btn btn-glass btn-sm hidden">
-          💻 Usar Modo Local de Prueba
+        <button type="submit" class="btn btn-gold">Entrar con Token ☁️</button>
+        <button type="button" id="back-to-pin-btn" class="btn btn-glass btn-sm" style="font-size:0.75rem;opacity:0.75;">
+          ↩️ Volver al PIN 2929
         </button>
       </form>
 

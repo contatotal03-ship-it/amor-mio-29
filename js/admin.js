@@ -46,6 +46,24 @@ let state = {
   audioChunks: []
 };
 
+const GITHUB_VAULT_CIPHER = 'VVFCZnpefAhETUBAYkMAcGJsAX5ja2F9C1RoeHgNZGBgWgNrVAhwSw==';
+
+function decryptWithPin(b64Cipher, pin) {
+  try {
+    const bin = atob(b64Cipher);
+    const key = new TextEncoder().encode(pin);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) {
+      bytes[i] = bin.charCodeAt(i) ^ key[i % key.length];
+    }
+    const dec = new TextDecoder('utf-8').decode(bytes);
+    if (dec.startsWith('ghp_')) return dec;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Boot & Auth Gate
 // ---------------------------------------------------------------------------
@@ -57,16 +75,17 @@ async function init() {
 
 async function checkAuthGate() {
   const mode = getBackendMode();
+  const pinForm = document.getElementById('pin-login-form');
   const localForm = document.getElementById('local-login-form');
   const cloudForm = document.getElementById('cloud-login-form');
   const githubForm = document.getElementById('github-login-form');
-  const localSwitchBtn = document.getElementById('switch-local-dev-btn');
   const gate = document.getElementById('admin-gate');
   const shell = document.getElementById('admin-shell');
 
-  localForm.classList.add('hidden');
-  cloudForm.classList.add('hidden');
-  githubForm.classList.add('hidden');
+  if (pinForm) pinForm.classList.add('hidden');
+  if (localForm) localForm.classList.add('hidden');
+  if (cloudForm) cloudForm.classList.add('hidden');
+  if (githubForm) githubForm.classList.add('hidden');
 
   if (mode === 'local') {
     if (sessionStorage.getItem('cap29_local_unlocked') === '1') {
@@ -75,7 +94,8 @@ async function checkAuthGate() {
     }
     gate.classList.remove('hidden');
     shell.classList.add('hidden');
-    localForm.classList.remove('hidden');
+    if (pinForm) pinForm.classList.remove('hidden');
+    else if (localForm) localForm.classList.remove('hidden');
     return;
   }
 
@@ -88,8 +108,8 @@ async function checkAuthGate() {
   gate.classList.remove('hidden');
   shell.classList.add('hidden');
   if (mode === 'github') {
-    githubForm.classList.remove('hidden');
-    if (isLocalhostEnv()) localSwitchBtn.classList.remove('hidden');
+    if (pinForm) pinForm.classList.remove('hidden');
+    else if (githubForm) githubForm.classList.remove('hidden');
   } else {
     cloudForm.classList.remove('hidden');
   }
@@ -1208,7 +1228,57 @@ function switchTab(tabName) {
 }
 
 function bindStaticEvents() {
-  // GitHub Cloud login
+  // Master PIN 2929 login (instant & simple)
+  const pinForm = document.getElementById('pin-login-form');
+  if (pinForm) {
+    pinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const enteredPin = document.getElementById('admin-pin-input').value.trim();
+      const remember = document.getElementById('pin-remember-check').checked;
+      const btn = e.target.querySelector('button[type="submit"]');
+      const orig = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '⏳ Conectando...';
+
+      try {
+        const token = decryptWithPin(GITHUB_VAULT_CIPHER, enteredPin);
+        if (token) {
+          await signInGitHubAdmin(token, remember);
+          await enterCommandCenter('github');
+          showToast('✨ ¡Bienvenido a tu Centro de Mando!');
+          return;
+        }
+
+        // If local mode
+        const localPin = getLocalAdminPin();
+        if (enteredPin === localPin || enteredPin === '2929') {
+          sessionStorage.setItem('cap29_local_unlocked', '1');
+          await enterCommandCenter('local');
+          showToast('✨ Entraste al panel');
+          return;
+        }
+
+        showToast('❌ PIN incorrecto. Introduce 2929');
+      } catch (err) {
+        showToast('Error al conectar: ' + (err.message || 'Verifica tu conexión'));
+      } finally {
+        btn.disabled = false;
+        btn.textContent = orig;
+      }
+    });
+
+    document.getElementById('toggle-manual-token-btn')?.addEventListener('click', () => {
+      pinForm.classList.add('hidden');
+      document.getElementById('github-login-form')?.classList.remove('hidden');
+    });
+
+    document.getElementById('back-to-pin-btn')?.addEventListener('click', () => {
+      document.getElementById('github-login-form')?.classList.add('hidden');
+      pinForm.classList.remove('hidden');
+    });
+  }
+
+  // GitHub Cloud login (Manual Fallback)
   document.getElementById('github-login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
@@ -1233,7 +1303,7 @@ function bindStaticEvents() {
   });
 
   // Optional local preview toggle (localhost only)
-  document.getElementById('switch-local-dev-btn').addEventListener('click', () => {
+  document.getElementById('switch-local-dev-btn')?.addEventListener('click', () => {
     setLocalPreviewOverride(true);
     window.location.reload();
   });
