@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:23:58.338Z",
+  "updatedAt": "2026-11-12T04:24:00.204Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -28,21 +28,8 @@
     },
     {
       "dayNumber": 4,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo IV · Escucha mi voz",
-      "unlockedTitle": "Palabras que prefiero decirte al oído",
-      "message": "A veces las letras se quedan cortas. Dale play al audio de arriba y cierra los ojos un segundo.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/37miw1ff4zH0LDuFrBvZ4i",
-          "caption": "?? Sabes ? Reik"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo IV · Escucha mi voz"
     },
     {
       "dayNumber": 5,
