@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:57:52.689Z",
+  "updatedAt": "2026-11-12T03:57:55.523Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -106,24 +106,27 @@
     },
     {
       "dayNumber": 8,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo",
-      "unlockedTitle": "Nuestras fotos favoritas (Parte I)",
-      "message": "Estaba mirando nuestra galería y encontré estos momentos. Si pudiera congelar el tiempo, volvería a reírme contigo exactamente así.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/5QjmUqgpPQgXgg4606DqZF",
-          "caption": "?? UWAIE ? Kapo"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo"
     },
     {
       "dayNumber": 9,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo IX · Brilla bajo el oro"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo IX · Brilla bajo el oro",
+      "unlockedTitle": "Sorpresa de media mañana",
+      "message": "Solo quiero hacer que hoy sea un poquito más dulce que ayer. Raspa aquí abajo:",
+      "dynamicType": "scratch",
+      "dynamicPayload": {
+        "prompt": "Descubre qué viene en camino hoy",
+        "secretReward": "¡Un café/postre sorpresa pensado justo para alegrarte el día hoy!"
+      },
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/45xU99QgWETDFGhgivpYce",
+          "caption": "?? Te Vi Venir ? Sin Bandera"
+        }
+      ]
     },
     {
       "dayNumber": 10,
