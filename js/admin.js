@@ -28,7 +28,7 @@ import {
   importFullBackupJson
 } from './store.js';
 import { PUBLIC_CONFIG } from './config.js';
-import { IDEAS_BANK, DYNAMIC_TYPES } from './ideas-bank.js';
+import { IDEAS_BANK, DYNAMIC_TYPES, getIdeaForDay } from './ideas-bank.js';
 import { initStardust, showToast, launchGoldConfetti } from './particles.js';
 import { openCinemaModal, renderAndDownloadFinaleVideo } from './cinema.js';
 
@@ -36,6 +36,9 @@ let state = {
   settings: null,
   privateSettings: null,
   capsules: [],
+  draftCapsule: null,
+  hasUnsavedDraft: false,
+  ideaVariantsMap: {},
   selectedDay: 1,
   ideasActFilter: 'all',
   mediaRecorder: null,
@@ -187,13 +190,29 @@ function renderDaysGrid() {
 // ---------------------------------------------------------------------------
 // Day Editor
 // ---------------------------------------------------------------------------
-function getCurrentCapsule() {
-  return state.capsules.find((c) => c.dayNumber === state.selectedDay);
+function getSavedCapsule(dayNumber = state.selectedDay) {
+  return state.capsules.find((c) => c.dayNumber === dayNumber);
 }
 
-function loadDayIntoEditor(dayNumber) {
-  const cap = state.capsules.find((c) => c.dayNumber === dayNumber);
-  if (!cap) return;
+function getCurrentCapsule() {
+  return state.draftCapsule || getSavedCapsule();
+}
+
+function setDraftDirty(dirty) {
+  state.hasUnsavedDraft = Boolean(dirty);
+  const banner = document.getElementById('ed-draft-banner');
+  if (banner) banner.classList.toggle('hidden', !state.hasUnsavedDraft);
+}
+
+function loadDayIntoEditor(dayNumber, useCurrentDraft = false) {
+  const saved = getSavedCapsule(dayNumber);
+  if (!saved) return;
+
+  if (!useCurrentDraft) {
+    state.draftCapsule = structuredClone(saved);
+    setDraftDirty(false);
+  }
+  const cap = getCurrentCapsule();
 
   const idea = IDEAS_BANK.find((i) => i.day === dayNumber);
   document.getElementById('ed-act-badge').textContent = idea ? idea.act : 'Capítulo';
@@ -274,18 +293,25 @@ function renderDynamicFieldsEditor(type, payload = {}) {
 
   if (type === 'trivia') {
     const opts = Array.isArray(payload.options) ? payload.options : ['', '', '', ''];
+    const fbs = Array.isArray(payload.optionFeedbacks) ? payload.optionFeedbacks : ['', '', '', ''];
     container.innerHTML = `
       <div class="form-grid">
         <div>
           <label class="field-label">Pregunta para ella</label>
           <input id="dyn-question" type="text" class="input" />
         </div>
-        <div class="form-row-2">
-          <div><label class="field-label">Opción 1</label><input id="dyn-opt-0" type="text" class="input" /></div>
-          <div><label class="field-label">Opción 2</label><input id="dyn-opt-1" type="text" class="input" /></div>
-          <div><label class="field-label">Opción 3</label><input id="dyn-opt-2" type="text" class="input" /></div>
-          <div><label class="field-label">Opción 4</label><input id="dyn-opt-3" type="text" class="input" /></div>
-        </div>
+        ${[0, 1, 2, 3].map((i) => `
+          <div class="option-feedback-pair">
+            <div>
+              <label class="field-label">Opción ${i + 1}</label>
+              <input id="dyn-opt-${i}" type="text" class="input" />
+            </div>
+            <div>
+              <label class="field-label" style="color:var(--rose-champagne);">Mensaje en pantalla si toca Opción ${i + 1}</label>
+              <input id="dyn-opt-fb-${i}" type="text" class="input" placeholder="Ej: ¡Qué linda respuesta! Pero..." />
+            </div>
+          </div>
+        `).join('')}
         <div class="form-row-2">
           <div>
             <label class="field-label">Opción Correcta</label>
@@ -297,18 +323,21 @@ function renderDynamicFieldsEditor(type, payload = {}) {
             </select>
           </div>
           <div>
-            <label class="field-label">Pista si falla</label>
+            <label class="field-label">Pista general (si dejas campo arriba vacío)</label>
             <input id="dyn-hint" type="text" class="input" />
           </div>
         </div>
         <div>
-          <label class="field-label">Recompensa al acertar</label>
+          <label class="field-label">Recompensa general al acertar</label>
           <input id="dyn-reward" type="text" class="input" />
         </div>
       </div>
     `;
     container.querySelector('#dyn-question').value = payload.question || '';
-    for (let i = 0; i < 4; i++) container.querySelector(`#dyn-opt-${i}`).value = opts[i] || '';
+    for (let i = 0; i < 4; i++) {
+      container.querySelector(`#dyn-opt-${i}`).value = opts[i] || '';
+      container.querySelector(`#dyn-opt-fb-${i}`).value = fbs[i] || '';
+    }
     container.querySelector('#dyn-correct').value = String(payload.correctIndex ?? 0);
     container.querySelector('#dyn-hint').value = payload.hint || '';
     container.querySelector('#dyn-reward').value = payload.rewardText || '';
@@ -360,19 +389,32 @@ function renderDynamicFieldsEditor(type, payload = {}) {
 
   if (type === 'challenge') {
     const ch = Array.isArray(payload.choices) ? payload.choices : ['', '', ''];
+    const cbs = Array.isArray(payload.choiceFeedbacks) ? payload.choiceFeedbacks : ['', '', ''];
     container.innerHTML = `
       <div class="form-grid">
         <div>
           <label class="field-label">Pregunta o Elección del Día</label>
           <input id="dyn-prompt" type="text" class="input" />
         </div>
-        <div><label class="field-label">Opción A</label><input id="dyn-ch-0" type="text" class="input" /></div>
-        <div><label class="field-label">Opción B</label><input id="dyn-ch-1" type="text" class="input" /></div>
-        <div><label class="field-label">Opción C (Opcional)</label><input id="dyn-ch-2" type="text" class="input" /></div>
+        ${[0, 1, 2].map((i) => `
+          <div class="option-feedback-pair">
+            <div>
+              <label class="field-label">Opción ${String.fromCharCode(65 + i)}${i === 2 ? ' (Opcional)' : ''}</label>
+              <input id="dyn-ch-${i}" type="text" class="input" />
+            </div>
+            <div>
+              <label class="field-label" style="color:var(--rose-champagne);">Mensaje en pantalla si elige Opción ${String.fromCharCode(65 + i)}</label>
+              <input id="dyn-ch-fb-${i}" type="text" class="input" placeholder="Ej: ¡Me encanta! Alístalo todo..." />
+            </div>
+          </div>
+        `).join('')}
       </div>
     `;
     container.querySelector('#dyn-prompt').value = payload.prompt || '';
-    for (let i = 0; i < 3; i++) container.querySelector(`#dyn-ch-${i}`).value = ch[i] || '';
+    for (let i = 0; i < 3; i++) {
+      container.querySelector(`#dyn-ch-${i}`).value = ch[i] || '';
+      container.querySelector(`#dyn-ch-fb-${i}`).value = cbs[i] || '';
+    }
   }
 }
 
@@ -385,11 +427,19 @@ function collectDynamicPayloadFromEditor(type) {
     };
   }
   if (type === 'trivia') {
+    const options = [];
+    const optionFeedbacks = [];
+    for (let i = 0; i < 4; i++) {
+      const val = c.querySelector(`#dyn-opt-${i}`)?.value.trim() || '';
+      if (val) {
+        options.push(val);
+        optionFeedbacks.push(c.querySelector(`#dyn-opt-fb-${i}`)?.value.trim() || '');
+      }
+    }
     return {
       question: c.querySelector('#dyn-question')?.value.trim() || '',
-      options: [0, 1, 2, 3]
-        .map((i) => c.querySelector(`#dyn-opt-${i}`)?.value.trim() || '')
-        .filter(Boolean),
+      options,
+      optionFeedbacks,
       correctIndex: Number(c.querySelector('#dyn-correct')?.value || 0),
       hint: c.querySelector('#dyn-hint')?.value.trim() || '',
       rewardText: c.querySelector('#dyn-reward')?.value.trim() || ''
@@ -409,11 +459,19 @@ function collectDynamicPayloadFromEditor(type) {
     };
   }
   if (type === 'challenge') {
+    const choices = [];
+    const choiceFeedbacks = [];
+    for (let i = 0; i < 3; i++) {
+      const val = c.querySelector(`#dyn-ch-${i}`)?.value.trim() || '';
+      if (val) {
+        choices.push(val);
+        choiceFeedbacks.push(c.querySelector(`#dyn-ch-fb-${i}`)?.value.trim() || '');
+      }
+    }
     return {
       prompt: c.querySelector('#dyn-prompt')?.value.trim() || '',
-      choices: [0, 1, 2]
-        .map((i) => c.querySelector(`#dyn-ch-${i}`)?.value.trim() || '')
-        .filter(Boolean)
+      choices,
+      choiceFeedbacks
     };
   }
   return {};
@@ -512,13 +570,36 @@ async function saveCurrentDayFromEditor() {
   cap.dynamicPayload = collectDynamicPayloadFromEditor(cap.dynamicType);
 
   await saveAdminCapsule(cap);
+  const idx = state.capsules.findIndex((c) => c.dayNumber === cap.dayNumber);
+  if (idx >= 0) state.capsules[idx] = structuredClone(cap);
+  else state.capsules.push(structuredClone(cap));
+  setDraftDirty(false);
+
   renderStats();
   renderDaysGrid();
   showToast(`💾 Capítulo ${String(cap.dayNumber).padStart(2, '0')} guardado`);
 }
 
+function applyIdeaPreviewToDraft(idea) {
+  state.selectedDay = idea.day;
+  const saved = getSavedCapsule(idea.day);
+  const draft = structuredClone(saved);
+  draft.teaserTitle = idea.teaserTitle;
+  draft.unlockedTitle = idea.unlockedTitle;
+  draft.message = idea.message;
+  draft.allowReply = Boolean(idea.allowReply);
+  draft.hasSunflowers = Boolean(idea.hasSunflowers);
+  draft.dynamicType = idea.dynamicType;
+  draft.dynamicPayload = structuredClone(idea.dynamicPayload || {});
+  state.draftCapsule = draft;
+
+  setDraftDirty(true);
+  renderDaysGrid();
+  loadDayIntoEditor(idea.day, true);
+}
+
 // ---------------------------------------------------------------------------
-// Ideas Assistant
+// Ideas Assistant (Plan A & Plan B, Safe Draft Preview)
 // ---------------------------------------------------------------------------
 function renderIdeasGrid() {
   const grid = document.getElementById('ideas-grid');
@@ -528,42 +609,51 @@ function renderIdeasGrid() {
     (item) => state.ideasActFilter === 'all' || item.act === state.ideasActFilter
   );
 
-  for (const idea of items) {
+  for (const baseItem of items) {
+    const variant = state.ideaVariantsMap[baseItem.day] || 'A';
+    const idea = getIdeaForDay(baseItem.day, variant);
     const dynMeta = DYNAMIC_TYPES[idea.dynamicType] || DYNAMIC_TYPES.classic;
     const card = document.createElement('article');
     card.className = 'idea-card';
 
     const top = document.createElement('div');
     top.innerHTML = `
-      <span class="idea-act-badge">${idea.act} · Día ${String(idea.day).padStart(2, '0')}</span>
+      <span class="idea-act-badge">${idea.act} · Día ${String(idea.day).padStart(2, '0')} · Plan ${variant}</span>
       <h3 class="font-display gold-text" style="font-size:1.35rem;margin:4px 0 6px;">${idea.unlockedTitle}</h3>
       <span style="display:inline-block;font-size:0.74rem;color:var(--rose-champagne);margin-bottom:8px;">
-        ${dynMeta.icon} ${dynMeta.label}
+        ${dynMeta.icon} ${dynMeta.label}${idea.hasSunflowers ? ' · 🌻 Girasoles' : ''}
       </span>
       <p style="font-size:0.86rem;color:var(--text-muted);line-height:1.5;">${idea.suggestion}</p>
     `;
 
-    const applyBtn = document.createElement('button');
-    applyBtn.type = 'button';
-    applyBtn.className = 'btn btn-glass btn-sm';
-    applyBtn.textContent = `✨ Cargar al Día ${String(idea.day).padStart(2, '0')}`;
-    applyBtn.addEventListener('click', () => {
-      state.selectedDay = idea.day;
-      const cap = getCurrentCapsule();
-      cap.teaserTitle = idea.teaserTitle;
-      cap.unlockedTitle = idea.unlockedTitle;
-      cap.message = idea.message;
-      cap.dynamicType = idea.dynamicType;
-      cap.dynamicPayload = structuredClone(idea.dynamicPayload || {});
+    const actions = document.createElement('div');
+    actions.style.display = 'flex';
+    actions.style.gap = '8px';
+    actions.style.flexWrap = 'wrap';
 
-      switchTab('capsules');
-      renderDaysGrid();
-      loadDayIntoEditor(idea.day);
-      showToast(`💡 Idea del Día ${idea.day} cargada en el editor (recuerda guardar).`);
+    const switchBtn = document.createElement('button');
+    switchBtn.type = 'button';
+    switchBtn.className = 'btn btn-glass btn-sm';
+    switchBtn.textContent = variant === 'A' ? '🎲 Ver Plan B' : '↩️ Ver Plan A';
+    switchBtn.addEventListener('click', () => {
+      state.ideaVariantsMap[baseItem.day] = variant === 'A' ? 'B' : 'A';
+      renderIdeasGrid();
     });
 
+    const applyBtn = document.createElement('button');
+    applyBtn.type = 'button';
+    applyBtn.className = 'btn btn-gold btn-sm';
+    applyBtn.textContent = `✨ Cargar al Día ${String(idea.day).padStart(2, '0')}`;
+    applyBtn.addEventListener('click', () => {
+      switchTab('capsules');
+      applyIdeaPreviewToDraft(idea);
+      showToast(`💡 Vista previa Plan ${variant} cargada. Pulsa "Guardar Capítulo" si deseas aplicarla.`);
+    });
+
+    actions.appendChild(switchBtn);
+    actions.appendChild(applyBtn);
     card.appendChild(top);
-    card.appendChild(applyBtn);
+    card.appendChild(actions);
     grid.appendChild(card);
   }
 }
@@ -903,23 +993,36 @@ function bindStaticEvents() {
     }
   });
 
-  // Load idea for current day
+  // Load Plan A / Plan B idea as safe unsaved draft preview
   document.getElementById('ed-load-idea-btn').addEventListener('click', () => {
-    const idea = IDEAS_BANK.find((i) => i.day === state.selectedDay);
-    if (!idea) return;
-    const cap = getCurrentCapsule();
-    cap.teaserTitle = idea.teaserTitle;
-    cap.unlockedTitle = idea.unlockedTitle;
-    cap.message = idea.message;
-    cap.dynamicType = idea.dynamicType;
-    cap.dynamicPayload = structuredClone(idea.dynamicPayload || {});
-    loadDayIntoEditor(state.selectedDay);
-    showToast('💡 Idea cargada. Personalízala y pulsa Guardar.');
+    const idea = getIdeaForDay(state.selectedDay, 'A');
+    applyIdeaPreviewToDraft(idea);
+    showToast('💡 Plan A cargado como borrador (no reemplaza lo tuyo hasta que pulses Guardar).');
   });
+
+  document.getElementById('ed-load-planb-btn').addEventListener('click', () => {
+    const idea = getIdeaForDay(state.selectedDay, 'B');
+    applyIdeaPreviewToDraft(idea);
+    showToast('🎲 Plan B cargado como borrador (no reemplaza lo tuyo hasta que pulses Guardar).');
+  });
+
+  document.getElementById('ed-discard-draft-btn').addEventListener('click', () => {
+    loadDayIntoEditor(state.selectedDay, false);
+    showToast('↩️ Borrador descartado; se mantuvo tu versión guardada.');
+  });
+
+  // Track manual unsaved edits
+  ['ed-teaser', 'ed-title', 'ed-message', 'ed-allow-reply', 'ed-sunflowers', 'ed-dynamic-type'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => setDraftDirty(true));
+    if (el && el.type === 'checkbox') el.addEventListener('change', () => setDraftDirty(true));
+  });
+  document.getElementById('ed-dynamic-fields').addEventListener('input', () => setDraftDirty(true));
 
   // Dynamic type switcher
   document.getElementById('ed-dynamic-type').addEventListener('change', (e) => {
     const cap = getCurrentCapsule();
+    setDraftDirty(true);
     renderDynamicFieldsEditor(e.target.value, cap?.dynamicPayload || {});
   });
 

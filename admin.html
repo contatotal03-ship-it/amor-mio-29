@@ -147,8 +147,15 @@
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <button type="button" class="btn btn-sm" id="ed-toggle-auth-btn">🔓 Autorizar Apertura</button>
-              <button type="button" class="btn btn-glass btn-sm" id="ed-load-idea-btn">💡 Cargar Idea Sugerida</button>
+              <button type="button" class="btn btn-glass btn-sm" id="ed-load-idea-btn">💡 Idea Plan A</button>
+              <button type="button" class="btn btn-glass btn-sm" id="ed-load-planb-btn">🎲 Idea Plan B</button>
             </div>
+          </div>
+
+          <!-- Unsaved Draft Guard Banner -->
+          <div class="draft-banner hidden" id="ed-draft-banner">
+            <span>⚠️ Borrador sin guardar — Tu versión guardada anterior sigue intacta hasta que pulses <strong>Guardar Capítulo</strong>.</span>
+            <button type="button" class="btn btn-glass btn-sm" id="ed-discard-draft-btn">↩️ Descartar borrador</button>
           </div>
 
           <!-- Her Reply & Activity Box (shown when she interacts) -->

@@ -1,17 +1,51 @@
 /**
  * ============================================================================
- * 29 CAPÍTULOS · INTERACTIVE DYNAMICS ENGINE
- * Renderiza Raspa y Gana, Trivia, Búsqueda del Tesoro, Cupones VIP y Elecciones.
+ * RUMBO A TUS 29 · INTERACTIVE DYNAMICS ENGINE
+ * Pop-ups centrados en pantalla + mensajes únicos por cada respuesta.
  * ============================================================================
  */
 
-import { launchGoldConfetti, showToast } from './particles.js';
+import { launchGoldConfetti } from './particles.js';
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
   if (text !== undefined) node.textContent = text;
   return node;
+}
+
+/**
+ * Displays a centered luxury pop-up right in front of her eyes when clicking any option.
+ */
+export function showDynamicPopup({
+  icon = '✨',
+  title = '¡Sorpresa!',
+  message = '',
+  isSuccess = true,
+  buttonText = 'Continuar ✨'
+}) {
+  const existing = document.querySelector('.dynamic-popup-backdrop');
+  if (existing) existing.remove();
+
+  const backdrop = el('div', 'dynamic-popup-backdrop');
+  const card = el('div', 'dynamic-popup-card' + (isSuccess ? '' : ' is-nudge'));
+
+  card.appendChild(el('div', 'dynamic-popup-icon', icon));
+  const h3 = el('h3', 'dynamic-popup-title gold-text', title);
+  card.appendChild(h3);
+  card.appendChild(el('p', 'dynamic-popup-msg', message));
+
+  const btn = el('button', isSuccess ? 'btn btn-gold' : 'btn btn-rose', buttonText);
+  btn.type = 'button';
+  btn.addEventListener('click', () => backdrop.remove());
+  card.appendChild(btn);
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  backdrop.appendChild(card);
+  document.body.appendChild(backdrop);
 }
 
 export function renderDynamicSection(container, capsule, onComplete) {
@@ -46,7 +80,8 @@ function renderScratchDynamic(card, capsule, payload, onComplete) {
   card.appendChild(el('h3', 'dynamic-prompt', payload.prompt || 'Raspa el oro con tu dedo para revelar tu sorpresa'));
 
   const box = el('div', 'scratch-container');
-  const reward = el('div', 'scratch-reveal-text', payload.secretReward || '¡Sorpresa desbloqueada!');
+  const rewardText = payload.secretReward || '¡Sorpresa desbloqueada!';
+  const reward = el('div', 'scratch-reveal-text', rewardText);
   box.appendChild(reward);
 
   if (!capsule.dynamicDone) {
@@ -58,7 +93,13 @@ function renderScratchDynamic(card, capsule, payload, onComplete) {
       canvas.style.opacity = '0';
       canvas.style.pointerEvents = 'none';
       launchGoldConfetti();
-      showToast('✨ ¡Sorpresa revelada!');
+      showDynamicPopup({
+        icon: '🪙',
+        title: '¡Sorpresa Revelada!',
+        message: rewardText,
+        isSuccess: true,
+        buttonText: '¡Me encanta! ✨'
+      });
       onComplete({ dynamicDone: true, dynamicAnswer: 'Raspado' });
     }));
   }
@@ -74,7 +115,6 @@ function initGoldScratchCanvas(canvas, onRevealed) {
   canvas.height = h;
 
   const ctx = canvas.getContext('2d');
-  // Draw luxury champagne gold metallic gradient
   const grad = ctx.createLinearGradient(0, 0, w, h);
   grad.addColorStop(0, '#a67c1e');
   grad.addColorStop(0.28, '#f5e1a4');
@@ -84,7 +124,6 @@ function initGoldScratchCanvas(canvas, onRevealed) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, w, h);
 
-  // Delicate sparkle dots on foil
   for (let i = 0; i < 65; i++) {
     ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.32})`;
     ctx.beginPath();
@@ -121,7 +160,7 @@ function initGoldScratchCanvas(canvas, onRevealed) {
     if (done) return;
     const pixels = ctx.getImageData(0, 0, w, h).data;
     let cleared = 0;
-    const step = 16; // fast sampling
+    const step = 16;
     let total = 0;
     for (let i = 3; i < pixels.length; i += 4 * step) {
       total++;
@@ -148,7 +187,7 @@ function initGoldScratchCanvas(canvas, onRevealed) {
 }
 
 // ---------------------------------------------------------------------------
-// 2. TRIVIA SECRETA DE NOSOTROS
+// 2. TRIVIA SECRETA (Respuesta única en pantalla por cada botón)
 // ---------------------------------------------------------------------------
 function renderTriviaDynamic(card, capsule, payload, onComplete) {
   card.appendChild(el('span', 'dynamic-badge', '🧠 Trivia de Nosotros'));
@@ -156,15 +195,14 @@ function renderTriviaDynamic(card, capsule, payload, onComplete) {
 
   const list = el('div', 'options-list');
   const options = Array.isArray(payload.options) ? payload.options : [];
+  const feedbacks = Array.isArray(payload.optionFeedbacks) ? payload.optionFeedbacks : [];
   const correctIdx = Number(payload.correctIndex ?? 0);
 
-  const hintBox = el('p', '', '');
-  hintBox.style.marginTop = '12px';
-  hintBox.style.fontSize = '0.88rem';
-  hintBox.style.color = 'var(--rose-champagne)';
-  hintBox.classList.add('hidden');
-
-  const rewardBox = el('div', 'reward-reveal', payload.rewardText || '¡Acertaste!');
+  const rewardBox = el(
+    'div',
+    'reward-reveal',
+    feedbacks[correctIdx] || payload.rewardText || '¡Acertaste!'
+  );
   if (!capsule.dynamicDone) rewardBox.classList.add('hidden');
 
   options.forEach((opt, idx) => {
@@ -178,30 +216,41 @@ function renderTriviaDynamic(card, capsule, payload, onComplete) {
 
     btn.addEventListener('click', () => {
       if (capsule.dynamicDone) return;
+      const customMsg = (feedbacks[idx] || '').trim();
+
       if (idx === correctIdx) {
         btn.classList.add('is-correct');
         list.querySelectorAll('button').forEach((b) => (b.disabled = true));
-        hintBox.classList.add('hidden');
+        const winText = customMsg || payload.rewardText || '¡Acertaste, amor mío!';
+        rewardBox.textContent = winText;
         rewardBox.classList.remove('hidden');
         launchGoldConfetti();
-        showToast('💖 ¡Respuesta correcta!');
+        showDynamicPopup({
+          icon: '💖',
+          title: '¡Respuesta Correcta!',
+          message: winText,
+          isSuccess: true,
+          buttonText: '¡Me encanta! ✨'
+        });
         onComplete({ dynamicDone: true, dynamicAnswer: opt });
       } else {
         btn.classList.add('is-wrong', 'shake');
         setTimeout(() => btn.classList.remove('shake'), 500);
-        if (payload.hint) {
-          hintBox.textContent = payload.hint;
-          hintBox.classList.remove('hidden');
-        } else {
-          showToast('¡Casi! Intenta otra opción 😘');
-        }
+        const nudgeText =
+          customMsg || payload.hint || '¡Casi, mi princesa! Intenta con otra de las opciones 😘';
+        showDynamicPopup({
+          icon: '😘',
+          title: 'Mmm... ¡casi!',
+          message: nudgeText,
+          isSuccess: false,
+          buttonText: 'Seguir intentando ✨'
+        });
       }
     });
     list.appendChild(btn);
   });
 
   card.appendChild(list);
-  card.appendChild(hintBox);
   card.appendChild(rewardBox);
 }
 
@@ -217,7 +266,8 @@ function renderClueDynamic(card, capsule, payload, onComplete) {
   riddle.style.color = 'var(--text-muted)';
   card.appendChild(riddle);
 
-  const rewardBox = el('div', 'reward-reveal', payload.rewardText || '¡Código correcto!');
+  const rewardText = payload.rewardText || '¡Código correcto!';
+  const rewardBox = el('div', 'reward-reveal', rewardText);
 
   if (capsule.dynamicDone) {
     card.appendChild(rewardBox);
@@ -236,7 +286,6 @@ function renderClueDynamic(card, capsule, payload, onComplete) {
   input.style.flex = '1 1 200px';
 
   const submitBtn = el('button', 'btn btn-gold', 'Abrir Cofre ✨');
-
   rewardBox.classList.add('hidden');
 
   const checkCode = () => {
@@ -248,12 +297,24 @@ function renderClueDynamic(card, capsule, payload, onComplete) {
       row.classList.add('hidden');
       rewardBox.classList.remove('hidden');
       launchGoldConfetti();
-      showToast('🗝️ ¡Tesoro desbloqueado!');
+      showDynamicPopup({
+        icon: '🗝️',
+        title: '¡Tesoro Desbloqueado!',
+        message: rewardText,
+        isSuccess: true,
+        buttonText: '¡Genial! ✨'
+      });
       onComplete({ dynamicDone: true, dynamicAnswer: entered });
     } else {
       input.classList.add('shake');
       setTimeout(() => input.classList.remove('shake'), 500);
-      showToast('Mmm... esa no es la clave. ¡Sigue buscando! ✨');
+      showDynamicPopup({
+        icon: '🕵️‍♀️',
+        title: 'Esa no es la clave',
+        message: 'Sigue buscando en la pista... ¡cuando encuentres la palabra exacta se abrirá! ✨',
+        isSuccess: false,
+        buttonText: 'Intentar de nuevo'
+      });
     }
   };
 
@@ -275,7 +336,8 @@ function renderCouponDynamic(card, capsule, payload, onComplete) {
   card.appendChild(el('span', 'dynamic-badge', '🎟️ Pase VIP Exclusivo'));
 
   const coupon = el('div', 'vip-coupon');
-  const title = el('h3', 'font-display gold-text', payload.couponTitle || 'VALE POR UN CAPRICHO');
+  const titleText = payload.couponTitle || 'VALE POR UN CAPRICHO';
+  const title = el('h3', 'font-display gold-text', titleText);
   title.style.fontSize = '1.65rem';
   title.style.marginBottom = '8px';
 
@@ -288,15 +350,20 @@ function renderCouponDynamic(card, capsule, payload, onComplete) {
   coupon.appendChild(desc);
 
   if (capsule.dynamicDone) {
-    const stamp = el('div', 'vip-stamp', `CANJEADO ✓ ${capsule.dynamicAnswer || ''}`);
-    coupon.appendChild(stamp);
+    coupon.appendChild(el('div', 'vip-stamp', `CANJEADO ✓ ${capsule.dynamicAnswer || ''}`));
   } else {
     const btn = el('button', 'btn btn-gold', 'Canjear este Cupón ✨');
     btn.addEventListener('click', () => {
       const stampText = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
       btn.replaceWith(el('div', 'vip-stamp', `CANJEADO ✓ ${stampText}`));
       launchGoldConfetti();
-      showToast('🎟️ ¡Cupón canjeado! Ya quedó registrado.');
+      showDynamicPopup({
+        icon: '🎟️',
+        title: '¡Cupón VIP Canjeado!',
+        message: `Sellaste "${titleText}". ¡Prepárate para cobrarlo, mi princesa! 💖`,
+        isSuccess: true,
+        buttonText: '¡Listo para cobrarlo! ✨'
+      });
       onComplete({ dynamicDone: true, dynamicAnswer: stampText });
     });
     coupon.appendChild(btn);
@@ -306,7 +373,7 @@ function renderCouponDynamic(card, capsule, payload, onComplete) {
 }
 
 // ---------------------------------------------------------------------------
-// 5. ELECCIÓN / MISIÓN DEL DÍA
+// 5. ELECCIÓN / MISIÓN DEL DÍA (Respuesta única en pantalla por opción)
 // ---------------------------------------------------------------------------
 function renderChallengeDynamic(card, capsule, payload, onComplete) {
   card.appendChild(el('span', 'dynamic-badge', '✨ Tú Eliges Hoy'));
@@ -314,8 +381,17 @@ function renderChallengeDynamic(card, capsule, payload, onComplete) {
 
   const list = el('div', 'options-list');
   const choices = Array.isArray(payload.choices) ? payload.choices : [];
+  const feedbacks = Array.isArray(payload.choiceFeedbacks) ? payload.choiceFeedbacks : [];
 
-  choices.forEach((choice) => {
+  const chosenBox = el('div', 'reward-reveal', '');
+  if (capsule.dynamicDone && capsule.dynamicAnswer) {
+    const idx = choices.indexOf(capsule.dynamicAnswer);
+    chosenBox.textContent = (idx >= 0 && feedbacks[idx]) || `Tu elección: ${capsule.dynamicAnswer}`;
+  } else {
+    chosenBox.classList.add('hidden');
+  }
+
+  choices.forEach((choice, idx) => {
     const btn = el('button', 'option-btn', choice);
     if (capsule.dynamicDone && capsule.dynamicAnswer === choice) {
       btn.classList.add('is-correct');
@@ -323,13 +399,24 @@ function renderChallengeDynamic(card, capsule, payload, onComplete) {
     btn.addEventListener('click', () => {
       list.querySelectorAll('.option-btn').forEach((b) => b.classList.remove('is-correct'));
       btn.classList.add('is-correct');
+      const customFb =
+        (feedbacks[idx] || '').trim() ||
+        `Elegiste "${choice}". ¡Me encanta tu elección, amor mío! 💖`;
+      chosenBox.textContent = customFb;
+      chosenBox.classList.remove('hidden');
       launchGoldConfetti();
-      showToast('💖 ¡Elección guardada para él!');
+      showDynamicPopup({
+        icon: '✨',
+        title: '¡Elección Guardada!',
+        message: customFb,
+        isSuccess: true,
+        buttonText: '¡Perfecto! 💖'
+      });
       onComplete({ dynamicDone: true, dynamicAnswer: choice });
     });
     list.appendChild(btn);
   });
 
   card.appendChild(list);
+  card.appendChild(chosenBox);
 }
-
