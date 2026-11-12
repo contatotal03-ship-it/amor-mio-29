@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:02.083Z",
+  "updatedAt": "2026-11-12T04:24:03.817Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -60,24 +60,8 @@
     },
     {
       "dayNumber": 7,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo VII · Primera semana completada",
-      "unlockedTitle": "Cupón VIP: Cero estrés",
-      "message": "Ya completamos los primeros 7 capítulos. Como premio por iluminar mi semana, aquí tienes un pase VIP oficial.",
-      "dynamicType": "coupon",
-      "dynamicPayload": {
-        "couponTitle": "MASAJE RELAX + TARDE LIBRE DE TODO",
-        "couponDesc": "45 minutos de masaje con aceite tibio, tu serie o música favorita y yo encargándome de todo."
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/4TFjpINnVhINpTdrtNQIvx",
-          "caption": "?? X TI ? Kapo, Feid"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo VII · Primera semana completada"
     },
     {
       "dayNumber": 8,
