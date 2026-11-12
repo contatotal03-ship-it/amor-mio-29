@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:25:04.404Z",
+  "updatedAt": "2026-11-12T04:25:08.302Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -79,11 +79,6 @@
           "Un viaje o lugar nuevo que muero por conocer",
           "Una experiencia diferente que nunca he probado",
           "Algo especial para mí / mi bienestar"
-        ],
-        "choiceFeedbacks": [
-          "¡Anotado, viajera! Escríbeme abajo qué destino sueñas y lo ponemos en la mira ✈️🌍",
-          "¡Amo tu espíritu aventurero! Cuéntame abajo qué locura bonita quieres vivir ✨",
-          "¡Te lo mereces todo, princesa! Escríbeme abajo cómo quieres consentirte 💐💖"
         ]
       },
       "allowReply": false,
@@ -108,15 +103,8 @@
     },
     {
       "dayNumber": 15,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XV · Video secreto",
-      "unlockedTitle": "Un mensaje grabado para ti",
-      "message": "Hoy quise dejarte algo que puedas ver una y otra vez cuando me extrañes.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XV · Video secreto"
     },
     {
       "dayNumber": 16,
