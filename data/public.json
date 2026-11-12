@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:41.717Z",
+  "updatedAt": "2026-11-12T04:24:43.449Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -65,21 +65,8 @@
     },
     {
       "dayNumber": 8,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo",
-      "unlockedTitle": "Nuestras fotos favoritas (Parte I)",
-      "message": "Estaba mirando nuestra galería y encontré estos momentos. Si pudiera congelar el tiempo, volvería a reírme contigo exactamente así.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/5QjmUqgpPQgXgg4606DqZF",
-          "caption": "?? UWAIE ? Kapo"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo VIII · Un viaje en el tiempo"
     },
     {
       "dayNumber": 9,
