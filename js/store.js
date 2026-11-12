@@ -26,6 +26,7 @@ const blobUrlCache = new Map();
 
 let ghPublicCache = { ts: 0, promise: null, data: null };
 let ghVaultCache = null;
+let ghVaultPromise = null;
 
 // ---------------------------------------------------------------------------
 // UTF-8 & Base64 Helpers
@@ -262,6 +263,7 @@ export function clearGitHubToken() {
   localStorage.removeItem(LS_GH_TOKEN_KEY);
   sessionStorage.removeItem(LS_GH_TOKEN_KEY);
   ghVaultCache = null;
+  ghVaultPromise = null;
 }
 
 async function ghApiRequest(path, { method = 'GET', token = '', body = null, raw = false } = {}) {
@@ -376,29 +378,39 @@ function saveHerLocalProgress(map) {
 
 async function ensureGhVaultLoaded() {
   if (ghVaultCache) return ghVaultCache;
-  const token = getStoredGitHubToken();
-  const { githubOwner, githubVaultRepo } = PUBLIC_CONFIG;
-  const { data } = await ghGetJsonFile(githubOwner, githubVaultRepo, 'vault.json', token);
-  if (data && Array.isArray(data.capsules)) {
-    ghVaultCache = {
-      settings: { ...defaultSettings(), ...(data.settings || {}) },
-      capsules: data.capsules
-    };
-  } else {
-    ghVaultCache = {
-      settings: defaultSettings(),
-      capsules: defaultCapsules()
-    };
-    await ghPutBase64File(
-      githubOwner,
-      githubVaultRepo,
-      'vault.json',
-      utf8ToBase64(JSON.stringify(ghVaultCache, null, 2)),
-      'Inicializar boveda privada de 30 capitulos',
-      token
-    );
-  }
-  return ghVaultCache;
+  if (ghVaultPromise) return ghVaultPromise;
+
+  ghVaultPromise = (async () => {
+    try {
+      const token = getStoredGitHubToken();
+      const { githubOwner, githubVaultRepo } = PUBLIC_CONFIG;
+      const { data } = await ghGetJsonFile(githubOwner, githubVaultRepo, 'vault.json', token);
+      if (data && Array.isArray(data.capsules)) {
+        ghVaultCache = {
+          settings: { ...defaultSettings(), ...(data.settings || {}) },
+          capsules: data.capsules
+        };
+      } else {
+        ghVaultCache = {
+          settings: defaultSettings(),
+          capsules: defaultCapsules()
+        };
+        await ghPutBase64File(
+          githubOwner,
+          githubVaultRepo,
+          'vault.json',
+          utf8ToBase64(JSON.stringify(ghVaultCache, null, 2)),
+          'Inicializar boveda privada de 30 capitulos',
+          token
+        );
+      }
+      return ghVaultCache;
+    } finally {
+      ghVaultPromise = null;
+    }
+  })();
+
+  return ghVaultPromise;
 }
 
 async function syncGitHubVaultAndPublic(vaultData) {

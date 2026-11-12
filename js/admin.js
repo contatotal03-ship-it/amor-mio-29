@@ -92,9 +92,6 @@ async function checkAuthGate() {
 }
 
 async function enterCommandCenter(mode) {
-  document.getElementById('admin-gate').classList.add('hidden');
-  document.getElementById('admin-shell').classList.remove('hidden');
-
   const badge = document.getElementById('mode-badge');
   const logoutBtn = document.getElementById('cloud-logout-btn');
   if (mode === 'github') {
@@ -112,6 +109,8 @@ async function enterCommandCenter(mode) {
   }
 
   await refreshAdminData();
+  document.getElementById('admin-gate').classList.add('hidden');
+  document.getElementById('admin-shell').classList.remove('hidden');
 }
 
 async function refreshAdminData() {
@@ -811,6 +810,10 @@ function bindStaticEvents() {
   // GitHub Cloud login
   document.getElementById('github-login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const orig = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '⏳ Conectando a tu bóveda...';
     const token = document.getElementById('gh-token-input').value.trim();
     const remember = document.getElementById('gh-remember-check').checked;
     try {
@@ -818,6 +821,9 @@ function bindStaticEvents() {
       await enterCommandCenter('github');
     } catch (err) {
       showToast('Error GitHub: ' + (err.message || 'Verifica tu token'));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = orig;
     }
   });
 
