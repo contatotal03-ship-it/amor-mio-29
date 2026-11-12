@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T03:58:03.726Z",
+  "updatedAt": "2026-11-12T04:10:17.957Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -32,6 +32,8 @@
         "prompt": "Raspa el velo dorado con tu dedo",
         "secretReward": "Vale por una cena o pedido a domicilio de tu restaurante favorito esta semana 🍷✨"
       },
+      "allowReply": false,
+      "hasSunflowers": true,
       "mediaItems": [
         {
           "type": "spotify",
@@ -48,6 +50,8 @@
       "message": "A veces las letras se quedan cortas. Dale play al audio de arriba y cierra los ojos un segundo.",
       "dynamicType": "classic",
       "dynamicPayload": {},
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -71,6 +75,8 @@
           "Sorpréndeme tú eligiendo el lugar secreto"
         ]
       },
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -91,6 +97,8 @@
         "secretCode": "SIEMPRE",
         "rewardText": "¡Lo encontraste! Ahora mira el pequeño detalle que dejé ahí para recordarte que pienso en ti cada mañana."
       },
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -110,6 +118,8 @@
         "couponTitle": "MASAJE RELAX + TARDE LIBRE DE TODO",
         "couponDesc": "45 minutos de masaje con aceite tibio, tu serie o música favorita y yo encargándome de todo."
       },
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -126,6 +136,8 @@
       "message": "Estaba mirando nuestra galería y encontré estos momentos. Si pudiera congelar el tiempo, volvería a reírme contigo exactamente así.",
       "dynamicType": "classic",
       "dynamicPayload": {},
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -145,6 +157,8 @@
         "prompt": "Descubre qué viene en camino hoy",
         "secretReward": "¡Un café/postre sorpresa pensado justo para alegrarte el día hoy!"
       },
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -172,6 +186,8 @@
         "hint": "Pista: ¡Contigo todo plan se multiplica!",
         "rewardText": "¡Exacto! Prepárate porque antes de tus 29 vamos a hacer una escapada especial."
       },
+      "allowReply": false,
+      "hasSunflowers": false,
       "mediaItems": [
         {
           "type": "spotify",
@@ -182,8 +198,21 @@
     },
     {
       "dayNumber": 11,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XI · 11 razones"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XI · 11 razones",
+      "unlockedTitle": "11 cosas que amo de ti",
+      "message": "Hoy es día 11, así que aquí van 11 cosas reales que amo de ti:\n1. Tu risa contagiosa.\n2. Tu valentía para luchar por lo que quieres.\n3. La paz que siento cuando me abrazas.\n(Personaliza el resto con tus palabras...)",
+      "dynamicType": "classic",
+      "dynamicPayload": {},
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/7mne6vl01FpHSn1r1S2BCk",
+          "caption": "?? Cuando Quieras Quiero - En Vivo ? Felipe Peláez"
+        }
+      ]
     },
     {
       "dayNumber": 12,
