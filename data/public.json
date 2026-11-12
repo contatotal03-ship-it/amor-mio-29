@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:20.936Z",
+  "updatedAt": "2026-11-12T04:24:22.764Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -285,15 +285,8 @@
     },
     {
       "dayNumber": 22,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XXII · Voces que te aman",
-      "unlockedTitle": "Sorpresa de personas especiales",
-      "message": "No soy el único que celebra tu vida... escucha y mira quiénes se sumaron hoy a tu cuenta regresiva.",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": true,
-      "mediaItems": []
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXII · Voces que te aman"
     },
     {
       "dayNumber": 23,
