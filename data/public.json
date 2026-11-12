@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:30:56.210Z",
+  "updatedAt": "2026-11-12T04:31:00.641Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -13,8 +13,26 @@
   "capsules": [
     {
       "dayNumber": 1,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo I · Donde comienza la magia"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo I · Donde comienza la magia",
+      "unlockedTitle": "Bienvenida a tu mes, amor mío",
+      "message": "Amor mío: ❤️\n\nLlevo tiempo pensando en qué hacer y cómo hacerlo para que tu cumpleaños, que sé que es una fecha tan importante para ti, se convierta en uno de los momentos más especiales e inolvidables de este año y de todos los que nos quedan por vivir juntos, porque mi deseo es compartir toda una vida a tu lado.\n\nQuiero que disfrutes cada sorpresa, cada detalle, cada gesto y cada intento. Quiero que, detrás de cada cosa que haga, puedas sentir lo especial que eres para mí y lo orgulloso que me siento de tenerte en mi vida.\n\nHoy miro hacia atrás y recuerdo todo lo que hemos vivido hasta llegar aquí. Me siento demasiado orgulloso de ver la mujer que eres: una mujer maravillosa, valiente, fuerte, que no se rinde y que no se deja vencer fácilmente. Admiro todo lo que has logrado y todo lo que todavía te falta por conquistar. Y quiero estar a tu lado en cada uno de esos momentos, celebrando tus triunfos, acompañándote en los días difíciles y recordándote siempre lo increíble que eres.\n\nMe encantas, y no te imaginas cuánto. Eres mucho más de lo que alguna vez soñé y de lo que un día imaginé tener en mi vida. Eres todo lo que está bien.\n\nAmor, solo quiero que disfrutes. Que cada día de esta celebración te haga sentir querida, importante y especial, porque eso es lo que eres para mí.\n\nNota: Puede que en algunos momentos me notes ausente, incluso en esos espacios en los que acostumbramos a estar juntos, pero quiero que sepas que, si eso sucede, será porque estaré preparando el siguiente detalle, pensando en cómo sorprenderte y en cómo hacerte feliz. Aunque no siempre me veas, quiero que sepas que estaré pendiente de ti y pensando en cada cosa para que estos 29 años comiencen de una manera maravillosa.\n\nEspero estar a la altura de todo lo que mereces, porque mereces absolutamente todo lo bonito, lo grande y lo maravilloso que existe en este mundo.\n\nTe quiero demasiado, princesa. No te imaginas cuánto. Y si algo tengo claro es que quiero seguir celebrando tus cumpleaños, tus logros, tus sueños y cada año de tu vida, siempre a tu lado. ❤️\nMi princesa, desde hoy y hasta el 12 de diciembre cuando cumplas tus 29 años, cada capítulo de este lugar guardará algo pensado solo para ti.\n\nNo podrás abrir ninguno hasta que yo dé la señal... porque lo mejor de la vida sabe más rico cuando se espera con ilusión.\n\nFeliz inicio de tu cuenta regresiva, amor mío. Te quiero más de lo que cabría en mil páginas.",
+      "dynamicType": "classic",
+      "dynamicPayload": {},
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/intl-es/track/30VdvTsDJt103vPvhWur7z?si=9acf3b97d94f40a6",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "url": "https://raw.githubusercontent.com/contatotal03-ship-it/amor-mio-29/main/data/media/day-01/1794454542803-IMG-20260929-WA0111.jpg",
+          "caption": ""
+        }
+      ]
     },
     {
       "dayNumber": 2,
