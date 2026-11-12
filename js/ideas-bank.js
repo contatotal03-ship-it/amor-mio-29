@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * BANCO CREATIVO DE 30 DÍAS ESCALABLES ("MEJOR CADA DÍA") + PLANES ALTERNATIVOS
- * Cada Trivia y Elección incluye un mensaje distinto en pantalla por opción.
+ * Cada Trivia e Invitación incluye un mensaje sutil, romántico y único en pantalla por opción.
  * ============================================================================
  */
 
@@ -11,7 +11,7 @@ export const DYNAMIC_TYPES = {
   trivia: { label: 'Trivia de Nosotros', icon: '🧠', desc: 'Pregunta romántica con respuesta única en pantalla para cada opción.' },
   clue: { label: 'Búsqueda del Tesoro', icon: '🕵️‍♀️', desc: 'Acertijo o pista física + palabra clave secreta para abrir el regalo.' },
   coupon: { label: 'Cupón VIP Canjeable', icon: '🎟️', desc: 'Vale dorado exclusivo con botón de "Canjear ahora".' },
-  challenge: { label: 'Elección / Misión', icon: '✨', desc: 'Ella elige su plan favorito y recibe un mensaje único al tocar.' }
+  challenge: { label: 'Invitación con Misterio', icon: '✨', desc: 'Caminos ya dispuestos con certeza; ella abre un misterio sin organizar nada.' }
 };
 
 export const IDEAS_BANK = [
@@ -46,14 +46,14 @@ export const IDEAS_BANK = [
         '¡Todas las anteriores sin dudarlo!'
       ],
       optionFeedbacks: [
-        '¡Ay, casi! Esa risa tuya me derrite el alma, princesa... pero hay algo todavía más completo 😘',
-        '¡Esos ojos tuyos me hipnotizan cada vez! Pero quédate pensando un segundo más...',
-        '¡Totalmente cierto! Llegas tú y todo brilla... pero mira la última opción con atención 😉',
-        '¡EXACTO, amor mío! No podía quedarme con una sola cosa de ti. Premio de hoy: esta noche el antojo dulce que pidas corre por mi cuenta 🍫💖'
+        '¡Esa risa tuya me ilumina el alma entera, princesa! Pero todavía guarda un secreto más completo… 😘',
+        '¡Cuando me miras así siento que el mundo se detiene! Quédate pensando un instante más…',
+        '¡Es verdad que iluminas cada espacio adonde llegas, aunque la respuesta completa guarda algo más ✨',
+        '¡EXACTO, amor mío! Todo en ti me cautiva. Esta noche ya tengo preparado un antojo dulce solo para ti 🍫💖'
       ],
       correctIndex: 3,
-      hint: 'Pista: ¡No podía elegir solo una cosa de ti!',
-      rewardText: '¡Acertaste, amor mío! El antojo dulce de esta noche corre por mi cuenta 🍫💖'
+      hint: 'Pista: ¡No podía quedarme con una sola cosa de ti!',
+      rewardText: '¡Acertaste, amor mío! Esta noche ya tengo preparado un antojo dulce solo para ti 🍫💖'
     }
   },
   {
@@ -62,13 +62,13 @@ export const IDEAS_BANK = [
     dynamicType: 'scratch',
     allowReply: false,
     hasSunflowers: true,
-    teaserTitle: 'Capítulo III · Raspa bajo girasoles',
+    teaserTitle: 'Capítulo III · Un secreto entre girasoles 🌻',
     unlockedTitle: 'Un capricho dorado para mi princesa 🌻',
-    suggestion: 'Este día incluye girasoles especiales 🌻 en pantalla. Sube una selfie linda de ambos y sorpréndela con un antojo o cena.',
-    message: 'Hoy no hay acertijos... solo desliza tu dedo sobre el oro para descubrir el capricho que te espera.',
+    suggestion: 'Este día incluye girasoles especiales 🌻 en pantalla. Sube una selfie linda de ambos y sorpréndela con una cena o detalle ya reservado.',
+    message: 'Hoy no hace falta pensar en nada… solo desliza tu dedo sobre el oro para descubrir lo que ya preparé para ti.',
     dynamicPayload: {
-      prompt: 'Raspa el velo dorado con tu dedo',
-      secretReward: 'Vale por una cena o pedido a domicilio de tu restaurante favorito esta semana 🍷✨'
+      prompt: 'Desliza tu dedo sobre el oro para revelarlo',
+      secretReward: 'Esta semana ya tienes reservada una velada especial con tu plato favorito, pensada de principio a fin solo para ti 🍷✨'
     }
   },
   {
@@ -89,21 +89,21 @@ export const IDEAS_BANK = [
     dynamicType: 'challenge',
     allowReply: false,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo V · Tú decides el plan',
-    unlockedTitle: 'Elige tu aventura de este fin de semana',
-    suggestion: 'Cada opción muestra una confirmación diferente y romántica en pantalla, y guarda en tu Admin cuál eligió.',
-    message: 'Este fin de semana mandas tú, mi princesa. Toca el plan que más te provoque para hacerlo realidad:',
+    teaserTitle: 'Capítulo V · Todo está preparado para ti',
+    unlockedTitle: 'Un fin de semana pensado solo para ti',
+    suggestion: 'Cada opción transmite certeza total de que ya tienes todo organizado y listo para ella, invitándola a descubrir qué ambiente abrir primero.',
+    message: 'Este fin de semana no tienes que pensar ni organizar nada, amor mío.\n\nTodo está pensado, reservado y listo para ti. Solo elige qué atmósfera deseas descubrir primero:',
     dynamicPayload: {
-      prompt: '¿Qué plan te provoca más para nuestra próxima cita?',
+      prompt: 'Todo ya está dispuesto para nosotros… ¿qué experiencia deseas abrir primero?',
       choices: [
-        'Noche elegante: cocteles, música y cena especial',
-        'Plan íntimo: película, manta, comida rica y cero afán',
-        'Sorpréndeme tú eligiendo un lugar secreto'
+        'Velada I · Luces suaves, un brindis especial y música hecha para nosotros',
+        'Velada II · Nuestro refugio íntimo, aroma cálido y el mundo en pausa',
+        'Sorpresa Total · Déjame llevarte sin decirte el destino'
       ],
       choiceFeedbacks: [
-        '¡Me encanta! Ve alistando ese outfit espectacular porque nos vamos de noche elegante 🥂✨',
-        '¡Plan perfecto! Yo me encargo de tu comida favorita, mantas y cero afán en el mundo 🎬💖',
-        '¡Acepto el reto, amor mío! Prepárate porque te voy a llevar a un lugar especial sin decirte antes 😉✨'
+        '¡Reserva confirmada, mi princesa! Tú solo prepárate para brillar, que de cada detalle ya me encargué yo ✨🥂',
+        '¡Todo está listo en nuestro rincón secreto! Solo ven a mis brazos y déjate consentir sin mirar el reloj 💖🕯️',
+        '¡Me encanta cuando te dejas sorprender! El lugar, la música y el instante exacto ya esperan por nosotros ✨🌙'
       ]
     }
   },
@@ -130,12 +130,12 @@ export const IDEAS_BANK = [
     allowReply: false,
     hasSunflowers: false,
     teaserTitle: 'Capítulo VII · Primera semana completada',
-    unlockedTitle: 'Cupón VIP: Cero estrés',
-    suggestion: 'Cierra la primera semana consintiéndola de verdad con un masaje y cero responsabilidades.',
-    message: 'Completamos los primeros 7 capítulos. Como premio por iluminar mi semana, aquí tienes tu primer pase VIP.',
+    unlockedTitle: 'Un respiro dorado solo para ti',
+    suggestion: 'Cierra la primera semana haciéndole sentir que todo está resuelto y listo para consentirla de verdad.',
+    message: 'Completamos los primeros siete capítulos, amor mío. Hoy quiero que descanses tranquila mientras yo me encargo de absolutamente todo.',
     dynamicPayload: {
-      couponTitle: 'MASAJE RELAX + TARDE LIBRE DE TODO',
-      couponDesc: '45 minutos de masaje con aceite tibio, tu música favorita y yo encargándome de todo.'
+      couponTitle: 'TARDE DE CALMA & MIMO ABSOLUTO',
+      couponDesc: 'Todo está dispuesto: masaje tibio, tu música favorita de fondo y el resto del día resuelto por mí para ti.'
     }
   },
   {
@@ -161,8 +161,8 @@ export const IDEAS_BANK = [
     suggestion: 'Envíale o llévale hoy su bebida/postre favorito al trabajo o casa justo después de que raspe el cupón.',
     message: 'Solo quiero hacer que hoy sea un poquito más dulce que ayer. Raspa aquí abajo:',
     dynamicPayload: {
-      prompt: 'Descubre qué viene en camino hoy',
-      secretReward: '¡Un café / postre sorpresa pensado justo para alegrarte el día hoy! ☕🍰'
+      prompt: 'Descubre qué ya viene en camino hoy',
+      secretReward: '¡Hoy ya viene en camino tu café y postre favorito para endulzar tu mañana en el instante exacto ☕🍰!'
     }
   },
   {
@@ -173,25 +173,25 @@ export const IDEAS_BANK = [
     hasSunflowers: false,
     teaserTitle: 'Capítulo X · Un tercio del camino',
     unlockedTitle: '10 días y contando...',
-    suggestion: 'Trivia sobre una escapada juntos; personaliza las 4 respuestas con bromas o detalles suyos.',
-    message: '¡Llegamos al día 10! Veamos qué tan conectada estás con nuestro próximo escape:',
+    suggestion: 'Trivia sobre una escapada juntos; personaliza las 4 respuestas con detalles especiales suyos.',
+    message: '¡Llegamos al día 10! Veamos qué tan conectada estás con lo que ya estoy preparando:',
     dynamicPayload: {
       question: 'Si nos escapáramos hoy mismo a un lugar los dos solos, ¿qué no puede faltar en la maleta?',
       options: [
-        'Tu cámara y buena música',
-        'Ropa cómoda y algo rico para picar',
+        'Tu cámara y nuestra música',
+        'Ropa cómoda y un detalle para brindar',
         'Ganas de perdernos sin mirar el reloj',
         '¡Todo eso junto contigo!'
       ],
       optionFeedbacks: [
-        '¡Obvio que música y fotos van! Pero todavía falta algo más...',
-        '¡Un buen antojo nunca falla! Aun así falta la respuesta completa 😘',
-        '¡Desconectarnos del mundo es la clave! Pero mira la última opción...',
-        '¡SÍII, amor mío! Contigo todo plan se multiplica. Prepárate porque antes de tus 29 nos escapamos juntos ✈️💖'
+        '¡Nuestra música y fotos siempre nos acompañan! Aunque todavía guarda un secreto más…',
+        '¡Un detalle así nunca falla! Aun así falta la respuesta completa 😘',
+        '¡Desconectarnos del mundo es la mejor parte! Pero mira la última opción ✨',
+        '¡SÍ, amor mío! Contigo todo se multiplica. Ya estoy preparando una escapada especial para nosotros antes de tus 29 ✈️💖'
       ],
       correctIndex: 3,
       hint: 'Pista: ¡Contigo todo se suma!',
-      rewardText: '¡Exacto! Prepárate porque antes de tus 29 nos hacemos una escapada especial.'
+      rewardText: '¡Exacto! Ya estoy preparando una escapada especial antes de tus 29.'
     }
   },
   {
@@ -202,8 +202,8 @@ export const IDEAS_BANK = [
     hasSunflowers: false,
     teaserTitle: 'Capítulo XI · 11 razones',
     unlockedTitle: '11 cosas que amo de ti',
-    suggestion: 'Lista 11 manías, gestos o cualidades reales de ella (cómo sonríe, su voz, su valentía).',
-    message: 'Hoy es capítulo 11, así que aquí van 11 cosas reales que amo de ti:\n1. Tu risa contagiosa.\n2. Tu valentía para luchar por tus sueños.\n3. La paz que siento cuando me abrazas.\n(Completa las otras 8 con detalles bien reales de ustedes...)',
+    suggestion: 'Puedes dejar estas 11 razones o personalizar cada una con gestos reales suyos (su risa, su voz, su valentía).',
+    message: 'Hoy es capítulo 11, y aquí te dejo once verdades que guardo siempre en el corazón:\n1. La luz con la que iluminas cualquier lugar.\n2. Tu valentía inmensa para alcanzar cada sueño.\n3. La paz infinita que siento cuando me abrazas.\n4. La dulzura que pones incluso en los días difíciles.\n5. Tu mirada honesta cuando me hablas de frente.\n6. Esa risa tuya que borra cualquier cansancio.\n7. La forma tan tuya de cuidar a quienes amas.\n8. Tu fuerza silenciosa que admiro cada día.\n9. La complicidad con la que nos entendemos sin hablar.\n10. Cómo haces que un día cualquiera parezca inolvidable.\n11. El privilegio de caminar la vida tomado de tu mano.',
     dynamicPayload: {}
   },
   {
@@ -212,21 +212,21 @@ export const IDEAS_BANK = [
     dynamicType: 'challenge',
     allowReply: true,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo XII · Confesión nocturna',
-    unlockedTitle: 'Tu turno de pedirme un deseo',
-    suggestion: 'Aquí SÍ viene activada la caja para que te escriba un deseo de sus 29 y te lo pueda mandar por WhatsApp.',
-    message: 'Hoy quiero escuchar tu corazón. En tus próximos 29 años quiero ser tu cómplice número uno.',
+    teaserTitle: 'Capítulo XII · Un deseo guardado en oro',
+    unlockedTitle: 'Un anhelo pensado para tus 29',
+    suggestion: 'Trae caja opcional de respuesta, sin pedirle que organice nada: cada camino ya tiene una sorpresa reservada.',
+    message: 'Quiero ser tu cómplice en todo lo que sueñas para este nuevo año de vida.\n\nNo tienes que planear ni pedir nada: ya tengo sorpresas dispuestas en cada uno de estos caminos. Elige cuál deseas ver florecer primero:',
     dynamicPayload: {
-      prompt: 'Elige una categoría para tu deseo de los 29 (y si quieres, cuéntamelo en la caja de abajo):',
+      prompt: '¿Qué ilusión te gustaría sentir hecha realidad junto a mí?',
       choices: [
-        'Un viaje o lugar nuevo que muero por conocer',
-        'Una experiencia diferente que nunca he probado',
-        'Algo especial para mí / mi bienestar'
+        'Una escapada a un lugar nuevo para perdernos los dos',
+        'Una experiencia distinta que quede grabada en nuestra memoria',
+        'Un momento dedicado por completo a tu paz y bienestar'
       ],
       choiceFeedbacks: [
-        '¡Anotado, viajera! Escríbeme abajo qué destino sueñas y lo ponemos en la mira ✈️🌍',
-        '¡Amo tu espíritu aventurero! Cuéntame abajo qué locura bonita quieres vivir ✨',
-        '¡Te lo mereces todo, princesa! Escríbeme abajo cómo quieres consentirte 💐💖'
+        '¡Hecho, viajera mía! Ya guardo ese rumbo en mente para llevarte sin que tengas que preocuparte por nada ✈️🌍',
+        '¡Promesa sellada! Yo me encargo de hacer realidad un recuerdo inolvidable para nosotros ✨💫',
+        '¡Te mereces el cielo entero, amor mío! Todo quedará dispuesto para que solo descanses y disfrutes 💐💖'
       ]
     }
   },
@@ -238,11 +238,11 @@ export const IDEAS_BANK = [
     hasSunflowers: false,
     teaserTitle: 'Capítulo XIII · Pase de fotografía',
     unlockedTitle: 'Sesión privada de fotos & atardecer',
-    suggestion: 'Invítala a arreglarse bonita para una tarde de fotos juntos (esas fotos luego alimentan el video final).',
-    message: 'Porque mereces sentirte como portada de revista todos los días...',
+    suggestion: 'Invítala a arreglarse bonita para una tarde de fotos ya organizada al atardecer (esas fotos alimentan el video final).',
+    message: 'Porque mereces sentirte única y radiante en cada instante… todo ya está coordinado para nuestra tarde.',
     dynamicPayload: {
-      couponTitle: 'TARDE DE FOTOS + HELADO / CÓCTEL AL ATARDECER',
-      couponDesc: 'Ponte tu outfit favorito: hoy soy tu fotógrafo oficial y vamos por algo rico mirando el atardecer.'
+      couponTitle: 'TARDE DE FOTOS & BRINDIS AL ATARDECER',
+      couponDesc: 'Hoy la luz del atardecer ya tiene cita con nosotros: todo está listo para capturar recuerdos hermosos y brindar juntos.'
     }
   },
   {
@@ -281,11 +281,11 @@ export const IDEAS_BANK = [
     hasSunflowers: false,
     teaserTitle: 'Capítulo XVI · Boleto dorado',
     unlockedTitle: 'Noche de película VIP',
-    suggestion: 'Prepara palomitas/vino/sushi en casa o compra entradas VIP de cine.',
-    message: 'Raspa este boleto dorado para conocer tu función especial de esta noche:',
+    suggestion: 'Ten ya listas las entradas o la velada privada en casa para que ella sienta que solo debe llegar y disfrutar.',
+    message: 'Raspa este boleto dorado para descubrir la velada que ya está preparada para ti esta noche:',
     dynamicPayload: {
-      prompt: 'Raspa tu entrada VIP',
-      secretReward: 'Pase doble VIP para cine o maratón en casa con tus snacks favoritos incluidos 🍿🥂'
+      prompt: 'Raspa tu entrada privada',
+      secretReward: 'Esta noche tu función especial ya está lista: cine o velada privada en casa con todos tus detalles favoritos preparados 🍿🥂'
     }
   },
   {
@@ -294,27 +294,27 @@ export const IDEAS_BANK = [
     dynamicType: 'trivia',
     allowReply: false,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo XVII · ¿Qué tanto me conoces?',
-    unlockedTitle: 'Reto divertido de pareja',
-    suggestion: 'Cada opción tiene una respuesta coqueta/divertida distinta en pantalla.',
-    message: 'Hoy cambiamos las reglas: veamos qué tan bien me tienes leído...',
+    teaserTitle: 'Capítulo XVII · Complicidad en secreto',
+    unlockedTitle: 'Un pequeño secreto entre nosotros',
+    suggestion: 'Cada opción tiene una respuesta romántica, sutil y distinta en pantalla.',
+    message: 'Hay instantes contigo que se quedan conmigo todo el día… veamos si adivinas cuál me desarma más:',
     dynamicPayload: {
-      question: '¿Cuál es mi debilidad número uno cuando estás cerca?',
+      question: '¿Qué detalle tuyo logra desarmarme en cuestión de segundos?',
       options: [
-        'Tu aroma y un abrazo en el cuello',
-        'Cuando te ríes a carcajadas',
-        'Cuando me miras con cara de travesura',
-        '¡No puedo resistirme a ninguna de las tres!'
+        'Tu aroma suave cuando te acercas a abrazarme',
+        'El brillo de tus ojos cuando te ríes conmigo',
+        'Esa sonrisa cómplice que solo me regalas a mí',
+        'Todo en ti… no puedo resistirme a nada tuyo'
       ],
       optionFeedbacks: [
-        '¡Uf, totalmente cierto! Ese perfume tuyo me desarma... pero hay más 😘',
-        '¡Tu risa es mi sonido favorito! Sigue intentando...',
-        '¡Esa mirada peligrosa me vuelve loco! Pero mira la última opción 😉',
-        '¡Me conoces demasiado bien! Hoy te toca cobrar diez besos largos de interés 💋🔥'
+        '¡Ese perfume tuyo me envuelve por completo! Pero hay algo todavía más cierto 😘',
+        '¡Tu risa es mi melodía favorita en el mundo! Sigue mirando con atención…',
+        '¡Esa mirada tuya detiene mi mundo entero! Aunque falta la respuesta completa 😉',
+        '¡Me conoces demasiado bien, amor mío! Y esta noche me encargo de demostrártelo con diez besos sin prisa 💋✨'
       ],
       correctIndex: 3,
-      hint: 'Pista: ¡Me derrito con todo de ti!',
-      rewardText: '¡Correcto! Hoy cobras diez besos largos de interés 💋'
+      hint: 'Pista: ¡Es todo lo que eres!',
+      rewardText: '¡Acertaste! Esta noche tengo diez besos sin prisa esperando solo por ti 💋✨'
     }
   },
   {
@@ -323,21 +323,21 @@ export const IDEAS_BANK = [
     dynamicType: 'challenge',
     allowReply: false,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo XVIII · Sorpresa gastronómica',
-    unlockedTitle: 'Menú secreto de esta noche',
-    suggestion: 'Cocínale su plato favorito o llévala a probar el estilo que elija.',
-    message: 'Esta noche no cocinas ni mueves un dedo. Tú solo elige el estilo de tu antojo:',
+    teaserTitle: 'Capítulo XVIII · Una mesa reservada en secreto',
+    unlockedTitle: 'Tu cena especial de esta noche',
+    suggestion: 'Transmítele certeza de que la noche entera ya está resuelta y reservada; ella solo descubre qué atmósfera abrir primero.',
+    message: 'Esta noche todo está listo para nosotros, mi princesa. No tienes que pensar en nada: la mesa, la luz y los sabores ya tienen lugar.\n\nSolo toca la esencia con la que quieres dejarte sorprender hoy:',
     dynamicPayload: {
-      prompt: 'Elige la vibra de tu cena:',
+      prompt: 'Todo está reservado… ¿qué aroma deseas que reciba nuestra noche?',
       choices: [
-        'Italiana: pasta, vino y velas',
-        'Asiática: sushi / ramen especial',
-        'Parrilla / Burgers gourmet & cocteles'
+        'Encanto italiano · Luz de velas, vino y sabores clásicos',
+        'Noche exótica · Sabores orientales y brindis bajo tenues luces',
+        'Velada íntima · Cortes especiales, música suave y el tiempo nuestro'
       ],
       choiceFeedbacks: [
-        '¡Bellísima elección! Prepara tu apetito que esta noche nos vamos de pasta y vino 🍝🍷',
-        '¡Sushi y sabores increíbles en camino! Hoy se te cumple el antojo 🍣✨',
-        '¡Plan delicioso! Cocteles y algo bien rico para brindar por ti 🍔🥂'
+        '¡La mesa ya nos espera! Ven preciosa, que esta noche de velas y vino es toda nuestra 🍷🕯️',
+        '¡Encanto reservado! Todo está coordinado para sorprender tu paladar esta noche ✨🥂',
+        '¡Todo listo para una velada inolvidable! Tú solo déjate llevar desde que crucemos la puerta 💖🌙'
       ]
     }
   },
@@ -360,12 +360,12 @@ export const IDEAS_BANK = [
     allowReply: false,
     hasSunflowers: false,
     teaserTitle: 'Capítulo XX · Últimos 10 días',
-    unlockedTitle: 'Día de consentimiento / Beauty pass',
+    unlockedTitle: 'Pase de belleza y descanso total',
     suggestion: 'Regálale uñas, spa, peluquería o un kit de skincare antes de la semana final para que brille en su cumple.',
-    message: 'Faltan solo 10 capítulos para tu gran día y quiero verte brillando como la princesa que eres.',
+    message: 'Faltan solo diez capítulos para tu gran día y ya dejé todo listo para consentirte como la reina que eres.',
     dynamicPayload: {
       couponTitle: 'PASAPORTE BEAUTY & SPA',
-      couponDesc: 'Válido para consentirte (uñas, spa o tu tratamiento favorito) antes de tu fiesta de los 29 ✨'
+      couponDesc: 'Todo está dispuesto para consentirte con calma (uñas, spa o tu ritual favorito) antes de tu noche de los 29 ✨'
     }
   },
   {
@@ -420,24 +420,24 @@ export const IDEAS_BANK = [
     teaserTitle: 'Capítulo XXIV · Nuestros momentos top',
     unlockedTitle: '¿Recuerdas este día?',
     suggestion: 'Sube una foto icónica de ustedes y personaliza las 4 reacciones de lo que pasó ese día.',
-    message: 'Mira la foto de arriba y contesta rápido:',
+    message: 'Mira la foto de arriba y responde con el corazón:',
     dynamicPayload: {
-      question: '¿Qué fue lo mejor de ese día juntos?',
+      question: '¿Qué fue lo mejor de ese instante juntos?',
       options: [
-        'Lo rico que comimos',
-        'Que no paramos de reírnos',
-        'El abrazo al final del día',
+        'Cada detalle que compartimos en la mesa',
+        'El brillo de nuestras risas sin mirar el reloj',
+        'El abrazo eterno al final del día',
         '¡Todo, porque era contigo!'
       ],
       optionFeedbacks: [
-        '¡Estuvo delicioso! Pero hubo algo mejor todavía 😋',
-        '¡Esas carcajadas no las cambio por nada! Sigue intentando...',
-        '¡Ese abrazo recargó mi alma entera! Pero mira la última...',
-        '¡Exactamente, mi princesa! Contigo hasta un día normal se vuelve inolvidable 💖'
+        '¡Fue delicioso compartirlo contigo! Aunque hubo algo todavía más especial 😘',
+        '¡Esas risas nuestras no las cambio por nada! Sigue mirando con calma…',
+        '¡Ese abrazo me llenó el alma entera! Mira la última opción 😉',
+        '¡Exactamente, mi princesa! Contigo hasta un instante sencillo se vuelve eterno 💖'
       ],
       correctIndex: 3,
       hint: 'Pista: Siempre es la misma magia.',
-      rewardText: '¡Eso mismo! Y esta semana crearemos recuerdos aún más épicos.'
+      rewardText: '¡Eso mismo! Y esta semana crearemos recuerdos todavía más inolvidables.'
     }
   },
   {
@@ -446,21 +446,21 @@ export const IDEAS_BANK = [
     dynamicType: 'challenge',
     allowReply: true,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo XXV · Código de vestimenta',
-    unlockedTitle: 'Prepárate para celebrar',
-    suggestion: 'Empieza a crear expectativa sobre cómo quieres verla vestida o qué vibra prefiere para su cumple.',
-    message: 'Faltan apenas días para tu 12 de diciembre. Confírmame esto para el gran cierre:',
+    teaserTitle: 'Capítulo XXV · La antesala de tus 29',
+    unlockedTitle: 'Todo listo para tu noche dorada',
+    suggestion: 'Aumenta la emoción del gran día haciéndole sentir que cada detalle de la celebración ya está cubierto y reservado.',
+    message: 'Faltan apenas unos suspiros para tu 12 de diciembre, y cada detalle de tu celebración ya está cuidadosamente preparado para ti.\n\nElige cuál de estas sensaciones quieres sentir primero cuando comience tu gran noche:',
     dynamicPayload: {
-      prompt: '¿Cómo quieres sentirte el día de tus 29?',
+      prompt: 'Tu noche de los 29 ya está escrita en oro… ¿qué instante deseas abrir primero?',
       choices: [
-        'Elegante y espectacular en una noche inolvidable',
-        'Rodeada de música, brindis y mucha risa',
-        'Íntima, romántica y completamente consentida'
+        'Elegancia absoluta · Un vestido especial, brindis y miradas cómplices',
+        'Alegría infinita · Nuestra música favorita, luz dorada y tu sonrisa',
+        'Amor en estado puro · Abrazos largos, calma y magia solo nuestra'
       ],
       choiceFeedbacks: [
-        '¡Así será, reina mía! Alista tu look más espectacular porque vas a brillar ✨👑',
-        '¡Que suene nuestra playlist y no falte el brindis! Va a ser épico 🥂🎶',
-        '¡Totalmente consentida de principio a fin, te lo prometo! 💖✨'
+        '¡Así será, reina mía! Tu lugar y cada detalle ya aguardan para verte brillar como nunca ✨👑',
+        '¡Todo está preparado para escuchar tu risa llenarlo todo! Será una noche eterna 🥂🎶',
+        '¡Cada instante está pensado para hacerte sentir la mujer más amada del mundo! 💖✨'
       ]
     }
   },
@@ -516,7 +516,7 @@ export const IDEAS_BANK = [
     teaserTitle: 'Capítulo XXIX · Víspera del Gran Video',
     unlockedTitle: 'El Telón está por subir 🎬',
     suggestion: '¡El día previo al cumpleaños! Activa también el botón del "Gran Cine / Video Resumen" en la pestaña Gran Final.',
-    message: 'Llegamos al capítulo 29... tu número mágico.\n\nRaspa este boleto dorado y luego mira el botón del **Cine de Recuerdos** en tu pantalla principal.',
+    message: 'Llegamos al capítulo 29... tu número mágico.\n\nRaspa este boleto dorado y luego mira el botón del Cine de Recuerdos en tu pantalla principal.',
     dynamicPayload: {
       prompt: 'Raspa tu invitación al Gran Estreno',
       secretReward: '¡CINE DE RECUERDOS ACTIVADO! Sube arriba y dale play a nuestra película de estos días 🎬✨'
@@ -557,21 +557,21 @@ export const ALTERNATIVE_IDEAS = {
     dynamicType: 'challenge',
     allowReply: false,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo II · Elige tu premio hoy',
-    unlockedTitle: '¿Qué te consiente más hoy?',
-    suggestion: 'Plan B Día 2: En lugar de Trivia, dale a elegir entre 3 antojos reales para llevárselo hoy mismo.',
-    message: 'Hoy quiero consentir tu día con algo rico. Elige qué se te antoja más:',
+    teaserTitle: 'Capítulo II · Tres secretos listos para ti',
+    unlockedTitle: 'Un detalle reservado para tu día',
+    suggestion: 'Plan B Día 2: En lugar de Trivia, dale a elegir entre 3 gestos que ya tienes listos para entregarle hoy.',
+    message: 'Hoy no tienes que pensar en nada, mi princesa: ya dejé listos tres gestos distintos para consentirte. Elige cuál quieres descubrir primero:',
     dynamicPayload: {
-      prompt: 'Toca tu antojo ganador de hoy:',
+      prompt: 'Todo está preparado para tu tarde… toca el secreto que quieras abrir hoy:',
       choices: [
-        'Chocolate / Postre favorito',
-        'Café especial o bebida fría',
-        'Un abrazo eterno + sorpresa misteriosa'
+        'Un detalle dulce guardado especialmente para ti',
+        'Tu bebida favorita preparada con calma para ti',
+        'Un abrazo sin prisa y una sorpresa en mis manos'
       ],
       choiceFeedbacks: [
-        '¡Dulce para la mujer más dulce! En camino tu antojo de chocolate 🍫💖',
-        '¡Anotado! Tu bebida favorita va directo a alegrarte el día ☕✨',
-        '¡Qué mejor elección! Prepárate para un abrazo de esos que reinician el alma 🤗💛'
+        '¡Concedido, amor mío! Tu detalle dulce ya está reservado y en camino hacia ti 🍫💖',
+        '¡Todo listo! Tu bebida favorita llegará hoy para iluminar tu tarde ☕✨',
+        '¡Qué elección tan hermosa! Hoy te espera un abrazo eterno y mi sorpresa lista para ti 🤗💛'
       ]
     }
   },
@@ -647,22 +647,22 @@ function buildFallbackPlanB(base, altType) {
       dynamicType: 'trivia',
       suggestion: 'Plan B (Trivia): Pregúntale un dato único de ustedes y ponle 4 reacciones distintas en pantalla.',
       dynamicPayload: {
-        question: '¿Cuál de estos momentos conmigo repetirías mil veces?',
+        question: '¿Cuál de estos instantes conmigo guardarías para siempre?',
         options: [
-          'Una tarde de risas sin parar',
-          'Una cena romántica los dos solos',
-          'Un viaje improvisado con buena música',
+          'Una tarde de risas sin mirar el reloj',
+          'Una velada romántica solo nosotros dos',
+          'Un camino juntos con nuestra música sonando',
           '¡Cualquiera mientras estemos juntos!'
         ],
         optionFeedbacks: [
-          '¡Reír contigo es mi terapia favorita! Pero hay una respuesta todavía más cierta 😘',
-          '¡Con una copa y mirándote a los ojos! Mira la última opción...',
-          '¡Cantando a todo pulmón en carretera! Aun así falta la ganadora 😉',
-          '¡Exacto, amor mío! Contigo hasta el plan más simple es magia ✨💖'
+          '¡Reír contigo es mi paz favorita! Pero hay una respuesta todavía más cierta 😘',
+          '¡Con una copa y mirándote a los ojos! Mira la última opción…',
+          '¡Cantando juntos por carretera! Aun así falta la ganadora 😉',
+          '¡Exacto, amor mío! Contigo hasta el instante más sencillo se vuelve magia ✨💖'
         ],
         correctIndex: 3,
         hint: 'Pista: ¡Lo importante siempre es el "contigo"!',
-        rewardText: '¡Acertaste! Próximo plan juntos en camino 💖'
+        rewardText: '¡Acertaste! Nuestro próximo momento especial ya está en preparación 💖'
       }
     };
   }
@@ -670,14 +670,18 @@ function buildFallbackPlanB(base, altType) {
     return {
       ...base,
       dynamicType: 'challenge',
-      suggestion: 'Plan B (Elección): Deja que ella escoja entre 3 detalles para saber exactamente cómo sorprenderla.',
+      suggestion: 'Plan B (Invitación con Misterio): Tres caminos ya dispuestos con certeza para que ella elija qué descubrir primero.',
       dynamicPayload: {
-        prompt: '¿Cómo prefieres que te consienta hoy?',
-        choices: ['Con algo dulce', 'Con música y abrazo largo', 'Con una salida improvisada'],
+        prompt: 'Hoy todo ya está dispuesto para ti… ¿qué detalle deseas descubrir primero?',
+        choices: [
+          'Un detalle dulce pensado para tu tarde',
+          'Nuestra música y un abrazo que detenga el reloj',
+          'Una salida sorpresa completamente organizada'
+        ],
         choiceFeedbacks: [
-          '¡Dulce en camino para ti, mi princesa! 🍫✨',
-          '¡Música puesta y abrazo gigante reservado para ti! 🎶🤗',
-          '¡Me encanta tu energía! Prepárate para salir juntos ✨🚗'
+          '¡Todo listo, mi princesa! Tu detalle dulce ya viene en camino para ti 🍫✨',
+          '¡Nuestra música y ese abrazo largo ya esperan por ti esta noche! 🎶🤗',
+          '¡Todo reservado! Tú solo déjate llevar que de principio a fin me encargo yo ✨🌙'
         ]
       }
     };

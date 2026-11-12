@@ -359,10 +359,10 @@ function renderCouponDynamic(card, capsule, payload, onComplete) {
       launchGoldConfetti();
       showDynamicPopup({
         icon: '🎟️',
-        title: '¡Cupón VIP Canjeado!',
-        message: `Sellaste "${titleText}". ¡Prepárate para cobrarlo, mi princesa! 💖`,
+        title: '¡Cupón VIP Sellado!',
+        message: `Has abierto "${titleText}". Todo ya está listo para consentirte como mereces, mi princesa 💖`,
         isSuccess: true,
-        buttonText: '¡Listo para cobrarlo! ✨'
+        buttonText: '¡Qué emoción! ✨'
       });
       onComplete({ dynamicDone: true, dynamicAnswer: stampText });
     });
@@ -373,11 +373,13 @@ function renderCouponDynamic(card, capsule, payload, onComplete) {
 }
 
 // ---------------------------------------------------------------------------
-// 5. ELECCIÓN / MISIÓN DEL DÍA (Respuesta única en pantalla por opción)
+// 5. INVITACIÓN CON MISTERIO (Todo dispuesto con certeza; respuesta única por opción)
 // ---------------------------------------------------------------------------
 function renderChallengeDynamic(card, capsule, payload, onComplete) {
-  card.appendChild(el('span', 'dynamic-badge', '✨ Tú Eliges Hoy'));
-  card.appendChild(el('h3', 'dynamic-prompt', payload.prompt || '¿Qué prefieres hoy?'));
+  card.appendChild(el('span', 'dynamic-badge', '✨ Tu Destino de Hoy'));
+  card.appendChild(
+    el('h3', 'dynamic-prompt', payload.prompt || 'Todo está preparado para ti… elige cuál deseas descubrir primero')
+  );
 
   const list = el('div', 'options-list');
   const choices = Array.isArray(payload.choices) ? payload.choices : [];
@@ -386,7 +388,7 @@ function renderChallengeDynamic(card, capsule, payload, onComplete) {
   const chosenBox = el('div', 'reward-reveal', '');
   if (capsule.dynamicDone && capsule.dynamicAnswer) {
     const idx = choices.indexOf(capsule.dynamicAnswer);
-    chosenBox.textContent = (idx >= 0 && feedbacks[idx]) || `Tu elección: ${capsule.dynamicAnswer}`;
+    chosenBox.textContent = (idx >= 0 && feedbacks[idx]) || `Tu destino elegido: ${capsule.dynamicAnswer}`;
   } else {
     chosenBox.classList.add('hidden');
   }
@@ -401,16 +403,16 @@ function renderChallengeDynamic(card, capsule, payload, onComplete) {
       btn.classList.add('is-correct');
       const customFb =
         (feedbacks[idx] || '').trim() ||
-        `Elegiste "${choice}". ¡Me encanta tu elección, amor mío! 💖`;
+        `Todo está dispuesto y reservado para "${choice}". Prepárate para dejarte sorprender, amor mío 💖`;
       chosenBox.textContent = customFb;
       chosenBox.classList.remove('hidden');
       launchGoldConfetti();
       showDynamicPopup({
         icon: '✨',
-        title: '¡Elección Guardada!',
+        title: '¡Todo Listo para Ti!',
         message: customFb,
         isSuccess: true,
-        buttonText: '¡Perfecto! 💖'
+        buttonText: '¡Qué ilusión! 💖'
       });
       onComplete({ dynamicDone: true, dynamicAnswer: choice });
     });

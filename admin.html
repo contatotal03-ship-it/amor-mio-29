@@ -136,6 +136,9 @@
             <span style="font-size:0.75rem;color:var(--text-muted);">🔒 Sellado · ✨ Listo · 💖 Abierto</span>
           </div>
           <div class="days-selector-grid" id="days-selector-grid"></div>
+          <button type="button" class="btn btn-glass btn-sm" id="admin-reset-local-test-btn" style="width:100%;margin-top:14px;font-size:0.76rem;color:var(--text-muted);" title="Vuelve a sellar los capítulos abiertos en este navegador para que los veas como ella">
+            🔄 Volver a sellar mis pruebas en este navegador
+          </button>
         </aside>
 
         <!-- Right: Day Editor -->
@@ -145,7 +148,8 @@
               <span class="modal-day-tag" id="ed-act-badge">Acto I</span>
               <h2 class="font-display gold-text" style="font-size:1.85rem;" id="ed-day-heading">Capítulo 01</h2>
             </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <button type="button" class="btn btn-gold btn-sm" id="ed-preview-as-her-btn" style="background:linear-gradient(135deg, #d4af37, #f3e5ab);color:#0a0a0f;font-weight:700;">👁️ Previsualizar como Ella</button>
               <button type="button" class="btn btn-sm" id="ed-toggle-auth-btn">🔓 Autorizar Apertura</button>
               <button type="button" class="btn btn-glass btn-sm" id="ed-load-idea-btn">💡 Idea Plan A</button>
               <button type="button" class="btn btn-glass btn-sm" id="ed-load-planb-btn">🎲 Idea Plan B</button>
@@ -208,7 +212,7 @@
                 <option value="trivia">🧠 Trivia de Nosotros</option>
                 <option value="clue">🕵️‍♀️ Búsqueda del Tesoro (Pista + Código)</option>
                 <option value="coupon">🎟️ Cupón VIP Canjeable</option>
-                <option value="challenge">✨ Elección / Misión del Día</option>
+                <option value="challenge">✨ Invitación con Misterio (Todo Listo)</option>
               </select>
             </div>
 
@@ -245,6 +249,7 @@
             <!-- Action Footer -->
             <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:8px;">
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="btn btn-glass btn-sm" id="ed-preview-bottom-btn">👁️ Previsualizar como Ella</button>
                 <button type="button" class="btn btn-glass btn-sm" id="ed-whatsapp-alert-btn">📲 Avisar por WhatsApp</button>
                 <button type="button" class="btn btn-glass btn-sm" id="ed-telegram-alert-btn">✈️ Avisar por Telegram</button>
               </div>
@@ -369,6 +374,10 @@
             <div>
               <label class="field-label" for="alert-wa-phone">WhatsApp de Ella (código país + número, sin +)</label>
               <input id="alert-wa-phone" type="text" class="input" placeholder="Ej: 573001234567" />
+            </div>
+            <div>
+              <label class="field-label" for="alert-my-wa-phone">Tu WhatsApp personal (donde Ella te responderá con un clic)</label>
+              <input id="alert-my-wa-phone" type="text" class="input" placeholder="Ej: 573009876543" />
             </div>
             <div>
               <label class="field-label" for="alert-wa-template">Mensaje que le llegará a WhatsApp (puedes usar {nombre}, {capitulo}, {link})</label>

@@ -31,6 +31,7 @@ import { PUBLIC_CONFIG } from './config.js';
 import { IDEAS_BANK, DYNAMIC_TYPES, getIdeaForDay } from './ideas-bank.js';
 import { initStardust, showToast, launchGoldConfetti } from './particles.js';
 import { openCinemaModal, renderAndDownloadFinaleVideo } from './cinema.js';
+import { renderDynamicSection } from './dynamics.js';
 
 let state = {
   settings: null,
@@ -409,7 +410,7 @@ function renderDynamicFieldsEditor(type, payload = {}) {
     container.innerHTML = `
       <div class="form-grid">
         <div>
-          <label class="field-label">Pregunta o Elección del Día</label>
+          <label class="field-label">Invitación / Propuesta Romántica del Día</label>
           <input id="dyn-prompt" type="text" class="input" />
         </div>
         ${[0, 1, 2].map((i) => `
@@ -420,7 +421,7 @@ function renderDynamicFieldsEditor(type, payload = {}) {
             </div>
             <div>
               <label class="field-label" style="color:var(--rose-champagne);">Mensaje en pantalla si elige Opción ${String.fromCharCode(65 + i)}</label>
-              <input id="dyn-ch-fb-${i}" type="text" class="input" placeholder="Ej: ¡Me encanta! Alístalo todo..." />
+              <input id="dyn-ch-fb-${i}" type="text" class="input" placeholder="Ej: ¡Todo está reservado y listo para ti, amor mío!..." />
             </div>
           </div>
         `).join('')}
@@ -675,6 +676,284 @@ function renderIdeasGrid() {
 }
 
 // ---------------------------------------------------------------------------
+// Novio Live Preview Mode (Previsualizar como Ella sin alterar datos)
+// ---------------------------------------------------------------------------
+function createPreviewSunflowerSvg(cls) {
+  const wrap = document.createElement('div');
+  wrap.className = `sunflower-ornament ${cls}`;
+  wrap.innerHTML = `
+    <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
+      <g transform="translate(60 60)">
+        ${Array.from({ length: 14 }, (_, i) =>
+          `<ellipse cx="0" cy="-36" rx="9" ry="22" transform="rotate(${(i * 360) / 14})" fill="#f5c542" opacity="0.92"/>`
+        ).join('')}
+        ${Array.from({ length: 14 }, (_, i) =>
+          `<ellipse cx="0" cy="-32" rx="6" ry="17" transform="rotate(${(i * 360) / 14 + 13})" fill="#d4af37" opacity="0.88"/>`
+        ).join('')}
+        <circle r="21" fill="#3a200a" stroke="#b99124" stroke-width="2.5"/>
+        <circle r="14" fill="#241305"/>
+      </g>
+    </svg>
+  `;
+  return wrap;
+}
+
+async function openAdminCapsulePreview() {
+  const cap = state.capsules[state.selectedDay - 1];
+  if (!cap) return;
+
+  const type = document.getElementById('ed-dynamic-type').value;
+  const previewCap = {
+    dayNumber: state.selectedDay,
+    isAuthorized: cap.isAuthorized,
+    teaserTitle: document.getElementById('ed-teaser').value.trim() || cap.teaserTitle,
+    unlockedTitle: document.getElementById('ed-title').value.trim() || cap.unlockedTitle,
+    message: document.getElementById('ed-message').value.trim(),
+    dynamicType: type,
+    dynamicPayload: collectDynamicPayloadFromEditor(type),
+    allowReply: document.getElementById('ed-allow-reply').checked,
+    hasSunflowers: document.getElementById('ed-sunflowers').checked,
+    mediaItems: Array.isArray(cap.mediaItems) ? cap.mediaItems : []
+  };
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop';
+  backdrop.style.zIndex = '99999';
+
+  // Floating Control Bar for Novio
+  const bar = document.createElement('div');
+  bar.style.position = 'fixed';
+  bar.style.top = '14px';
+  bar.style.left = '50%';
+  bar.style.transform = 'translateX(-50%)';
+  bar.style.zIndex = '100001';
+  bar.style.display = 'flex';
+  bar.style.gap = '8px';
+  bar.style.alignItems = 'center';
+  bar.style.background = 'rgba(10, 10, 15, 0.95)';
+  bar.style.border = '1px solid var(--border-gold)';
+  bar.style.borderRadius = '30px';
+  bar.style.padding = '6px 14px';
+  bar.style.boxShadow = '0 8px 32px rgba(0,0,0,0.6)';
+
+  const label = document.createElement('span');
+  label.style.fontSize = '0.82rem';
+  label.style.fontWeight = '700';
+  label.style.color = 'var(--gold-light)';
+  label.textContent = `👁️ Vista Previa · Cap ${String(previewCap.dayNumber).padStart(2, '0')}`;
+
+  const viewOpenBtn = document.createElement('button');
+  viewOpenBtn.type = 'button';
+  viewOpenBtn.className = 'btn btn-gold btn-sm';
+  viewOpenBtn.style.padding = '4px 10px';
+  viewOpenBtn.style.fontSize = '0.78rem';
+  viewOpenBtn.textContent = '✨ Contenido Abierto';
+
+  const viewSealBtn = document.createElement('button');
+  viewSealBtn.type = 'button';
+  viewSealBtn.className = 'btn btn-glass btn-sm';
+  viewSealBtn.style.padding = '4px 10px';
+  viewSealBtn.style.fontSize = '0.78rem';
+  viewSealBtn.textContent = '🔒 Probar Sello de Cera';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'btn btn-glass btn-sm';
+  closeBtn.style.padding = '4px 10px';
+  closeBtn.style.fontSize = '0.78rem';
+  closeBtn.textContent = '✕ Cerrar Previa';
+  closeBtn.addEventListener('click', () => backdrop.remove());
+
+  bar.appendChild(label);
+  bar.appendChild(viewOpenBtn);
+  bar.appendChild(viewSealBtn);
+  bar.appendChild(closeBtn);
+  backdrop.appendChild(bar);
+
+  const container = document.createElement('div');
+  container.style.width = '100%';
+  container.style.display = 'flex';
+  container.style.justifyContent = 'center';
+  backdrop.appendChild(container);
+
+  function renderSealView() {
+    container.innerHTML = '';
+    viewSealBtn.className = 'btn btn-gold btn-sm';
+    viewOpenBtn.className = 'btn btn-glass btn-sm';
+
+    const ritual = document.createElement('div');
+    ritual.className = 'ritual-overlay';
+    ritual.style.position = 'relative';
+    ritual.style.background = 'transparent';
+    ritual.style.height = 'auto';
+    ritual.style.minHeight = '70vh';
+
+    ritual.innerHTML = `
+      <p class="curtain-eyebrow">Capítulo ${String(previewCap.dayNumber).padStart(2, '0')} · Simulación de Sello</p>
+      <button type="button" class="wax-seal-btn" id="preview-break-seal">
+        <span style="font-family:var(--font-display);font-size:2.4rem;font-weight:700;line-height:1;">${String(previewCap.dayNumber).padStart(2, '0')}</span>
+        <span style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;margin-top:4px;">Romper sello</span>
+      </button>
+      <p style="color:var(--text-muted);max-width:340px;margin-top:14px;text-align:center;">
+        ${previewCap.teaserTitle || 'Toca el sello real para descubrir la sorpresa de hoy.'}
+      </p>
+    `;
+
+    ritual.querySelector('#preview-break-seal').addEventListener('click', () => {
+      launchGoldConfetti();
+      showToast('✨ ¡Sello roto con éxito en vista previa!');
+      setTimeout(renderOpenView, 450);
+    });
+
+    container.appendChild(ritual);
+  }
+
+  async function renderOpenView() {
+    container.innerHTML = '';
+    viewOpenBtn.className = 'btn btn-gold btn-sm';
+    viewSealBtn.className = 'btn btn-glass btn-sm';
+
+    const card = document.createElement('div');
+    card.className = 'modal-card' + (previewCap.hasSunflowers ? ' has-sunflowers' : '');
+    card.style.marginTop = '60px';
+    card.style.marginBottom = '40px';
+
+    if (previewCap.hasSunflowers) {
+      card.appendChild(createPreviewSunflowerSvg('sunflower-tr'));
+      card.appendChild(createPreviewSunflowerSvg('sunflower-bl'));
+    }
+
+    const header = document.createElement('div');
+    header.className = 'modal-header';
+
+    const titleWrap = document.createElement('div');
+    const tag = document.createElement('span');
+    tag.className = 'modal-day-tag';
+    tag.textContent = `Capítulo ${String(previewCap.dayNumber).padStart(2, '0')} · ${
+      (DYNAMIC_TYPES[previewCap.dynamicType] || DYNAMIC_TYPES.classic).label
+    }`;
+    if (previewCap.hasSunflowers) {
+      const sf = document.createElement('span');
+      sf.className = 'sunflower-pill';
+      sf.textContent = '🌻 Girasoles para ti';
+      tag.appendChild(sf);
+    }
+
+    const h2 = document.createElement('h2');
+    h2.className = 'modal-title gold-text';
+    h2.textContent = previewCap.unlockedTitle || `Capítulo ${previewCap.dayNumber}`;
+
+    titleWrap.appendChild(tag);
+    titleWrap.appendChild(h2);
+    header.appendChild(titleWrap);
+    card.appendChild(header);
+
+    // Media Gallery
+    if (Array.isArray(previewCap.mediaItems) && previewCap.mediaItems.length > 0) {
+      const gallery = document.createElement('div');
+      gallery.className = 'media-gallery';
+
+      for (const m of previewCap.mediaItems) {
+        const item = document.createElement('div');
+        item.className = 'media-item';
+        const resolvedUrl = await resolveMediaUrl(m.url);
+        if (!resolvedUrl) continue;
+
+        if (m.type === 'image') {
+          const img = document.createElement('img');
+          img.src = resolvedUrl;
+          img.alt = m.caption || previewCap.unlockedTitle;
+          item.appendChild(img);
+        } else if (m.type === 'video') {
+          const vid = document.createElement('video');
+          vid.src = resolvedUrl;
+          vid.controls = true;
+          item.appendChild(vid);
+        } else if (m.type === 'audio') {
+          const wrap = document.createElement('div');
+          wrap.className = 'media-audio-wrap';
+          const lbl = document.createElement('span');
+          lbl.style.fontSize = '0.84rem';
+          lbl.style.color = 'var(--gold-light)';
+          lbl.textContent = '🎙️ Nota de voz grabada';
+          const aud = document.createElement('audio');
+          aud.src = resolvedUrl;
+          aud.controls = true;
+          wrap.appendChild(lbl);
+          wrap.appendChild(aud);
+          item.appendChild(wrap);
+        } else if (m.type === 'spotify') {
+          const embedUrl = toSpotifyEmbedUrl(resolvedUrl);
+          if (embedUrl) {
+            item.classList.add('is-spotify');
+            const iframe = document.createElement('iframe');
+            iframe.className = 'spotify-embed-frame';
+            iframe.src = embedUrl;
+            iframe.height = embedUrl.includes('/playlist/') || embedUrl.includes('/album/') ? '180' : '80';
+            iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+            item.appendChild(iframe);
+          }
+        }
+
+        if (m.caption) {
+          const capEl = document.createElement('div');
+          capEl.className = 'media-caption';
+          capEl.textContent = m.caption;
+          item.appendChild(capEl);
+        }
+        gallery.appendChild(item);
+      }
+      card.appendChild(gallery);
+    }
+
+    // Letter Message
+    if (previewCap.message) {
+      const letter = document.createElement('div');
+      letter.className = 'modal-letter';
+      letter.innerHTML = previewCap.message
+        .split(/\n\s*\n/)
+        .map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+        .join('');
+      card.appendChild(letter);
+    }
+
+    // Interactive Dynamic
+    if (previewCap.dynamicType && previewCap.dynamicType !== 'classic') {
+      const dynContainer = document.createElement('div');
+      dynContainer.className = 'modal-dynamic-section';
+      renderDynamicSection(dynContainer, previewCap, () => {
+        showToast('✨ Dinámica completada en modo vista previa.');
+      });
+      card.appendChild(dynContainer);
+    }
+
+    // Reply Box preview
+    if (previewCap.allowReply) {
+      const replySec = document.createElement('div');
+      replySec.className = 'reply-section';
+      replySec.innerHTML = `
+        <label class="reply-label">💌 Déjale una respuesta o lo que sentiste hoy</label>
+        <div class="reply-row">
+          <textarea class="reply-textarea" placeholder="Aquí ella podrá escribirte lo que sintió o responderte..."></textarea>
+          <div class="reply-actions">
+            <button type="button" class="btn btn-gold btn-sm">📲 Enviársela por WhatsApp</button>
+          </div>
+        </div>
+      `;
+      card.appendChild(replySec);
+    }
+
+    container.appendChild(card);
+  }
+
+  viewOpenBtn.addEventListener('click', renderOpenView);
+  viewSealBtn.addEventListener('click', renderSealView);
+
+  await renderOpenView();
+  document.body.appendChild(backdrop);
+}
+
+// ---------------------------------------------------------------------------
 // Settings, Finale, QR & Alerts
 // ---------------------------------------------------------------------------
 function populateSettingsForms() {
@@ -696,6 +975,9 @@ function populateSettingsForms() {
   // Alerts
   if (p) {
     document.getElementById('alert-wa-phone').value = p.whatsappPhone || '';
+    if (document.getElementById('alert-my-wa-phone')) {
+      document.getElementById('alert-my-wa-phone').value = p.myWhatsappPhone || s.myWhatsappPhone || '';
+    }
     document.getElementById('alert-wa-template').value =
       p.whatsappTemplate ||
       '✨ Hola {nombre}! Acabo de autorizar la apertura del Capítulo {capitulo} en tu universo. Entra a descubrirlo aquí: {link}';
@@ -1157,6 +1439,18 @@ function bindStaticEvents() {
     }
   });
 
+  document.getElementById('ed-preview-as-her-btn').addEventListener('click', openAdminCapsulePreview);
+  const bottomPrevBtn = document.getElementById('ed-preview-bottom-btn');
+  if (bottomPrevBtn) bottomPrevBtn.addEventListener('click', openAdminCapsulePreview);
+
+  const resetLocalBtn = document.getElementById('admin-reset-local-test-btn');
+  if (resetLocalBtn) {
+    resetLocalBtn.addEventListener('click', () => {
+      localStorage.removeItem('cap29_her_progress_v1');
+      showToast('✨ Pruebas reseteadas en este navegador. Las cápsulas volverán a verse selladas.');
+    });
+  }
+
   document.getElementById('ed-whatsapp-alert-btn').addEventListener('click', () => {
     sendWhatsAppAlert(state.selectedDay);
   });
@@ -1228,14 +1522,20 @@ function bindStaticEvents() {
   document.getElementById('download-qr-card-btn').addEventListener('click', downloadLuxuryQrCard);
 
   document.getElementById('save-alerts-btn').addEventListener('click', async () => {
+    const myPhone = document.getElementById('alert-my-wa-phone')?.value.trim() || '';
     state.privateSettings = {
       whatsappPhone: document.getElementById('alert-wa-phone').value.trim(),
+      myWhatsappPhone: myPhone,
       whatsappTemplate: document.getElementById('alert-wa-template').value.trim(),
       telegramBotToken: document.getElementById('alert-tg-token').value.trim(),
       telegramChatId: document.getElementById('alert-tg-chat').value.trim()
     };
+    if (myPhone) {
+      state.settings.myWhatsappPhone = myPhone;
+      await saveAdminSettings(state.settings);
+    }
     await savePrivateAdminSettings(state.privateSettings);
-    showToast('🔔 Alertas guardadas con seguridad');
+    showToast('🔔 Alertas y números guardados con seguridad');
   });
 
   document.getElementById('test-tg-btn').addEventListener('click', async () => {

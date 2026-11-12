@@ -75,11 +75,27 @@ async function init() {
     return;
   }
 
+  // Reset test progress if ?reset=1 is present
+  if (params.get('reset') === '1' || params.has('reset')) {
+    localStorage.removeItem('cap29_her_progress_v1');
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, '', cleanUrl);
+  }
+
   initStardust();
   registerServiceWorker();
   await loadData();
   bindEvents();
   startCountdownTicker();
+
+  // Mobile preview mode if ?preview=X is passed
+  const previewDay = parseInt(params.get('preview') || '0', 10);
+  if (previewDay >= 1 && previewDay <= 30) {
+    const target = state.capsules.find((c) => c.dayNumber === previewDay);
+    if (target) {
+      setTimeout(() => openCapsuleModal({ ...target, isOpenedByHer: true }), 400);
+    }
+  }
 
   // Live updates when he unlocks a capsule from Admin
   await subscribeHerLiveUpdates(async () => {
@@ -560,7 +576,11 @@ async function openCapsuleModal(cap) {
       cap.herReply = msg;
       await herInteractCapsule(cap.dayNumber, { herReply: msg }).catch(() => {});
       const waText = `💌 Respuesta sobre el Capítulo ${String(cap.dayNumber).padStart(2, '0')} (${cap.unlockedTitle}):\n\n"${msg}"`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(waText)}`, '_blank');
+      const phone = (state.settings?.myWhatsappPhone || '').replace(/\D/g, '');
+      const waUrl = phone
+        ? `https://wa.me/${phone}?text=${encodeURIComponent(waText)}`
+        : `https://wa.me/?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, '_blank');
     });
 
     btnRow.appendChild(saveReplyBtn);
@@ -754,6 +774,16 @@ function bindEvents() {
       renderGrid();
     });
   });
+
+  // Reset test progress button in footer
+  const resetBtn = document.getElementById('reset-test-progress-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      localStorage.removeItem('cap29_her_progress_v1');
+      showToast('✨ Todas las cápsulas vuelven a estar selladas en este navegador.');
+      setTimeout(() => window.location.reload(), 500);
+    });
+  }
 
   // Finale Cinema Button
   document.getElementById('open-cinema-btn').addEventListener('click', () => {
