@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:12.530Z",
+  "updatedAt": "2026-11-12T04:24:14.384Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -104,38 +104,8 @@
     },
     {
       "dayNumber": 10,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo X · Un tercio del camino",
-      "unlockedTitle": "10 días y contando...",
-      "message": "¡Llegamos al día 10! Vamos a ver qué tan buena eres recordando nuestras locuras:",
-      "dynamicType": "trivia",
-      "dynamicPayload": {
-        "question": "Si tuviéramos que escapar hoy mismo a un lugar los dos solos, ¿qué no puede faltar en la maleta?",
-        "options": [
-          "Tu cámara y buena música",
-          "Ropa cómoda y algo rico para picar",
-          "Ganas de perdernos sin horario",
-          "¡Todo eso junto contigo!"
-        ],
-        "correctIndex": 3,
-        "hint": "Pista: ¡Contigo todo plan se multiplica!",
-        "rewardText": "¡Exacto! Prepárate porque antes de tus 29 vamos a hacer una escapada especial.",
-        "optionFeedbacks": [
-          "¡Obvio que música y fotos van! Pero todavía falta algo más...",
-          "¡Un buen antojo nunca falla! Aun así falta la respuesta completa 😘",
-          "¡Desconectarnos del mundo es la clave! Pero mira la última opción...",
-          "¡SÍII, amor mío! Contigo todo plan se multiplica. Prepárate porque antes de tus 29 nos escapamos juntos ✈️💖"
-        ]
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/4rHczyhBZ53pLWgn6edWfB",
-          "caption": "?? Casi un Hechizo ? Jerry Rivera"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo X · Un tercio del camino"
     },
     {
       "dayNumber": 11,
@@ -447,21 +417,8 @@
     },
     {
       "dayNumber": 30,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑",
-      "unlockedTitle": "¡Feliz Cumpleaños #29, Amor Mío! 👑✨",
-      "message": "¡FELIZ CUMPLEAÑOS #29, MI PRINCESA!\n\nTreinta días, treinta latidos y un solo propósito: hacerte sentir la mujer más amada, admirada y especial del planeta.\n\nQue tus 29 años estén llenos de salud, sueños cumplidos, risas hasta llorar y momentos eternos a mi lado.\n\nHoy celebramos tu vida, amor mío. ¡Te amo con toda mi alma!",
-      "dynamicType": "classic",
-      "dynamicPayload": {},
-      "allowReply": false,
-      "hasSunflowers": true,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/playlist/26rX8PRMYuCee9l0QZK0je",
-          "caption": "?? Playlist completa: D?a especial 29"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑"
     }
   ]
 }
