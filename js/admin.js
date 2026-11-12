@@ -1069,74 +1069,263 @@ function renderQrPreview() {
 }
 
 function downloadLuxuryQrCard() {
-  const url = document.getElementById('qr-url-input').value.trim();
-  const msg = document.getElementById('qr-dedication-input').value.trim();
-  const herName = state.settings?.herName || 'Amor Mío';
-  const title = state.settings?.appTitle || '29 Capítulos';
+  const url = document.getElementById('qr-url-input').value.trim() || 'https://contatotal03-ship-it.github.io/amor-mio-29/';
+  const herName = state.settings?.herName || 'Camila';
+  const title = state.settings?.appTitle || 'Rumbo a tus 29';
 
-  const w = 1080;
-  const h = 1440;
+  const w = 1200;
+  const h = 1700;
   const card = document.createElement('canvas');
   card.width = w;
   card.height = h;
   const ctx = card.getContext('2d');
 
-  // Luxury dark background
-  const bg = ctx.createRadialGradient(w / 2, h * 0.3, 60, w / 2, h / 2, w * 0.9);
-  bg.addColorStop(0, '#1f182d');
-  bg.addColorStop(1, '#07060a');
+  // 1. Velvet Midnight Obsidian Background with rich radial lighting
+  const bg = ctx.createRadialGradient(w / 2, h * 0.38, 80, w / 2, h / 2, w * 0.95);
+  bg.addColorStop(0, '#221932');
+  bg.addColorStop(0.5, '#120d1c');
+  bg.addColorStop(1, '#060408');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, w, h);
 
-  // Outer & Inner Gold Borders
+  // 2. Subtle Golden Stardust / Nebula Particles
+  ctx.fillStyle = '#fce49c';
+  const stars = [
+    [120, 140, 2, 0.4], [180, 220, 1.5, 0.5], [260, 120, 2.5, 0.6], [950, 150, 2, 0.5],
+    [1040, 230, 1.8, 0.4], [1080, 120, 2.5, 0.6], [140, 780, 1.8, 0.35], [1060, 810, 2, 0.4],
+    [160, 1480, 2.2, 0.5], [230, 1560, 1.5, 0.35], [970, 1490, 2.5, 0.55], [1050, 1570, 1.8, 0.45],
+    [320, 480, 1.5, 0.3], [880, 490, 1.5, 0.3], [290, 1220, 1.6, 0.35], [910, 1210, 1.5, 0.35]
+  ];
+  stars.forEach(([x, y, r, a]) => {
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#fff5d0';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(x - r * 2.5, y); ctx.lineTo(x + r * 2.5, y);
+    ctx.moveTo(x, y - r * 2.5); ctx.lineTo(x, y + r * 2.5);
+    ctx.stroke();
+    ctx.restore();
+  });
+
+  // 3. Dual Jewelry Gold Borders with Filigree Corner Flourishes
   ctx.strokeStyle = '#d4af37';
-  ctx.lineWidth = 6;
-  ctx.strokeRect(48, 48, w - 96, h - 96);
-  ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 4;
+  ctx.strokeRect(50, 50, w - 100, h - 100);
+
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.42)';
+  ctx.lineWidth = 1.5;
   ctx.strokeRect(70, 70, w - 140, h - 140);
 
-  ctx.textAlign = 'center';
-  ctx.fillStyle = '#d4af37';
-  ctx.font = '600 28px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('INVITACIÓN PRIVADA', w / 2, 175);
+  const corners = [
+    [50, 50, 1, 1],
+    [w - 50, 50, -1, 1],
+    [50, h - 50, 1, -1],
+    [w - 50, h - 50, -1, -1]
+  ];
+  corners.forEach(([cx, cy, sx, sy]) => {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(sx, sy);
+    ctx.strokeStyle = '#f3cf65';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(10, 36); ctx.lineTo(10, 10); ctx.lineTo(36, 10);
+    ctx.stroke();
+    ctx.fillStyle = '#fce49c';
+    ctx.beginPath();
+    ctx.moveTo(20, 16); ctx.lineTo(24, 20); ctx.lineTo(20, 24); ctx.lineTo(16, 20);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  });
 
-  ctx.fillStyle = '#f9ecc6';
-  ctx.font = '600 84px Georgia, serif';
-  ctx.fillText(title, w / 2, 280);
-
-  ctx.fillStyle = '#e8b4b8';
-  ctx.font = 'italic 46px Georgia, serif';
-  ctx.fillText(`Para ${herName}`, w / 2, 355);
-
-  // White QR frame
-  const qrSize = 520;
-  const qrBox = 580;
-  const qx = (w - qrBox) / 2;
-  const qy = 440;
-
-  ctx.fillStyle = '#ffffff';
+  // 4. Royal Medallion Crest at Top
+  const crestY = 160;
+  ctx.save();
+  ctx.translate(w / 2, crestY);
+  const mGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, 60);
+  mGlow.addColorStop(0, 'rgba(246, 227, 161, 0.35)');
+  mGlow.addColorStop(1, 'rgba(212, 175, 55, 0)');
+  ctx.fillStyle = mGlow;
   ctx.beginPath();
-  ctx.roundRect(qx, qy, qrBox, qrBox, 36);
+  ctx.arc(0, 0, 60, 0, Math.PI * 2);
   ctx.fill();
 
-  const tempQr = document.createElement('canvas');
-  drawQrToCanvas(tempQr, url, qrSize);
-  ctx.drawImage(tempQr, (w - qrSize) / 2, qy + 30);
+  ctx.strokeStyle = '#d4af37';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(0, 0, 44, 0, Math.PI * 2);
+  ctx.stroke();
 
-  ctx.fillStyle = '#e8dfd1';
-  ctx.font = '400 32px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText(msg.slice(0, 56), w / 2, 1130);
+  ctx.strokeStyle = 'rgba(246, 227, 161, 0.6)';
+  ctx.lineWidth = 1.2;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath();
+  ctx.arc(0, 0, 38, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
 
+  ctx.fillStyle = 'rgba(32, 24, 48, 0.9)';
+  ctx.beginPath();
+  ctx.arc(0, 0, 37, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#f6e3a1';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = '700 34px Georgia, serif';
+  ctx.fillText('29', 0, 2);
+  ctx.restore();
+
+  // 5. Eyebrow Badge
+  ctx.textAlign = 'center';
   ctx.fillStyle = '#d4af37';
-  ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('SOLO SE ABRIRÁ CUANDO YO DÉ LA SEÑAL ✦', w / 2, 1280);
+  ctx.font = '600 19px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('✦  INVITACIÓN PRIVADA & EXCLUSIVA  ✦', w / 2, 250);
+
+  // 6. Main Luxury Title
+  const titleGrad = ctx.createLinearGradient(w / 2 - 250, 0, w / 2 + 250, 0);
+  titleGrad.addColorStop(0, '#f9ecc6');
+  titleGrad.addColorStop(0.5, '#ffffff');
+  titleGrad.addColorStop(1, '#d4af37');
+  ctx.fillStyle = titleGrad;
+  ctx.font = '700 76px Georgia, serif';
+  ctx.fillText(title, w / 2, 335);
+
+  // 7. Recipient
+  ctx.fillStyle = '#e8b4b8';
+  ctx.font = 'italic 38px Georgia, serif';
+  ctx.fillText(`Para ${herName}, el amor de mi vida`, w / 2, 395);
+
+  // 8. Delicate Gold Divider Line
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(w / 2 - 280, 430);
+  ctx.lineTo(w / 2 + 280, 430);
+  ctx.stroke();
+  ctx.fillStyle = '#d4af37';
+  ctx.font = '14px sans-serif';
+  ctx.fillText('◆', w / 2, 431);
+
+  // 9. Emotional Editorial Manifesto (Que se asombre al leerlo!)
+  ctx.fillStyle = '#eae2d5';
+  ctx.font = '400 23px "Plus Jakarta Sans", Georgia, sans-serif';
+  const lineSpacing = 36;
+  const msgY = 475;
+  const manifesto = [
+    "Durante los próximos 30 días, antes de que celebres tus 29,",
+    "cada medianoche se encenderá un capítulo secreto pensado solo para ti.",
+    "Un refugio privado donde las palabras, nuestros recuerdos y cada detalle",
+    "ya están preparados para recordarte lo maravillosa que eres.",
+    "Tú no tienes que organizar nada; todo ya está dispuesto para hacerte feliz."
+  ];
+  manifesto.forEach((line, idx) => {
+    ctx.fillText(line, w / 2, msgY + idx * lineSpacing);
+  });
+
+  // 10. The QR Code Plaque (Luxury Porcelain with Gold Trim)
+  const qrBoxW = 490;
+  const qrBoxH = 490;
+  const qx = (w - qrBoxW) / 2;
+  const qy = 690;
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
+  ctx.shadowBlur = 45;
+  ctx.shadowOffsetY = 8;
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.roundRect(qx, qy, qrBoxW, qrBoxH, 32);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.strokeStyle = '#d4af37';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.roundRect(qx + 4, qy + 4, qrBoxW - 8, qrBoxH - 8, 28);
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(qx + 12, qy + 12, qrBoxW - 24, qrBoxH - 24, 22);
+  ctx.stroke();
+
+  // 11. Render Scannable QR Code
+  const qr = window.qrcode(0, 'M');
+  qr.addData(url);
+  qr.make();
+  const count = qr.getModuleCount();
+
+  const qrInnerSize = 400;
+  const qrInnerX = (w - qrInnerSize) / 2;
+  const qrInnerY = qy + (qrBoxH - qrInnerSize) / 2;
+  const cell = qrInnerSize / count;
+
+  ctx.fillStyle = '#0f0a17';
+  for (let r = 0; r < count; r++) {
+    for (let c = 0; c < count; c++) {
+      if (qr.isDark(r, c)) {
+        ctx.fillRect(
+          Math.round(qrInnerX + c * cell),
+          Math.round(qrInnerY + r * cell),
+          Math.ceil(cell),
+          Math.ceil(cell)
+        );
+      }
+    }
+  }
+
+  // 12. Instructions Below QR
+  const pillY = 1235;
+  ctx.save();
+  ctx.fillStyle = 'rgba(212, 175, 55, 0.12)';
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+  ctx.lineWidth = 1.5;
+  const pillW = 620;
+  const pillH = 50;
+  ctx.beginPath();
+  ctx.roundRect((w - pillW) / 2, pillY, pillW, pillH, 25);
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.fillStyle = '#fce49c';
+  ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('📷  Apunta la cámara de tu celular al código', w / 2, pillY + 32);
+
+  ctx.fillStyle = '#eae2d5';
+  ctx.font = 'italic 23px Georgia, serif';
+  ctx.fillText('Toca la notificación y rompe tu primer sello de cera dorada', w / 2, 1345);
+
+  // 13. Guarantee of Certainty / Footer
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(w / 2 - 320, 1420);
+  ctx.lineTo(w / 2 + 320, 1420);
+  ctx.stroke();
+  ctx.fillStyle = '#d4af37';
+  ctx.fillText('✦', w / 2, 1421);
+
+  ctx.fillStyle = '#f6e3a1';
+  ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('UN CAPÍTULO CADA DÍA A LAS 00:00 · PREPARADO CON TODO MI AMOR', w / 2, 1480);
+
+  ctx.fillStyle = 'rgba(234, 226, 213, 0.65)';
+  ctx.font = '400 17px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Tu universo secreto ya está esperándote · Rumbo a tus 29 Años · Diciembre 2026', w / 2, 1530);
 
   const link = document.createElement('a');
-  link.download = `Tarjeta-QR-29-Anos-${herName.replace(/\s+/g, '-')}.png`;
+  link.download = `Tarjeta-QR-Lujo-Rumbo-a-tus-29-${herName.replace(/\s+/g, '-')}.png`;
   link.href = card.toDataURL('image/png');
   link.click();
-  showToast('🖨️ Tarjeta QR descargada en alta resolución');
+  showToast('🖨️ Tarjeta QR de Lujo descargada en alta resolución (1200x1700)');
 }
 
 // ---------------------------------------------------------------------------
