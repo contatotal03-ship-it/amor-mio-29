@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:24:00.204Z",
+  "updatedAt": "2026-11-12T04:24:02.083Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -33,33 +33,8 @@
     },
     {
       "dayNumber": 5,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo V · Tú decides el plan",
-      "unlockedTitle": "Elige tu aventura de este fin de semana",
-      "message": "Este fin de semana te toca ser la directora. Elige cuál de estos dos planes quieres que hagamos realidad:",
-      "dynamicType": "challenge",
-      "dynamicPayload": {
-        "prompt": "¿Qué plan te provoca más para nuestra próxima cita?",
-        "choices": [
-          "Noche elegante: cocteles, música y cena especial",
-          "Plan íntimo: película, manta, comida rica y cero afán",
-          "Sorpréndeme tú eligiendo el lugar secreto"
-        ],
-        "choiceFeedbacks": [
-          "¡Me encanta! Ve alistando ese outfit espectacular porque nos vamos de noche elegante 🥂✨",
-          "¡Plan perfecto! Yo me encargo de tu comida favorita, mantas y cero afán en el mundo 🎬💖",
-          "¡Acepto el reto, amor mío! Prepárate porque te voy a llevar a un lugar especial sin decirte antes 😉✨"
-        ]
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/0Co5gTHVp54QyEQw5yPrd7",
-          "caption": "?? De Rodillas ? Reik"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo V · Tú decides el plan"
     },
     {
       "dayNumber": 6,
