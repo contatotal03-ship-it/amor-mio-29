@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:54.721Z",
+  "updatedAt": "2026-11-12T04:10:56.754Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -523,8 +523,21 @@
     },
     {
       "dayNumber": 30,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XXX · ¡FELICES 29 AÑOS! 👑",
+      "unlockedTitle": "¡Feliz Cumpleaños #29, Amor Mío! 👑✨",
+      "message": "¡FELIZ CUMPLEAÑOS #29, MI PRINCESA!\n\nTreinta días, treinta latidos y un solo propósito: hacerte sentir la mujer más amada, admirada y especial del planeta.\n\nQue tus 29 años estén llenos de salud, sueños cumplidos, risas hasta llorar y momentos eternos a mi lado.\n\nHoy celebramos tu vida, amor mío. ¡Te amo con toda mi alma!",
+      "dynamicType": "classic",
+      "dynamicPayload": {},
+      "allowReply": false,
+      "hasSunflowers": true,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/playlist/26rX8PRMYuCee9l0QZK0je",
+          "caption": "?? Playlist completa: D?a especial 29"
+        }
+      ]
     }
   ]
 }
