@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T04:10:52.766Z",
+  "updatedAt": "2026-11-12T04:10:54.721Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -508,8 +508,18 @@
     },
     {
       "dayNumber": 29,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo XXIX · Víspera del Gran Video"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo XXIX · Víspera del Gran Video",
+      "unlockedTitle": "El Telón está por subir 🎬",
+      "message": "Llegamos al capítulo 29... tu número mágico.\n\nRaspa este boleto dorado y luego ve al botón del **Cine de Recuerdos** que acabo de activar en tu pantalla principal.",
+      "dynamicType": "scratch",
+      "dynamicPayload": {
+        "prompt": "Raspa tu invitación al Gran Estreno",
+        "secretReward": "¡CINE DE RECUERDOS ACTIVADO! Sube arriba y dale play a nuestra película de estos 29 días 🎬✨"
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": []
     },
     {
       "dayNumber": 30,
