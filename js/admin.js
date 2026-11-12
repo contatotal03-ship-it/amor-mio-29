@@ -1215,13 +1215,17 @@ function bindStaticEvents() {
     const orig = btn.textContent;
     btn.disabled = true;
     btn.textContent = '⏳ Conectando a tu bóveda...';
-    const token = document.getElementById('gh-token-input').value.trim();
+    const token = document.getElementById('gh-token-input').value.trim().replace(/^["']|["']$/g, '');
     const remember = document.getElementById('gh-remember-check').checked;
     try {
       await signInGitHubAdmin(token, remember);
       await enterCommandCenter('github');
     } catch (err) {
-      showToast('Error GitHub: ' + (err.message || 'Verifica tu token'));
+      if (err.message && err.message.includes('401')) {
+        showToast('🔑 Token incorrecto o incompleto. Copia tu token que empieza por ghp_... completo sin espacios.');
+      } else {
+        showToast('Error GitHub: ' + (err.message || 'Verifica tu token'));
+      }
     } finally {
       btn.disabled = false;
       btn.textContent = orig;
