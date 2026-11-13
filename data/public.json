@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T20:35:04.927Z",
+  "updatedAt": "2026-11-13T20:35:12.191Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -39,8 +39,38 @@
     },
     {
       "dayNumber": 2,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta",
+      "unlockedTitle": "Prueba de memoria de nosotros",
+      "message": "Antes de revelarte tu premio de hoy, quiero ver qué tan conectada estás con nuestro inicio...",
+      "dynamicType": "trivia",
+      "dynamicPayload": {
+        "question": "¿Qué es lo que más me enamoró de ti desde el principio?",
+        "options": [
+          "Lo sexy y hermosa que eres al vestir, tus sentimientos tan bonitos y esa forma tan especial e inteligente que tienes de pensar",
+          "Tu forma de ser y esa habilidad tan especial que tienes para encontrar las palabras adecuadas y decirlas justo en el momento indicado. ❤️",
+          "Tu forma única de iluminar cualquier lugar",
+          "¡Absolutamente todo de ti, princesa! Cada detalle, cada gesto, cada forma de expresarte y hasta esa manera tan nuestra y especial de entregarnos cuando hacemos el amor. Me encanta descubrirte, disfrutarte y seguir enamorándome de cada parte de ti. 😍🔥❤️"
+        ],
+        "optionFeedbacks": [
+          "¡Eres una combinación peligrosa, princesa! Tienes esa belleza que atrapa miradas, esa sensualidad que cautiva sin esfuerzo y una forma de sentir y pensar que te hace aún más irresistible. Eres hermosa por fuera, maravillosa por dentro y tienes ese encanto que me enamoró desde el primer día y que sigue conquistándome cada día más. 😍❤️",
+          "Me encanta esa magia que tienes, princesa, de saber cómo decir las cosas y encontrar siempre las palabras perfectas justo en el momento indicado. 😘❤️",
+          "¡Y es que tienes una luz propia, princesa! No solo iluminas cada lugar al que llegas, también haces que mis días sean más bonitos con tu presencia. Aunque lo más especial de ti no es solo esa luz que todos pueden ver, sino todo lo hermoso que llevas dentro. ✨❤️",
+          "¡Absolutamente todo de ti, princesa! Me encanta lo sexy y hermosa que eres al vestir, tus sentimientos tan bonitos y esa forma tan especial e inteligente que tienes de pensar. Admiro tu manera de ser y esa habilidad tan tuya para encontrar siempre las palabras adecuadas y decirlas justo en el momento indicado. ❤️ Tienes una luz propia que ilumina cada lugar al que llegas y que también hace que mis días sean más bonitos con tu presencia. Pero lo que más me cautiva es todo lo hermoso que llevas dentro. Me encanta cada detalle, cada gesto, cada forma de expresarte y hasta esa manera tan nuestra y especial de entregarnos cuando hacemos el amor. Me encanta descubrirte, admirarte, disfrutarte y seguir enamorándome de cada parte de ti, porque cuanto más te conozco, más razones encuentro para QUERERTE. 😍🔥❤️"
+        ],
+        "correctIndex": 3,
+        "hint": "Pista: ¡No podía quedarme con una sola cosa de ti!",
+        "rewardText": "¡Acertaste, mi princesa! Esta noche tengo preparado un antojo dulce solo para ti, con muchos besos, caricias y todo el amor que tengo para darte. 🍫💖😘"
+      },
+      "allowReply": false,
+      "hasSunflowers": false,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/0xXhgLXfEHnWJHVgRvFvdn",
+          "caption": "🎵 Creo en Ti — Reik"
+        }
+      ]
     },
     {
       "dayNumber": 3,
