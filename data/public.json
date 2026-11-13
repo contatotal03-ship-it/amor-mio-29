@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T20:24:10.926Z",
+  "updatedAt": "2026-11-13T20:24:12.628Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -39,38 +39,8 @@
     },
     {
       "dayNumber": 2,
-      "isAuthorized": true,
-      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta",
-      "unlockedTitle": "Prueba de memoria de nosotros",
-      "message": "Antes de revelarte tu premio de hoy, quiero ver qué tan conectada estás con nuestro inicio...",
-      "dynamicType": "trivia",
-      "dynamicPayload": {
-        "question": "¿Qué es lo que más me enamoró de ti desde el principio?",
-        "options": [
-          "Lo sexy y linda que te vistes, los sentimientos tan bonitos que tienes y tu hermosa forma de pensar.",
-          "Tu forma de ser y decir las cosas en el momento justo.",
-          "Tu forma única de iluminar cualquier lugar",
-          "¡Todo de ti  sin dudarlo!  Incluyendo como enseñaste  hacemos el amor"
-        ],
-        "optionFeedbacks": [
-          "Eres una combinación peligrosa, princesa! Tan hermosa por fuera, tan sexy sin intentarlo y con un corazón y una mente que me enamoran cada día más. 😍❤️",
-          "Me encanta esa magia que tienes para decir justo lo que necesito escuchar, princesa! 😘❤️",
-          "¡Es verdad que iluminas cada espacio adonde llegas, aunque la respuesta completa guarda algo más ✨",
-          "EXACTAMENTE, amor mío! Tu sonrisa, tu mirada, tu forma de ser y esa manera tan especial de iluminar cada lugar hacen que todo en ti me cautive. Eres hermosa por fuera y por dentro. ¡Esta noche tengo preparado un antojo dulce solo para ti! 🍫"
-        ],
-        "correctIndex": 3,
-        "hint": "Pista: ¡No podía quedarme con una sola cosa de ti!",
-        "rewardText": "¡Acertaste, amor mío! Esta noche ya tengo preparado un antojo dulce solo para ti 🍫💖"
-      },
-      "allowReply": false,
-      "hasSunflowers": false,
-      "mediaItems": [
-        {
-          "type": "spotify",
-          "url": "https://open.spotify.com/track/0xXhgLXfEHnWJHVgRvFvdn",
-          "caption": "🎵 Creo en Ti — Reik"
-        }
-      ]
+      "isAuthorized": false,
+      "teaserTitle": "Capítulo II · Solo tú sabes la respuesta"
     },
     {
       "dayNumber": 3,
