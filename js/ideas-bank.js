@@ -128,17 +128,25 @@ export const IDEAS_BANK = [
   {
     day: 6,
     act: 'Acto I · La Chispa',
-    dynamicType: 'clue',
-    allowReply: false,
+    dynamicType: 'challenge',
+    allowReply: true,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo VI · Algo escondido cerca de ti',
-    unlockedTitle: 'Búsqueda del tesoro · Pista #1',
-    suggestion: 'Esconde un detallito físico (crema, chocolate, nota o accesorio) en su bolso, almohada o carro con una palabra secreta escrita.',
-    message: 'Hoy dejé algo pequeño en el mundo real esperándote. Encuentra la nota escondida y escribe aquí la palabra clave.',
+    teaserTitle: 'Capítulo VI · Dos secretos que brillan y cuidan de ti ✨',
+    unlockedTitle: 'Dos Tesoros para Ti: Uno Guarda tu Brillo y el Otro Acaricia tu Piel 💎🖌️',
+    suggestion: 'Entrega física de dos detalles: un joyero de viaje para sus tesoros y una brocha suave de seda para consentirla.',
+    message: 'Amor mío: ❤️\n\nHoy la magia sale de la pantalla del celular y se convierte en algo real que puedes tocar y tener entre tus manos.\n\nElegí dos detalles especiales pensados exclusivamente para ti, para acompañarte en tus días y recordarte lo mucho que me gusta verte sonreír:\n\n1. 👝 Un joyero de viaje portátil y elegante: un cofre seguro, suave y con compartimentos para que tus anillos, aretes, cadenas y tesoros favoritos viajen siempre protegidos a donde sea que vayamos juntos. Porque cada detalle que usas te hace brillar aún más.\n\n2. 🖌️ Una brocha suave de seda: pensada para consentirte, para acariciar tu piel con delicadeza cada mañana y recordarte, antes de salir al mundo, lo hermosa, radiante y perfecta que eres para mí.\n\nPero como este mes es para jugar, reírnos y disfrutar... ¡no te los voy a dar tan fácil! Mira la dinámica que preparé abajo para ti... 🎁✨',
     dynamicPayload: {
-      riddle: 'Busca donde guardas lo que usas justo antes de salir de casa cada mañana... ahí hay una nota con una palabra secreta.',
-      secretCode: 'SIEMPRE',
-      rewardText: '¡Lo encontraste! Que este pequeño detalle te recuerde que pienso en ti desde que amanece.'
+      prompt: 'Tengo dos regalos en mis manos preparados hoy para ti... ¿Cuál de los dos deseas descubrir primero?',
+      choices: [
+        '👝 El Cofre Secreto · Para que tus tesoros más brillantes viajen contigo',
+        '🖌️ La Caricia Suave · Para la mujer más hermosa de mi vida',
+        '✨ ¡Quiero descubrir ambos a la vez con un abrazo apretado!'
+      ],
+      choiceFeedbacks: [
+        '¡Has elegido el Joyero de Viaje! 👝✨ Extiende tus manos... Un lugar especial para tus anillos, collares y aretes favoritos, para que brillen donde sea que vayas.',
+        '¡Has elegido la Brocha de Seda! 🖌️✨ Extiende tus manos... Tan suave como una caricia, pensada para consentirte y recordarte cada día lo radiante que eres.',
+        '¡Doble sorpresa concedida! 🎁✨ Extiende tus dos manos y cierra los ojos... aquí tienes tu joyero de viaje y tu brocha suave, junto con el beso más dulce del día.'
+      ]
     }
   },
   {
