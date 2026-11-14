@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T00:44:47.899Z",
+  "updatedAt": "2026-11-14T14:20:28.228Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -74,8 +74,38 @@
     },
     {
       "dayNumber": 3,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo III · Un secreto entre girasoles 🌻"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo III · Desafío de girasoles 🌻",
+      "unlockedTitle": "¿Cuánto conoces de mis gustos por ti? 🌻",
+      "message": "Veamos si adivinas qué pienso cuando te veo arreglada...",
+      "dynamicType": "trivia",
+      "dynamicPayload": {
+        "question": "¿Qué es lo primero que pienso cuando te veo llegar toda linda?",
+        "options": [
+          "Qué suerte tengo de tenerla",
+          "Hoy no le quito los ojos de encima",
+          "Se ve más hermosa cada día",
+          "¡Las tres al mismo tiempo!"
+        ],
+        "optionFeedbacks": [
+          "¡Lo pienso cada segundo! Pero es todavía más grande que eso 😘",
+          "¡Literalmente me hipnotizas! Aun así falta algo...",
+          "¡Cada año te pones más espectacular! Mira la cuarta opción 😉",
+          "¡BINGO, mi princesa! Eres mi obra de arte favorita 🌻👑"
+        ],
+        "correctIndex": 3,
+        "hint": "Pista: ¡Todo junto!",
+        "rewardText": "¡BINGO! Ganaste un beso largo y una salida por tu postre favorito 🌻✨"
+      },
+      "allowReply": false,
+      "hasSunflowers": true,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/6c9HvXjXSEOwhFp7GhqQ8x",
+          "caption": "🎵 Transforma Mi Mundo — Kaleth Morales"
+        }
+      ]
     },
     {
       "dayNumber": 4,
