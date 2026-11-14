@@ -523,6 +523,20 @@ async function openCapsuleModal(cap) {
           iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
           iframe.loading = 'lazy';
           item.appendChild(iframe);
+
+          const openSpotifyBtn = document.createElement('a');
+          openSpotifyBtn.className = 'spotify-app-link-btn';
+          openSpotifyBtn.href = resolvedUrl;
+          openSpotifyBtn.target = '_blank';
+          openSpotifyBtn.rel = 'noopener noreferrer';
+          openSpotifyBtn.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:7px;margin-top:6px;padding:7px 12px;background:rgba(30,215,96,0.12);border:1px solid rgba(30,215,96,0.4);border-radius:10px;color:#1ed760;font-size:0.78rem;font-weight:600;text-decoration:none;transition:all 0.2s ease;';
+          openSpotifyBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.308-1.758-8.793-.963-.335.077-.67-.133-.746-.468-.077-.334.132-.67.467-.746 3.808-.87 7.076-.51 9.721 1.113.295.18.387.564.208.857zm1.226-2.726c-.227.37-.714.484-1.083.257-2.69-1.654-6.79-2.133-9.972-1.168-.415.127-.858-.106-.984-.52-.127-.414.106-.858.52-.984 3.636-1.103 8.147-.568 11.262 1.332.37.227.484.714.257 1.083zm.106-2.836C14.692 8.95 8.57 8.75 5.068 9.813c-.496.15-1.022-.134-1.173-.63-.15-.496.134-1.022.63-1.173 3.99-1.21 10.665-.98 14.49 1.293.45.267.595.847.328 1.296-.266.45-.846.596-1.295.328z"/>
+            </svg>
+            <span>Escuchar canción completa en Spotify App ↗</span>
+          `;
+          item.appendChild(openSpotifyBtn);
         }
       }
 
@@ -678,10 +692,13 @@ function ensureSpotifyDrawer(embedUrl) {
     drawer.className = 'spotify-drawer hidden';
     drawer.innerHTML = `
       <div class="spotify-drawer-head">
-        <span>🎧 Día especial 29</span>
+        <span>🎧 Música de Fondo</span>
         <button type="button" class="icon-btn" style="width:28px;height:28px;font-size:0.85rem;" id="spotify-drawer-close">✕</button>
       </div>
       <iframe class="spotify-embed-frame" id="spotify-drawer-iframe" height="180" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <a href="${state.settings?.musicUrl || 'https://open.spotify.com'}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;padding:6px;background:rgba(30,215,96,0.12);border:1px solid rgba(30,215,96,0.35);border-radius:8px;color:#1ed760;font-size:0.75rem;font-weight:600;text-decoration:none;">
+        <span>Escuchar playlist completa en Spotify App ↗</span>
+      </a>
     `;
     document.body.appendChild(drawer);
     drawer.querySelector('#spotify-drawer-close').addEventListener('click', () => {

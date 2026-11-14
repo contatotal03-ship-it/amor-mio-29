@@ -74,14 +74,32 @@ export const IDEAS_BANK = [
   {
     day: 4,
     act: 'Acto I · La Chispa',
-    dynamicType: 'classic',
-    allowReply: false,
+    dynamicType: 'challenge',
+    allowReply: true,
     hasSunflowers: false,
-    teaserTitle: 'Capítulo IV · Escucha mi voz',
-    unlockedTitle: 'Palabras que prefiero decirte al oído',
-    suggestion: 'Usa el grabador de micrófono en Admin para grabarle una nota de voz de 25 segundos diciéndole 3 cosas que amas y admiras de ella.',
-    message: 'A veces las letras se quedan cortas. Dale play al audio de arriba y cierra los ojos un segundo, amor mío.',
-    dynamicPayload: {}
+    teaserTitle: 'Capítulo IV · Esta noche descorchamos algo especial 🍷',
+    unlockedTitle: 'Dos Copas de Vino y Preguntas para Nosotros 🍷✨',
+    suggestion: 'Una velada íntima de vino y conversación. Sirve dos copas, pon la música que les gusta y descubran juntos cada una de las 6 preguntas cómplices.',
+    message: 'Amor mío: ❤️\n\nHoy no tienes que organizar nada ni pensar en pendientes. Esta noche el plan es nuestro: una buena botella de vino, dos copas, la música que nos gusta de fondo y todo el tiempo del mundo a nuestro favor para hablar de lo que a veces la rutina nos hace olvidar.\n\nPreparé esta pequeña dinámica con preguntas cómplices, divertidas y románticas para que las vayamos destapando copa a copa. Prepárate para reírte, para recordar momentos de los dos que nos hicieron enamorarnos y para mirarnos con la complicidad de siempre.\n\nSirve tu copa, acomódate a mi lado y toca la primera carta... ¡Salud por nosotros! 🍷✨',
+    dynamicPayload: {
+      prompt: 'Elige una copa para destapar la pregunta de esta ronda:',
+      choices: [
+        '🍷 Primera Copa: "¿Cuál fue el segundo exacto en que supiste que te gustaba?"',
+        '🍷 Segunda Copa: "Si pudiéramos congelar un solo recuerdo de los dos para revivirlo mil veces, ¿cuál sería?"',
+        '🍷 Tercera Copa: "Una locura divertida o viaje soñado que tengamos pendiente hacer juntos."',
+        '🍷 Cuarta Copa: "¿Qué es lo que más te derrite o te hace reír cuando estamos a solas?"',
+        '🍷 Quinta Copa: "Una promesa que quieras que sellemos juntos esta noche con esta copa de vino."',
+        '🥂 Brindis Dorado: "Dime 3 cosas que amas de nosotros antes de dar el siguiente trago."'
+      ],
+      choiceFeedbacks: [
+        '¡Salud por ese momento! Brindemos por cómo empezó todo... ahora cuéntame cada detalle mirándome a los ojos ❤️',
+        'Uff... qué recuerdo tan hermoso. Yo también me quedaría a vivir ahí contigo mil veces. Salud, mi princesa 🍷',
+        '¡Queda sellado esta noche con esta copa! Lo vamos a cumplir sí o sí, te lo prometo ✈️✨',
+        'Me encantas... no te imaginas cuánto. Por cada risa y por cada momento a tu lado, ¡salud! 💖',
+        'Promesa sellada con vino y con el corazón. Quiero estar a tu lado en cada paso, siempre ❤️',
+        '¡Salud por nosotros! Por tu sonrisa, por tus 29 que vienen y por toda la vida que quiero compartir contigo 🥂👑'
+      ]
+    }
   },
   {
     day: 5,
