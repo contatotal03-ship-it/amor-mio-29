@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T22:11:32.046Z",
+  "updatedAt": "2026-11-14T23:53:44.038Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -145,8 +145,43 @@
     },
     {
       "dayNumber": 6,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo VI · Dos secretos que brillan y cuidan de ti ✨"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo VI · Dos secretos que brillan y cuidan de ti ✨",
+      "unlockedTitle": "Dos Tesoros para Ti: Uno Guarda tu Brillo y el Otro Acaricia tu Piel 💎🖌️",
+      "message": "Amor mío: ❤️\n\nHoy la magia sale de la pantalla del celular y se convierte en algo real que puedes tocar y tener entre tus manos.\n\nElegí dos detalles especiales pensados exclusivamente para ti, para acompañarte en tus días y recordarte lo mucho que me gusta verte sonreír:\n\n1. 👝 Un joyero de viaje portátil y elegante: un cofre seguro, suave y con compartimentos para que tus anillos, aretes, cadenas y tesoros favoritos viajen siempre protegidos a donde sea que vayamos juntos. Porque cada detalle que usas te hace brillar aún más.\n\n2. 🖌️ Una brocha suave de seda: pensada para consentirte, para acariciar tu piel con delicadeza cada mañana y recordarte, antes de salir al mundo, lo hermosa, radiante y perfecta que eres para mí.\n\nPero como este mes es para jugar, reírnos y disfrutar... ¡no te los voy a dar tan fácil! Mira la dinámica que preparé abajo para ti... 🎁✨",
+      "dynamicType": "challenge",
+      "dynamicPayload": {
+        "prompt": "Tengo dos regalos en mis manos preparados hoy para ti... ¿Cuál de los dos deseas descubrir primero?",
+        "choices": [
+          "👝 El Cofre Secreto · Para que tus tesoros más brillantes viajen contigo",
+          "🖌️ La Caricia Suave · Para la mujer más hermosa de mi vida",
+          "✨ ¡Quiero descubrir ambos a la vez con un abrazo apretado!"
+        ],
+        "choiceFeedbacks": [
+          "¡Has elegido el Joyero de Viaje! 👝✨ Extiende tus manos... Un lugar especial para tus anillos, collares y aretes favoritos, para que brillen donde sea que vayas.",
+          "¡Has elegido la Brocha de Seda! 🖌️✨ Extiende tus manos... Tan suave como una caricia, pensada para consentirte y recordarte cada día lo radiante que eres.",
+          "¡Doble sorpresa concedida! 🎁✨ Extiende tus dos manos y cierra los ojos... aquí tienes tu joyero de viaje y tu brocha suave, junto con el beso más dulce del día."
+        ]
+      },
+      "allowReply": true,
+      "hasSunflowers": false,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/06C0w9m8VKo25XAIIRpNN6",
+          "caption": "🎵 Sin Miedo a Querer — Nalaia Lyrics"
+        },
+        {
+          "type": "image",
+          "url": "https://raw.githubusercontent.com/contatotal03-ship-it/amor-mio-29/main/data/media/day-06/joyero-viaje.webp",
+          "caption": "👝 Tu joyero de viaje para guardar lo que más brilla"
+        },
+        {
+          "type": "image",
+          "url": "https://raw.githubusercontent.com/contatotal03-ship-it/amor-mio-29/main/data/media/day-06/brocha-belleza.jpg",
+          "caption": "🖌️ Tu brocha suave para consentirte cada mañana"
+        }
+      ]
     },
     {
       "dayNumber": 7,
