@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T14:21:28.625Z",
+  "updatedAt": "2026-11-14T22:11:32.046Z",
   "settings": {
     "herName": "Amor Mío",
     "birthdayIso": "2026-12-12T00:00",
@@ -110,8 +110,33 @@
     },
     {
       "dayNumber": 4,
-      "isAuthorized": false,
-      "teaserTitle": "Capítulo IV · Esta noche descorchamos algo especial 🍷"
+      "isAuthorized": true,
+      "teaserTitle": "Capítulo IV · Esta noche descorchamos algo especial 🍷",
+      "unlockedTitle": "Dos Copas de Vino y Preguntas para Nosotros 🍷✨",
+      "message": "Amor mío: ❤️\n\nHoy no tienes que organizar nada ni pensar en pendientes. Esta noche el plan es nuestro: una buena botella de vino, dos copas, la música que nos gusta de fondo y todo el tiempo del mundo a nuestro favor para hablar de lo que a veces la rutina nos hace olvidar.\n\nPreparé esta pequeña dinámica con preguntas cómplices, divertidas y románticas para que las vayamos destapando copa a copa. Prepárate para reírte, para recordar momentos de los dos que nos hicieron enamorarnos y para mirarnos con la complicidad de siempre.\n\nSirve tu copa, acomódate a mi lado y toca la primera carta... ¡Salud por nosotros! 🍷✨",
+      "dynamicType": "challenge",
+      "dynamicPayload": {
+        "prompt": "Elige una copa para destapar la pregunta de esta ronda:",
+        "choices": [
+          "🍷 Primera Copa: '¿Cuál fue el segundo exacto en que supiste que te gustaba?'",
+          "🍷 Segunda Copa: 'Si pudiéramos congelar un solo recuerdo de los dos para revivirlo mil veces, ¿cuál sería?'",
+          "🍷 Tercera Copa: 'Una locura divertida o viaje soñado que tengamos pendiente hacer juntos.'"
+        ],
+        "choiceFeedbacks": [
+          "¡Salud por ese momento! Brindemos por cómo empezó todo... ahora cuéntame cada detalle mirándome a los ojos ❤️",
+          "Uff... qué recuerdo tan hermoso. Yo también me quedaría a vivir ahí contigo mil veces. Salud, mi princesa 🍷",
+          "¡Queda sellado esta noche con esta copa! Lo vamos a cumplir sí o sí, te lo prometo ✈️✨"
+        ]
+      },
+      "allowReply": true,
+      "hasSunflowers": false,
+      "mediaItems": [
+        {
+          "type": "spotify",
+          "url": "https://open.spotify.com/track/37miw1ff4zH0LDuFrBvZ4i",
+          "caption": "🎵 Sabes — Reik (Nuestra canción para brindar)"
+        }
+      ]
     },
     {
       "dayNumber": 5,
