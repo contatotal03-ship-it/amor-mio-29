@@ -1461,10 +1461,24 @@ function bindStaticEvents() {
       try {
         const token = decryptWithPin(GITHUB_VAULT_CIPHER, enteredPin);
         if (token) {
-          await signInGitHubAdmin(token, remember);
-          await enterCommandCenter('github');
-          showToast('✨ ¡Bienvenido a tu Centro de Mando!');
-          return;
+          try {
+            await signInGitHubAdmin(token, remember);
+            await enterCommandCenter('github');
+            showToast('✨ ¡Bienvenido a tu Centro de Mando!');
+            return;
+          } catch (ghErr) {
+            console.warn('El token encriptado de GitHub no es válido o expiró:', ghErr);
+            // Si el token falló por 401 Bad credentials, pero el PIN es 2929,
+            // permitir entrar en modo local para no dejar bloqueado al usuario
+            const localPin = getLocalAdminPin();
+            if (enteredPin === localPin || enteredPin === '2929') {
+              sessionStorage.setItem('cap29_local_unlocked', '1');
+              await enterCommandCenter('local');
+              showToast('⚠️ Token de GitHub vencido (401). Entraste en Modo Local con PIN 2929.');
+              return;
+            }
+            throw ghErr;
+          }
         }
 
         // If local mode
