@@ -513,19 +513,19 @@ export const IDEAS_BANK = [
     hasSunflowers: false,
     teaserTitle: 'Capítulo XXVII · Un oasis secreto para los dos 🫧',
     unlockedTitle: 'Tarde de Desconexión Total & Caricias para el Alma 🫧🧖‍♀️',
-    suggestion: 'Experiencia Spa en pareja (80 min de relajación, masajes y jacuzzi privado). Mensaje íntimo y dinámico con la lista de implementos en pop-ups interactivos.',
-    message: 'Amor mío: ❤️\n\nHoy tus únicas tareas son respirar profundo, cerrar los ojos y dejarte consentir. Llevas días entregándolo todo con esa fuerza y dedicación que tanto admiro en ti, y hoy quiero que el tiempo se detenga solo para nosotros.\n\nHe preparado una cita mágica y privada para desconectarnos del mundo entero, consentir tu piel y regalarte un momento de paz absoluta.\n\nNo te diré a dónde vamos porque quiero ver tu carita de sorpresa al llegar, pero sí tienes una pequeña misión para estar 100% lista. Toca abajo los pasos de tu misión para descubrir qué alistar y las coordenadas de hoy... 🫧✨',
+    suggestion: 'Experiencia Spa en pareja para este sábado. Aviso con anticipación para que aliste con tiempo su vestido de baño, toalla, gorro, chanclas y candado.',
+    message: 'Amor mío: ❤️\n\nTe escribo esto desde ya porque quiero que tu corazón empiece a emocionarse y para que tengas todo listo con tiempo: este sábado tus únicas tareas serán respirar profundo, cerrar los ojos y dejarte consentir.\n\nLlevas días entregándolo todo con esa fuerza y dedicación que tanto admiro en ti, y este fin de semana he preparado una cita mágica y privada para desconectarnos del mundo entero, consentir tu piel y regalarte un momento de paz absoluta.\n\nNo te diré a dónde vamos porque quiero ver tu carita de sorpresa cuando lleguemos, pero como este plan exige unos implementos especiales, aquí tienes tu misión para dejar tu bolso listo con anticipación. Toca abajo los pasos interactivos para descubrir qué empacar y las coordenadas del encuentro... 🫧✨',
     dynamicPayload: {
-      prompt: 'Misión Secreta: Toca cada paso para prepararte hoy ✨',
+      prompt: 'Misión Secreta: Toca cada paso para prepararte con tiempo ✨',
       choices: [
-        '🎒 Paso 1 · Lo que debes empacar en tu bolso',
+        '🎒 Paso 1 · Tu Bolso Secreto (Alistar con tiempo)',
         '⏰ Paso 2 · La regla de oro de nuestra reserva',
         '📍 Paso 3 · Coordenadas de nuestro encuentro'
       ],
       choiceFeedbacks: [
-        '🎒 Alista en tu maletín (imprescindibles para ingresar):\n\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas 🩴\n• Candado pequeño 🔒\n\n¡Empácalo todo y prepárate para sumergirte!',
-        '⏰ La puntualidad es sagrada hoy:\n\n• Nuestra cita no da espera.\n• Con 15 minutos de retraso nos reducen tiempo de relajación, y a los 30 minutos ya no nos pueden atender.\n\n¡Lleguemos súper puntuales para no perder ni un segundo!',
-        '📍 Nuestro destino de hoy:\n\nCarrera 78 # 47 - 78, Barrio Velódromo (Medellín).\n\n¡Ven cómoda, lista y con el corazón abierto para dejarte consentir! 💖🫧'
+        '🎒 Alista en tu maletín (imprescindibles para ingresar):\n\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas 🩴\n• Candado pequeño 🔒\n\n¡Empácalo todo con anticipación para estar 100% lista para nuestro sábado!',
+        '⏰ La puntualidad es sagrada para nuestra cita:\n\n• Nuestra reserva no da espera.\n• Con 15 minutos de retraso nos reducen tiempo de relajación, y a los 30 minutos ya no nos pueden atender.\n\n¡Lleguemos súper puntuales para disfrutar cada segundo de nuestro momento!',
+        '📍 Nuestro destino secreto:\n\nCarrera 78 # 47 - 78, Barrio Velódromo (Medellín).\n\n¡Prepárate para una tarde inolvidable de desconexión y amor! 💖🫧'
       ]
     }
   },
