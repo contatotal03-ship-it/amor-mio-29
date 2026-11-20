@@ -669,20 +669,34 @@ function loadLocalSettings() {
 function loadLocalCapsules() {
   try {
     const raw = localStorage.getItem(LS_CAPSULES_KEY);
+    const snapCaps = ghPublicCache.data?.capsules;
     if (!raw) {
+      if (Array.isArray(snapCaps) && snapCaps.length === 30) {
+        localStorage.setItem(LS_CAPSULES_KEY, JSON.stringify(snapCaps));
+        return snapCaps;
+      }
       const def = defaultCapsules();
       localStorage.setItem(LS_CAPSULES_KEY, JSON.stringify(def));
       return def;
     }
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed) || parsed.length !== 30) {
+      if (Array.isArray(snapCaps) && snapCaps.length === 30) {
+        localStorage.setItem(LS_CAPSULES_KEY, JSON.stringify(snapCaps));
+        return snapCaps;
+      }
       const def = defaultCapsules();
       localStorage.setItem(LS_CAPSULES_KEY, JSON.stringify(def));
       return def;
     }
+    const anyAuth = parsed.some((c) => c.isAuthorized);
+    if (!anyAuth && Array.isArray(snapCaps) && snapCaps.some((c) => c.isAuthorized)) {
+      localStorage.setItem(LS_CAPSULES_KEY, JSON.stringify(snapCaps));
+      return snapCaps;
+    }
     return parsed;
   } catch {
-    return defaultCapsules();
+    return ghPublicCache.data?.capsules || defaultCapsules();
   }
 }
 
