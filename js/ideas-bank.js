@@ -520,11 +520,13 @@ export const IDEAS_BANK = [
       choices: [
         '🎒 Paso 1 · Lo que debes empacar en tu bolso',
         '⏰ Paso 2 · La regla de oro de nuestra reserva',
-        '🚗 Paso 3 · El viaje y tu única tarea'
+        '🕛 Paso 3 · Hora de salida: 12:30 PM en punto',
+        '🚗 Paso 4 · El viaje y tu única tarea'
       ],
       choiceFeedbacks: [
         '🎒 Para ingresar a la zona húmeda y los lockers, empaca en tu maletín:\n\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas 🩴\n• Candado pequeño 🔒\n\n(Son de uso obligatorio para ingresar. ¡Déjalo listo desde ya para que no se nos quede nada!)',
         '⏰ Nuestra reserva tiene hora exacta y no da espera:\n\n• A partir de 15 minutos de retraso, reducen el tiempo de masaje y jacuzzi.\n• A partir de 30 minutos, ya no nos pueden atender.\n\n¡Así que saldremos con tiempo para no perder ni un solo segundo de nuestro momento!',
+        '🕛 ¡12:30 PM en punto! Ni un minuto más, ni un minuto menos ⏱️✨\n\nA esa hora pasamos a modo desconexión total: maletín listo en mano y cero estrés. Yo paso por ti puntual, así que quiero verte lista con esa sonrisa hermosa que me vuelve loco. ¡Prohibido demorarse probándose 10 outfits porque vas es a que te consientan! 😂💖',
         '🚗 No te preocupes por la dirección ni por cómo llegar: yo me encargo de todo el camino.\n\nTu única tarea este sábado es alistar tu maletín, venir cómoda y con el corazón abierto para ser consentida como la reina que eres. 💖🫧'
       ]
     }

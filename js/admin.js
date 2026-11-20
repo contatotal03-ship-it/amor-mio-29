@@ -440,18 +440,18 @@ function renderDynamicFieldsEditor(type, payload = {}) {
   }
 
   if (type === 'challenge') {
-    const ch = Array.isArray(payload.choices) ? payload.choices : ['', '', ''];
-    const cbs = Array.isArray(payload.choiceFeedbacks) ? payload.choiceFeedbacks : ['', '', ''];
+    const ch = Array.isArray(payload.choices) ? payload.choices : ['', '', '', ''];
+    const cbs = Array.isArray(payload.choiceFeedbacks) ? payload.choiceFeedbacks : ['', '', '', ''];
     container.innerHTML = `
       <div class="form-grid">
         <div>
           <label class="field-label">Invitación / Propuesta Romántica del Día</label>
           <input id="dyn-prompt" type="text" class="input" />
         </div>
-        ${[0, 1, 2].map((i) => `
+        ${[0, 1, 2, 3].map((i) => `
           <div class="option-feedback-pair">
             <div>
-              <label class="field-label">Opción ${String.fromCharCode(65 + i)}${i === 2 ? ' (Opcional)' : ''}</label>
+              <label class="field-label">Opción ${String.fromCharCode(65 + i)}${i >= 2 ? ' (Opcional)' : ''}</label>
               <input id="dyn-ch-${i}" type="text" class="input" />
             </div>
             <div>
@@ -463,9 +463,11 @@ function renderDynamicFieldsEditor(type, payload = {}) {
       </div>
     `;
     container.querySelector('#dyn-prompt').value = payload.prompt || '';
-    for (let i = 0; i < 3; i++) {
-      container.querySelector(`#dyn-ch-${i}`).value = ch[i] || '';
-      container.querySelector(`#dyn-ch-fb-${i}`).value = cbs[i] || '';
+    for (let i = 0; i < 4; i++) {
+      const chEl = container.querySelector(`#dyn-ch-${i}`);
+      const fbEl = container.querySelector(`#dyn-ch-fb-${i}`);
+      if (chEl) chEl.value = ch[i] || '';
+      if (fbEl) fbEl.value = cbs[i] || '';
     }
   }
 }
@@ -513,7 +515,7 @@ function collectDynamicPayloadFromEditor(type) {
   if (type === 'challenge') {
     const choices = [];
     const choiceFeedbacks = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
       const val = c.querySelector(`#dyn-ch-${i}`)?.value.trim() || '';
       if (val) {
         choices.push(val);
