@@ -336,7 +336,7 @@ export function forceInstantPublicRefresh() {
 
 async function fetchPublicGitHubSnapshot({ preferApi = true } = {}) {
   const now = Date.now();
-  if (ghPublicCache.data && now - ghPublicCache.ts < 2000) {
+  if (ghPublicCache.data && now - ghPublicCache.ts < 1200) {
     return ghPublicCache.data;
   }
   if (ghPublicCache.promise) return ghPublicCache.promise;
@@ -345,9 +345,32 @@ async function fetchPublicGitHubSnapshot({ preferApi = true } = {}) {
     const { githubOwner, githubPublicRepo } = PUBLIC_CONFIG;
     let payload = null;
 
-    // 1. Instant GitHub API raw read (bypasses edge cache via timestamp, <1s live!)
+    // 1. Instant raw GitHub snapshot (live within 1s after commit, no 60/hr API limit)
+    if (githubOwner && githubPublicRepo && !isLocalhostEnv()) {
+      try {
+        const rawResp = await fetch(
+          `https://raw.githubusercontent.com/${githubOwner}/${githubPublicRepo}/main/data/public.json?_=${Date.now()}`,
+          { cache: 'no-store' }
+        );
+        if (rawResp.ok) payload = await rawResp.json();
+      } catch {
+        // Fallback to same-origin or API
+      }
+    }
+
+    // 2. Same-origin ./data/public.json (unlimited requests, cache-busted)
+    if (!payload) {
+      try {
+        const resp = await fetch(`./data/public.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (resp.ok) payload = await resp.json();
+      } catch {
+        // Offline fallback
+      }
+    }
+
+    // 3. Fallback: GitHub Contents API raw
     const canTryApi = preferApi && (now - lastApiCheckTs > 3500);
-    if (canTryApi && githubOwner && githubPublicRepo && !isLocalhostEnv()) {
+    if (!payload && canTryApi && githubOwner && githubPublicRepo && !isLocalhostEnv()) {
       lastApiCheckTs = Date.now();
       try {
         const rawText = await ghApiRequest(
@@ -356,24 +379,9 @@ async function fetchPublicGitHubSnapshot({ preferApi = true } = {}) {
         );
         payload = JSON.parse(rawText);
       } catch {
-        // Fallback to raw githubusercontent below
+        // Fallback
       }
     }
-
-    // 1.5. Instant raw GitHub snapshot (unlimited requests, live in 1-2s after git push)
-    if (!payload && githubOwner && githubPublicRepo) {
-      try {
-        const rawResp = await fetch(
-          `https://raw.githubusercontent.com/${githubOwner}/${githubPublicRepo}/main/data/public.json?_=${Date.now()}`,
-          { cache: 'no-store' }
-        );
-        if (rawResp.ok) payload = await rawResp.json();
-      } catch {
-        // Fallback to Pages CDN below
-      }
-    }
-
-    // 2. Same-origin ./data/public.json (unlimited requests, cache-busted)
     if (!payload) {
       try {
         const resp = await fetch(`./data/public.json?t=${Date.now()}`, { cache: 'no-store' });
@@ -563,6 +571,17 @@ async function syncGitHubVaultAndPublic(vaultData) {
   );
 
   ghPublicCache = { ts: Date.now(), promise: null, data: publicSnapshot };
+  broadcastInstantLocalSync();
+}
+
+function broadcastInstantLocalSync() {
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const bc = new BroadcastChannel('cap29-instant-sync');
+      bc.postMessage({ type: 'refresh', ts: Date.now() });
+      bc.close();
+    }
+  } catch {}
 }
 
 // ---------------------------------------------------------------------------
@@ -715,6 +734,7 @@ function loadLocalCapsules() {
 
 function saveLocalCapsules(list) {
   localStorage.setItem(LS_CAPSULES_KEY, JSON.stringify(list));
+  broadcastInstantLocalSync();
 }
 
 // ---------------------------------------------------------------------------
@@ -920,6 +940,18 @@ export async function herInteractCapsule(dayNumber, changes) {
 }
 
 export async function subscribeHerLiveUpdates(onChange) {
+  // 1. Instant cross-tab broadcast (0ms on same device)
+  let bc = null;
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      bc = new BroadcastChannel('cap29-instant-sync');
+      bc.onmessage = () => {
+        forceInstantPublicRefresh();
+        onChange();
+      };
+    }
+  } catch {}
+
   const mode = getBackendMode();
 
   if (mode === 'local') {
@@ -927,20 +959,24 @@ export async function subscribeHerLiveUpdates(onChange) {
       if (e.key === LS_CAPSULES_KEY || e.key === LS_SETTINGS_KEY) onChange();
     };
     window.addEventListener('storage', handler);
-    return () => window.removeEventListener('storage', handler);
+    return () => {
+      window.removeEventListener('storage', handler);
+      if (bc) bc.close();
+    };
   }
 
   if (mode === 'github') {
-    let tick = 0;
+    // Poll raw.githubusercontent every 2.5 seconds when active
     const timer = setInterval(async () => {
       if (document.visibilityState !== 'visible') return;
-      tick++;
-      ghPublicCache.ts = 0;
-      // Every 10s check unlimited GitHub Pages CDN; every 60s also hit instant GitHub API
-      await fetchPublicGitHubSnapshot({ preferApi: tick % 6 === 0 });
+      forceInstantPublicRefresh();
+      await fetchPublicGitHubSnapshot({ preferApi: false });
       onChange();
-    }, 10000);
-    return () => clearInterval(timer);
+    }, 2500);
+    return () => {
+      clearInterval(timer);
+      if (bc) bc.close();
+    };
   }
 
   const sb = await getSupabase();
@@ -956,6 +992,7 @@ export async function subscribeHerLiveUpdates(onChange) {
 
   return () => {
     sb.removeChannel(channel);
+    if (bc) bc.close();
   };
 }
 
