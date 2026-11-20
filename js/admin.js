@@ -46,7 +46,7 @@ let state = {
   audioChunks: []
 };
 
-const GITHUB_VAULT_CIPHER = 'VVFCZnpefAhETUBAYkMAcGJsAX5ja2F9C1RoeHgNZGBgWgNrVAhwSw==';
+const GITHUB_VAULT_CIPHER = '';
 
 function decryptWithPin(b64Cipher, pin) {
   try {
