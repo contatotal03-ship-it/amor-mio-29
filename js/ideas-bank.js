@@ -514,18 +514,18 @@ export const IDEAS_BANK = [
     teaserTitle: 'Capítulo XXVII · Un oasis secreto para los dos 🫧',
     unlockedTitle: 'Tarde de Desconexión Total & Caricias para el Alma 🫧🧖‍♀️',
     suggestion: 'Experiencia Spa en pareja para este sábado. Aviso con anticipación para que aliste con tiempo su vestido de baño, toalla, gorro, chanclas y candado.',
-    message: 'Amor mío: ❤️\n\nEste sábado tus únicas tareas serán respirar profundo, cerrar los ojos y dejarte consentir. Llevas días entregándolo todo con esa fuerza y dedicación que tanto admiro en ti, y quiero que el tiempo se detenga solo para nosotros.\n\nHe preparado una cita mágica y privada para desconectarnos del mundo entero, consentir tu piel y regalarte un momento de paz absoluta.\n\nEl lugar exacto te lo revelaré solo cuando crucemos la puerta... me muero de ganas de ver esa mirada tuya y esa sonrisa hermosa cuando veas todo lo que preparé para ti.\n\nComo este plan exige unos implementos especiales, te aviso desde ahora para que dejes tu maletín listo. Toca abajo los pasos interactivos para descubrir qué empacar y cómo nos organizaremos... 🫧✨',
+    message: 'Amor mío: ❤️\n\nEste sábado tus únicas tareas serán respirar profundo, cerrar los ojos y dejarte consentir. Llevas días entregándolo todo con esa fuerza y dedicación que tanto admiro en ti, y quiero que el tiempo se detenga solo para nosotros.\n\nHe preparado una cita mágica y privada pensada de pies a cabeza para renovar tu energía, acariciar tu piel y regalarte un momento de desconexión absoluta: 80 minutos donde solo existiremos tú, yo, la calma, masajes relajantes, aceites aromáticos, piedras volcánicas calientes y un jacuzzi privado con hidromasaje y espuma.\n\nEl lugar exacto no te lo diré porque quiero ver tu carita de sorpresa cuando crucemos la puerta... me muero de ganas de ver esa mirada tuya y esa sonrisa hermosa cuando veas todo lo que preparé para ti.\n\nComo este plan exige unos implementos especiales, te aviso con tiempo para que dejes tu maletín listo. Toca abajo los pasos interactivos para descubrir qué empacar y cómo nos organizaremos... 🫧✨',
     dynamicPayload: {
-      prompt: 'Misión Secreta: Toca cada paso para prepararte con tiempo ✨',
+      prompt: 'Misión Secreta: Toca cada detalle para prepararte con tiempo ✨',
       choices: [
-        '🎒 Paso 1 · Tu Bolso Secreto (Alistar con tiempo)',
+        '🎒 Paso 1 · Lo que debes empacar en tu bolso',
         '⏰ Paso 2 · La regla de oro de nuestra reserva',
         '🚗 Paso 3 · El viaje y tu única tarea'
       ],
       choiceFeedbacks: [
-        '🎒 Alista en tu maletín (imprescindibles para ingresar):\n\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas 🩴\n• Candado pequeño 🔒\n\n¡Empácalo todo con anticipación para estar 100% lista para nuestro sábado!',
-        '⏰ La puntualidad es sagrada para nuestra cita:\n\n• Nuestra reserva no da espera.\n• Con 15 minutos de retraso nos reducen tiempo de relajación, y a los 30 minutos ya no nos pueden atender.\n\n¡Lleguemos súper puntuales para disfrutar cada segundo de nuestro momento!',
-        '🚗 Tú solo déjate llevar:\n\nNo te preocupes por el lugar ni por cómo llegar: yo me encargo de todo el camino. Tu única tarea es ponerte ropa cómoda, traer tu maletín listo y venir con el corazón abierto para ser consentida como la reina que eres. 💖🫧'
+        '🎒 Para ingresar a la zona húmeda y los lockers, empaca en tu maletín:\n\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas 🩴\n• Candado pequeño 🔒\n\n(Son de uso obligatorio para ingresar. ¡Déjalo listo desde ya para que no se nos quede nada!)',
+        '⏰ Nuestra reserva tiene hora exacta y no da espera:\n\n• A partir de 15 minutos de retraso, reducen el tiempo de masaje y jacuzzi.\n• A partir de 30 minutos, ya no nos pueden atender.\n\n¡Así que saldremos con tiempo para no perder ni un solo segundo de nuestro momento!',
+        '🚗 No te preocupes por la dirección ni por cómo llegar: yo me encargo de todo el camino.\n\nTu única tarea este sábado es alistar tu maletín, venir cómoda y con el corazón abierto para ser consentida como la reina que eres. 💖🫧'
       ]
     }
   },
