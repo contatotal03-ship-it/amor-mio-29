@@ -513,19 +513,19 @@ export const IDEAS_BANK = [
     hasSunflowers: false,
     teaserTitle: 'Capítulo XXVII · Un oasis secreto para los dos 🫧',
     unlockedTitle: 'Tarde de Desconexión Total & Caricias para el Alma 🫧🧖‍♀️',
-    suggestion: 'Experiencia Spa en pareja (80 min de masajes, aceites, piedras volcánicas, exfoliación y jacuzzi privado). Se mantiene el misterio del nombre con el checklist exacto y reglas de puntualidad.',
-    message: 'Amor mío: ❤️\n\nHoy tus únicas tareas son respirar profundo, cerrar los ojos y dejarte consentir. Llevas días entregándolo todo con esa fuerza y dedicación que tanto admiro en ti, y hoy quiero que el tiempo se detenga solo para nosotros.\n\nHe preparado una cita mágica y privada pensada de pies a cabeza para renovar tu energía, acariciar tu piel y regalarte un momento de desconexión absoluta: 80 minutos donde solo existiremos tú, yo, la calma, masajes relajantes, aceites aromáticos, piedras volcánicas calientes y un jacuzzi privado con hidromasaje y espuma.\n\nNo te diré el nombre del lugar porque quiero ver tu carita de sorpresa cuando crucemos la puerta, pero sí necesito que seas mi cómplice perfecta y sigas estas instrucciones al pie de la letra para que la experiencia sea impecable:\n\n🎒 IMPLEMENTOS OBLIGATORIOS (Alista en tu bolso sin falta):\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas cómodas 🩴\n• Candado pequeño 🔒\n(Todos los implementos son de uso obligatorio para poder ingresar a las zonas de agua y lockers).\n\n⛔ REGLA DE ORO DE NUESTRA RESERVA:\n• La puntualidad es sagrada: debemos llegar con total anticipación.\n  - A partir de 15 minutos de retraso, la reserva será reducida en tiempo de masaje/jacuzzi.\n  - A partir de 30 minutos de retraso, no se podrá atender el servicio.\n¡No permitamos que nos quiten ni un solo minuto de este paraíso!\n\n🏘️ DIRECCIÓN DEL ENCUENTRO:\nCarrera 78 # 47 - 78, Barrio Velódromo (Medellín).\n\nAlista tu maletín con todo el cariño, ponte cómoda y toca abajo las opciones interactivas para destapar cada detalle de lo que viviremos hoy... ¡Te adoro con toda mi alma, mi princesa! 🫧✨',
+    suggestion: 'Experiencia Spa en pareja (80 min de relajación, masajes y jacuzzi privado). Mensaje íntimo y dinámico con la lista de implementos en pop-ups interactivos.',
+    message: 'Amor mío: ❤️\n\nHoy tus únicas tareas son respirar profundo, cerrar los ojos y dejarte consentir. Llevas días entregándolo todo con esa fuerza y dedicación que tanto admiro en ti, y hoy quiero que el tiempo se detenga solo para nosotros.\n\nHe preparado una cita mágica y privada para desconectarnos del mundo entero, consentir tu piel y regalarte un momento de paz absoluta.\n\nNo te diré a dónde vamos porque quiero ver tu carita de sorpresa al llegar, pero sí tienes una pequeña misión para estar 100% lista. Toca abajo los pasos de tu misión para descubrir qué alistar y las coordenadas de hoy... 🫧✨',
     dynamicPayload: {
-      prompt: 'Toca cada sello interactivo para destapar los secretos y preparativos de nuestra tarde:',
+      prompt: 'Misión Secreta: Toca cada paso para prepararte hoy ✨',
       choices: [
-        '🫧 Sello #1: El Circuito de Relajación Secreto',
-        '🎒 Sello #2: Mi Checklist de Bolso (Confirmar Equipaje)',
-        '⏰ Sello #3: Coordenadas & Regla de Oro de Puntualidad'
+        '🎒 Paso 1 · Lo que debes empacar en tu bolso',
+        '⏰ Paso 2 · La regla de oro de nuestra reserva',
+        '📍 Paso 3 · Coordenadas de nuestro encuentro'
       ],
       choiceFeedbacks: [
-        '🫧 ¡Circuito revelado! 80 minutos de desconexión absoluta para dos: masaje relajante en todo el cuerpo con aceites esenciales, piedras volcánicas calientes, exfoliante corporal para iluminar tu piel, jacuzzi privado con hidromasaje y espuma, velas y dos bebidas para brindar por nosotros. ¡Cierra los ojos y déjate consentir!',
-        '🎒 ¡Equipaje confirmado! Asegúrate de llevar en tu bolso: 🩱 Vestido de baño, 🧖‍♀️ Toalla corporal, 🏊‍♀️ Gorro, 🩴 Chanclas y 🔒 Candado pequeño. Todos los implementos son exigidos para el circuito. ¡Ya casi nos sumergimos!',
-        '⏰ ¡Puntualidad de reina! La cita no espera a nadie: a partir de 15 minutos de retraso nos reducen el tiempo del spa, y a partir de 30 minutos no nos atienden. Nos vemos súper puntuales y listos en: Carrera 78 # 47 - 78, Barrio Velódromo (Medellín). ¡Va a ser inolvidable!'
+        '🎒 Alista en tu maletín (imprescindibles para ingresar):\n\n• Vestido de baño 🩱\n• Toalla corporal 🧖‍♀️\n• Gorro 🏊‍♀️\n• Chanclas 🩴\n• Candado pequeño 🔒\n\n¡Empácalo todo y prepárate para sumergirte!',
+        '⏰ La puntualidad es sagrada hoy:\n\n• Nuestra cita no da espera.\n• Con 15 minutos de retraso nos reducen tiempo de relajación, y a los 30 minutos ya no nos pueden atender.\n\n¡Lleguemos súper puntuales para no perder ni un segundo!',
+        '📍 Nuestro destino de hoy:\n\nCarrera 78 # 47 - 78, Barrio Velódromo (Medellín).\n\n¡Ven cómoda, lista y con el corazón abierto para dejarte consentir! 💖🫧'
       ]
     }
   },
