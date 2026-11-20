@@ -1038,9 +1038,15 @@ function populateSettingsForms() {
 
   // QR default URL
   const qrUrlInput = document.getElementById('qr-url-input');
-  if (!qrUrlInput.value) {
-    const base = window.location.href.replace(/admin\.html.*$/, 'index.html');
-    qrUrlInput.value = base;
+  const defaultCloudUrl = `https://${PUBLIC_CONFIG.githubOwner}.github.io/${PUBLIC_CONFIG.githubPublicRepo}/`;
+  if (
+    !qrUrlInput.value ||
+    qrUrlInput.value.includes('localhost') ||
+    qrUrlInput.value.includes('127.0.0.1') ||
+    qrUrlInput.value.startsWith('file:') ||
+    qrUrlInput.value.includes('tuusuario')
+  ) {
+    qrUrlInput.value = defaultCloudUrl;
   }
 
   // Cloud creds fields
@@ -1088,7 +1094,11 @@ function drawQrToCanvas(canvas, text, size = 210) {
 }
 
 function renderQrPreview() {
-  const url = document.getElementById('qr-url-input').value.trim() || window.location.origin;
+  const defaultCloudUrl = `https://${PUBLIC_CONFIG.githubOwner}.github.io/${PUBLIC_CONFIG.githubPublicRepo}/`;
+  let url = document.getElementById('qr-url-input')?.value.trim() || defaultCloudUrl;
+  if (url.includes('localhost') || url.includes('127.0.0.1') || url.startsWith('file:') || url.includes('tuusuario')) {
+    url = defaultCloudUrl;
+  }
   const msg = document.getElementById('qr-dedication-input').value.trim();
 
   document.getElementById('qr-preview-title').textContent = state.settings?.appTitle || '29 Capítulos';
@@ -1100,7 +1110,11 @@ function renderQrPreview() {
 }
 
 function downloadLuxuryQrCard() {
-  const url = document.getElementById('qr-url-input').value.trim() || 'https://contatotal03-ship-it.github.io/amor-mio-29/';
+  const defaultCloudUrl = `https://${PUBLIC_CONFIG.githubOwner}.github.io/${PUBLIC_CONFIG.githubPublicRepo}/`;
+  let url = document.getElementById('qr-url-input')?.value.trim() || defaultCloudUrl;
+  if (url.includes('localhost') || url.includes('127.0.0.1') || url.startsWith('file:') || url.includes('tuusuario')) {
+    url = defaultCloudUrl;
+  }
   const herName = state.settings?.herName || 'Amor Mío';
   const title = state.settings?.appTitle || 'El Mes de tus 29';
 
@@ -1364,7 +1378,11 @@ function downloadLuxuryQrCard() {
 // ---------------------------------------------------------------------------
 function sendWhatsAppAlert(dayNumber) {
   const phone = (state.privateSettings?.whatsappPhone || '').replace(/\D/g, '');
-  const appUrl = document.getElementById('qr-url-input').value.trim() || window.location.origin;
+  const defaultCloudUrl = `https://${PUBLIC_CONFIG.githubOwner}.github.io/${PUBLIC_CONFIG.githubPublicRepo}/`;
+  let appUrl = document.getElementById('qr-url-input')?.value.trim() || defaultCloudUrl;
+  if (appUrl.includes('localhost') || appUrl.includes('127.0.0.1') || appUrl.startsWith('file:') || appUrl.includes('tuusuario')) {
+    appUrl = defaultCloudUrl;
+  }
   const her = state.settings?.herName || 'Amor Mío';
   const tpl =
     state.privateSettings?.whatsappTemplate ||
@@ -1795,7 +1813,11 @@ function bindStaticEvents() {
     sendWhatsAppAlert(state.selectedDay);
   });
   document.getElementById('ed-telegram-alert-btn').addEventListener('click', async () => {
-    const appUrl = document.getElementById('qr-url-input').value.trim() || window.location.origin;
+    const defaultCloudUrl = `https://${PUBLIC_CONFIG.githubOwner}.github.io/${PUBLIC_CONFIG.githubPublicRepo}/`;
+    let appUrl = document.getElementById('qr-url-input')?.value.trim() || defaultCloudUrl;
+    if (appUrl.includes('localhost') || appUrl.includes('127.0.0.1') || appUrl.startsWith('file:') || appUrl.includes('tuusuario')) {
+      appUrl = defaultCloudUrl;
+    }
     const her = state.settings?.herName || 'mi amor';
     try {
       await sendTelegramAlert(
