@@ -356,6 +356,19 @@ async function fetchPublicGitHubSnapshot({ preferApi = true } = {}) {
         );
         payload = JSON.parse(rawText);
       } catch {
+        // Fallback to raw githubusercontent below
+      }
+    }
+
+    // 1.5. Instant raw GitHub snapshot (unlimited requests, live in 1-2s after git push)
+    if (!payload && githubOwner && githubPublicRepo) {
+      try {
+        const rawResp = await fetch(
+          `https://raw.githubusercontent.com/${githubOwner}/${githubPublicRepo}/main/data/public.json?_=${Date.now()}`,
+          { cache: 'no-store' }
+        );
+        if (rawResp.ok) payload = await rawResp.json();
+      } catch {
         // Fallback to Pages CDN below
       }
     }
