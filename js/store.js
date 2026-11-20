@@ -1015,6 +1015,30 @@ export async function getAdminCapsules() {
     return data.map(mapDbCapsuleToModel);
   }
 
+  // Cargar siempre la base de datos real desde public.json como fuente de verdad
+  const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
+  if (snap && Array.isArray(snap.capsules) && snap.capsules.length === 30) {
+    return snap.capsules.map((c) => {
+      const idea = IDEAS_BANK.find((i) => i.day === c.dayNumber);
+      if (c.isAuthorized) {
+        return c;
+      }
+      return {
+        ...c,
+        unlockedTitle: c.unlockedTitle || idea?.unlockedTitle || `Capítulo ${c.dayNumber}`,
+        message: c.message || idea?.message || '',
+        dynamicType: c.dynamicType || idea?.dynamicType || 'classic',
+        dynamicPayload:
+          c.dynamicPayload && Object.keys(c.dynamicPayload).length > 0
+            ? c.dynamicPayload
+            : idea?.dynamicPayload || {},
+        allowReply: c.allowReply !== undefined ? c.allowReply : Boolean(idea?.allowReply),
+        hasSunflowers: c.hasSunflowers !== undefined ? c.hasSunflowers : Boolean(idea?.hasSunflowers),
+        mediaItems: c.mediaItems || []
+      };
+    });
+  }
+
   if (mode === 'github') {
     try {
       const vault = await ensureGhVaultLoaded();
@@ -1024,15 +1048,14 @@ export async function getAdminCapsules() {
     }
   }
 
-  const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
-  if (snap && Array.isArray(snap.capsules) && snap.capsules.length === 30) {
-    return snap.capsules;
-  }
-
   return loadLocalCapsules();
 }
 
 export async function getAdminSettings() {
+  const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
+  if (snap && snap.settings) {
+    return snap.settings;
+  }
   if (getBackendMode() === 'github') {
     try {
       const vault = await ensureGhVaultLoaded();
@@ -1040,10 +1063,6 @@ export async function getAdminSettings() {
     } catch (e) {
       console.warn('Error al cargar settings de GitHub:', e);
     }
-  }
-  const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
-  if (snap && snap.settings) {
-    return snap.settings;
   }
   return getPublicSettings();
 }
