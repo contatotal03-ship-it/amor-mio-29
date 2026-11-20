@@ -127,9 +127,9 @@ async function enterCommandCenter(mode) {
     badge.className = 'status-pill is-cloud';
     logoutBtn.classList.remove('hidden');
   } else {
-    badge.textContent = '💻 Modo Local (Pruebas)';
-    badge.className = 'status-pill is-local';
-    logoutBtn.classList.add('hidden');
+    badge.textContent = '☁️ Nube Activa 24/7';
+    badge.className = 'status-pill is-cloud';
+    logoutBtn.classList.remove('hidden');
   }
 
   await refreshAdminData();

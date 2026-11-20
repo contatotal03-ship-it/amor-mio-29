@@ -1021,9 +1021,12 @@ export async function getAdminCapsules() {
       return vault.capsules;
     } catch (e) {
       console.warn('Error al cargar cápsulas de GitHub:', e);
-      const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
-      return snap?.capsules || defaultCapsules();
     }
+  }
+
+  const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
+  if (snap && Array.isArray(snap.capsules) && snap.capsules.length === 30) {
+    return snap.capsules;
   }
 
   return loadLocalCapsules();
@@ -1036,8 +1039,11 @@ export async function getAdminSettings() {
       return vault.settings;
     } catch (e) {
       console.warn('Error al cargar settings de GitHub:', e);
-      return getPublicSettings();
     }
+  }
+  const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
+  if (snap && snap.settings) {
+    return snap.settings;
   }
   return getPublicSettings();
 }
