@@ -46,7 +46,7 @@ let state = {
   audioChunks: []
 };
 
-const GITHUB_VAULT_CIPHER = '';
+const GITHUB_VAULT_CIPHER = 'VVFdZkAPUG5hQHBrA35del1DU0x/XXF/eUNdTnZtQX9qAQBuAVtfbQ==';
 
 function decryptWithPin(b64Cipher, pin) {
   try {
@@ -57,7 +57,7 @@ function decryptWithPin(b64Cipher, pin) {
       bytes[i] = bin.charCodeAt(i) ^ key[i % key.length];
     }
     const dec = new TextDecoder('utf-8').decode(bytes);
-    if (dec.startsWith('ghp_')) return dec;
+    if (dec.startsWith('ghp_') || dec.startsWith('gho_')) return dec;
     return null;
   } catch {
     return null;
