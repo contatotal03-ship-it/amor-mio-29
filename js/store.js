@@ -142,7 +142,12 @@ export function isGitHubConfigured() {
 export function getBackendMode() {
   if (isLocalPreviewOverride()) return 'local';
   if (isCloudConfigured()) return 'supabase';
-  if (isGitHubConfigured()) return 'github';
+  if (isGitHubConfigured()) {
+    if (sessionStorage.getItem('cap29_local_unlocked') === '1' && !getStoredGitHubToken()) {
+      return 'local';
+    }
+    return 'github';
+  }
   return 'local';
 }
 
@@ -426,26 +431,29 @@ async function ensureGhVaultLoaded() {
     try {
       const token = getStoredGitHubToken();
       const { githubOwner, githubVaultRepo } = PUBLIC_CONFIG;
-      const { data } = await ghGetJsonFile(githubOwner, githubVaultRepo, 'vault.json', token);
-      if (data && Array.isArray(data.capsules)) {
-        ghVaultCache = {
-          settings: { ...defaultSettings(), ...(data.settings || {}) },
-          capsules: data.capsules
-        };
-      } else {
-        ghVaultCache = {
-          settings: defaultSettings(),
-          capsules: defaultCapsules()
-        };
-        await ghPutBase64File(
-          githubOwner,
-          githubVaultRepo,
-          'vault.json',
-          utf8ToBase64(JSON.stringify(ghVaultCache, null, 2)),
-          'Inicializar boveda privada de 30 capitulos',
-          token
-        );
+      if (token) {
+        try {
+          const { data } = await ghGetJsonFile(githubOwner, githubVaultRepo, 'vault.json', token);
+          if (data && Array.isArray(data.capsules)) {
+            ghVaultCache = {
+              settings: { ...defaultSettings(), ...(data.settings || {}) },
+              capsules: data.capsules
+            };
+            return ghVaultCache;
+          }
+        } catch (vaultErr) {
+          console.warn('No se pudo acceder a vault.json con el token actual:', vaultErr);
+          if (vaultErr.status === 401) {
+            clearGitHubToken();
+          }
+        }
       }
+
+      const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
+      ghVaultCache = {
+        settings: { ...defaultSettings(), ...(snap?.settings || {}) },
+        capsules: snap?.capsules || defaultCapsules()
+      };
       return ghVaultCache;
     } finally {
       ghVaultPromise = null;
@@ -1008,8 +1016,14 @@ export async function getAdminCapsules() {
   }
 
   if (mode === 'github') {
-    const vault = await ensureGhVaultLoaded();
-    return vault.capsules;
+    try {
+      const vault = await ensureGhVaultLoaded();
+      return vault.capsules;
+    } catch (e) {
+      console.warn('Error al cargar cápsulas de GitHub:', e);
+      const snap = await fetchPublicGitHubSnapshot({ preferApi: false });
+      return snap?.capsules || defaultCapsules();
+    }
   }
 
   return loadLocalCapsules();
@@ -1017,8 +1031,13 @@ export async function getAdminCapsules() {
 
 export async function getAdminSettings() {
   if (getBackendMode() === 'github') {
-    const vault = await ensureGhVaultLoaded();
-    return vault.settings;
+    try {
+      const vault = await ensureGhVaultLoaded();
+      return vault.settings;
+    } catch (e) {
+      console.warn('Error al cargar settings de GitHub:', e);
+      return getPublicSettings();
+    }
   }
   return getPublicSettings();
 }

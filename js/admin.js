@@ -1484,6 +1484,7 @@ function bindStaticEvents() {
         // If local mode
         const localPin = getLocalAdminPin();
         if (enteredPin === localPin || enteredPin === '2929') {
+          clearGitHubToken();
           sessionStorage.setItem('cap29_local_unlocked', '1');
           await enterCommandCenter('local');
           showToast('✨ Entraste al panel');
